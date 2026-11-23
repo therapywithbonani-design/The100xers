@@ -1,7 +1,7 @@
 """TravLink - City Palace Udaipur reel (no text). Built from the Travlink Reel Editing Playbook.
 
 Usage: python3 render.py <frames_dir> <photos_dir> <assets_dir> <out.mp4>
-frames_dir holds IMG_0642/ IMG_0672/ IMG_0712/ IMG_0714/ JPEG sequences (SDR, 1080x1920, 24 fps).
+frames_dir holds PRE-GRADED (pregrade.py) IMG_0642/ IMG_0672/ IMG_0712/ IMG_0714/ JPEG sequences (SDR, 1080x1920, 24 fps).
 """
 import sys, math, subprocess, functools
 from multiprocessing import Pool
@@ -21,18 +21,9 @@ def back_out(u, s=1.7): u = clamp(u) - 1; return 1 + (s + 1) * u ** 3 + s * u **
 def lerp(a, b, u): return a + (b - a) * u
 
 # ---------------- grade ----------------
-_x = np.arange(256) / 255.0
-def _curve(x, gain, lift):
-    x = np.clip(x * gain + lift, 0, 1)
-    s = x * x * (3 - 2 * x)
-    return np.clip(0.62 * x + 0.38 * s, 0, 1)
-LUT = np.stack([_curve(_x, 0.95, 0.0), _curve(_x, 1.0, 0.004), _curve(_x, 1.05, 0.012)], 1)  # B,G,R warm
-LUT = (LUT * 255).astype(np.uint8).reshape(256, 1, 3)
-
-def grade(u8):
-    img = cv2.LUT(u8, LUT).astype(np.float32) / 255.0
-    g = img.mean(2, keepdims=True)
-    return np.clip(g + (img - g) * 1.10, 0, 1)
+# Video frames arrive pre-graded (pregrade.py); photos are graded here with the same grade.
+from grade import grade as cine_grade, measure
+def to_f(u8): return u8.astype(np.float32) / 255.0
 
 yy, xx = np.mgrid[0:H, 0:W].astype(np.float32)
 r = np.sqrt(((xx - W / 2) / (W * 0.62)) ** 2 + ((yy - H / 2) / (H * 0.62)) ** 2)
@@ -49,7 +40,7 @@ for n in VIDEO_FPS: VIDEO_LEN[n] = len(os.listdir(f'{FR_DIR}/{n}'))
 @functools.lru_cache(maxsize=48)
 def vframe(name, idx):
     idx = int(clamp(idx, 0, VIDEO_LEN[name] - 1))
-    return grade(cv2.imread(f'{FR_DIR}/{name}/{idx + 1:04d}.jpg'))
+    return to_f(cv2.imread(f'{FR_DIR}/{name}/{idx + 1:04d}.jpg'))
 
 def video(name, t):
     # blend neighbouring frames for slow-mo instead of repeating frames (repeats read as stutter)
@@ -72,7 +63,8 @@ PHOTO_CROP = {
 def photo(key):
     im = ImageOps.exif_transpose(Image.open(f'{PH_DIR}/{PHOTO_FILES[key]}')).convert('RGB')
     if key in PHOTO_CROP: im = im.crop(PHOTO_CROP[key])
-    return grade(cv2.cvtColor(np.array(im), cv2.COLOR_RGB2BGR))
+    u8 = cv2.cvtColor(np.array(im), cv2.COLOR_RGB2BGR)
+    return cine_grade(u8, measure([u8]))
 
 # ---------------- reframe ----------------
 def reframe(img, w, h, zoom=1.0, cx=0.5, cy=0.5):
