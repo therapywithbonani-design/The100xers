@@ -11,6 +11,8 @@ import render as R
 from render import W, H, ease_out, ease_io, ease_in, back_out, clamp, lerp, reframe, video, photo, blur, zoom_img, paste
 
 FPS = 24
+import functools
+R.vframe = functools.lru_cache(maxsize=10)(R.vframe.__wrapped__)  # keep worker memory low
 FONT_BIG = '/usr/share/fonts/opentype/inter/InterDisplay-Black.otf'
 FONT_MID = '/usr/share/fonts/opentype/inter/Inter-SemiBold.otf'
 FONT_KICK = '/usr/share/fonts/opentype/inter/Inter-ExtraBold.otf'
@@ -319,7 +321,7 @@ if __name__ == '__main__':
     ff = subprocess.Popen(['ffmpeg', '-y', '-v', 'error', '-f', 'rawvideo', '-pix_fmt', 'bgr24', '-s', f'{W}x{H}', '-r', str(FPS),
                            '-i', '-', '-c:v', 'libx264', '-crf', '18', '-preset', 'slow', '-pix_fmt', 'yuv420p',
                            '-color_primaries', 'bt709', '-color_trc', 'bt709', '-colorspace', 'bt709', OUT], stdin=subprocess.PIPE)
-    with Pool(4) as p:
+    with Pool(4, maxtasksperchild=40) as p:
         for k, buf in enumerate(p.imap(frame, frames, chunksize=4)):
             ff.stdin.write(buf)
             if k % 240 == 0: print(f'{k}/{len(frames)}', flush=True)
