@@ -44,7 +44,7 @@ def chime():
     s *= np.minimum(1, t / 0.004); return s / np.abs(s).max()
 
 # transitions (centred on the cut)
-for t, L, g, pan in [(2.0, .5, .30, 0), (4.0, .4, .30, .4), (6.5, .4, .30, -.4), (12.0, .5, .30, 0), (17.5, .4, .30, .4),
+for t, L, g, pan in [(4.0, .4, .30, .4), (6.5, .4, .30, -.4), (12.0, .5, .30, 0), (17.5, .4, .30, .4),
                      (23.5, .5, .30, 0)]:
     place(whoosh(L), t - L / 2, g, pan)
 for t in (15.5, 27.0):  # light leaks: soft long airy swell

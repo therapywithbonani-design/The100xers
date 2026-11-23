@@ -9,7 +9,7 @@ import numpy as np, cv2
 from PIL import Image, ImageOps
 
 FR_DIR, PH_DIR, AS_DIR, OUT = sys.argv[1:5]
-W, H, FPS, DUR = 1080, 1920, 30, 33.0
+W, H, FPS, DUR = 1080, 1920, 24, 33.0  # native 24 fps: source frames map 1:1, no 24->30 judder
 BG = np.array([0.055, 0.063, 0.071], np.float32)  # warm near-black, BGR
 
 # ---------------- easing ----------------
@@ -52,7 +52,11 @@ def vframe(name, idx):
     return grade(cv2.imread(f'{FR_DIR}/{name}/{idx + 1:04d}.jpg'))
 
 def video(name, t):
-    return vframe(name, round(t * VIDEO_FPS[name]))
+    # blend neighbouring frames for slow-mo instead of repeating frames (repeats read as stutter)
+    x = t * VIDEO_FPS[name]; i = math.floor(x); f = x - i
+    if f < 0.08: return vframe(name, i)
+    if f > 0.92: return vframe(name, i + 1)
+    return vframe(name, i) * (1 - f) + vframe(name, i + 1) * f
 
 PHOTO_FILES = {
     'pano': '138eb100-image.jpg', 'horse': 'd0da4d1a-image.jpg', 'armour': '731f7dea-image.jpg',
@@ -88,7 +92,7 @@ def reframe(img, w, h, zoom=1.0, cx=0.5, cy=0.5):
 
 # ---------------- shot builders ----------------
 def settle_push(u, dur):
-    return (1 + 0.05 * (1 - ease_out(u / 0.35))) * (1 + 0.025 * u / dur)
+    return 1 + 0.03 * u / dur  # slow linear push only, no settle bounce
 
 def vshot(name, s0, s1, zoom=1.0, cx=.5, cy=.5, settle=True, punch=None):
     def f(t, dur, w=W, h=H):
@@ -167,7 +171,7 @@ def split_open(top_fn, bot_fn):
 G = 'IMG_0642'; J = 'IMG_0672'; C = 'IMG_0712'; Y = 'IMG_0714'
 HERO, BL, BR = (0, 0, 1080, 1150), (0, 1158, 536, 762), (544, 1158, 536, 762)
 SHOTS = [
-    (0.0, 2.0, vshot(J, 1.5, 4.5, 1.04)),
+    (0.0, 2.0, vshot(J, 3.25, 5.25, 1.02)),  # real-time steady section, after the jolts (1.6 s, 2.4-2.8 s) and the focus snap (~3.1 s)
     (2.0, 4.0, kb('pano', 1.08, 1.16, (0.30, 0.55), (0.62, 0.55))),
     (4.0, 6.5, vshot(Y, 0.3, 2.8, 1.02)),
     (6.5, 8.5, vshot(G, 0.0, 2.0, 1.04, cy=0.45)),
@@ -188,7 +192,7 @@ SHOTS = [
 ]
 END = (30.5, DUR)
 # transitions at shot boundaries: (time, kind, length)
-TRANS = [(2.0, 'zoom', 0.30), (4.0, 'whip', 0.24), (6.5, 'whipv', 0.24), (8.5, 'cut', 0), (12.0, 'zoom', 0.30),
+TRANS = [(2.0, 'cut', 0),(4.0, 'whip', 0.24), (6.5, 'whipv', 0.24), (8.5, 'cut', 0), (12.0, 'zoom', 0.30),
          (15.5, 'leak', 0.6), (17.5, 'whip', 0.24), (20.5, 'cut', 0), (23.5, 'zoom', 0.30), (27.0, 'leak', 0.6),
          (30.5, 'end', 0.4)]
 
