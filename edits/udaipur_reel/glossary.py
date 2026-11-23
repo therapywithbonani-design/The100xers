@@ -321,8 +321,10 @@ if __name__ == '__main__':
     ff = subprocess.Popen(['ffmpeg', '-y', '-v', 'error', '-f', 'rawvideo', '-pix_fmt', 'bgr24', '-s', f'{W}x{H}', '-r', str(FPS),
                            '-i', '-', '-c:v', 'libx264', '-crf', '18', '-preset', 'slow', '-pix_fmt', 'yuv420p',
                            '-color_primaries', 'bt709', '-color_trc', 'bt709', '-colorspace', 'bt709', OUT], stdin=subprocess.PIPE)
-    with Pool(4, maxtasksperchild=40) as p:
-        for k, buf in enumerate(p.imap(frame, frames, chunksize=4)):
-            ff.stdin.write(buf)
-            if k % 240 == 0: print(f'{k}/{len(frames)}', flush=True)
+    frames = list(frames); B = 48  # bounded batches: the encoder is slower than the renderers,
+    with Pool(4, maxtasksperchild=40) as p:  # so unbounded imap would queue frames in RAM
+        for b0 in range(0, len(frames), B):
+            for buf in p.imap(frame, frames[b0:b0 + B], chunksize=4):
+                ff.stdin.write(buf)
+            if b0 % 240 == 0: print(f'{b0}/{len(frames)}', flush=True)
     ff.stdin.close(); ff.wait()
