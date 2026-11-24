@@ -81,3 +81,6 @@ Rules: max **2 big styles + base caption** per reel unless it's a listicle; one 
 - **Follow gag** mid-reel, not at the end.
 - **"FREE" badge** on the offer card.
 - KPIs: comments-per-1k-reach (keyword comments), DM→lead conversion, CPL; 3s hold >60%, avg watch time >50%, saves.
+
+## 6. Sample reel
+`samples/caption-styles-sample.mp4` shows all 12 styles labelled. Re-render: `node .claude/skills/caption-animation-kit/demo/render.js <abs path to demo dir> out.mp4` (canvas renderer in demo/index.html — reuse its draw functions for real footage overlays).
