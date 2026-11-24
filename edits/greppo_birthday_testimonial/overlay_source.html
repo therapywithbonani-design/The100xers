@@ -23,6 +23,13 @@ html,body{margin:0;width:1080px;height:1920px;background:transparent;overflow:hi
 .hookh .em{font-style:italic;font-weight:500;color:var(--gold)}
 .hooks{margin-top:22px;font:700 66px/1 'Caveat',cursive;color:var(--ivory);text-shadow:0 3px 14px rgba(0,0,0,.7);position:relative}
 .k2{position:relative}
+
+#frm{inset:0;pointer-events:none}
+#frm .win{position:absolute;left:40px;top:78px;width:984px;height:1749px;border:8px solid #fbf3e4;border-radius:52px;box-shadow:0 0 0 1400px #2e4a3b,inset 0 0 40px rgba(0,0,0,.35)}
+#frm .fd{position:absolute;width:12px;height:12px;border-radius:99px;background:#e8a93c;box-shadow:0 0 12px 3px rgba(232,169,60,.75)}
+.flabel{position:absolute;left:216px;width:700px;top:1458px;text-align:center;font:700 80px/1 'Caveat',cursive;color:#2b2116;transform:rotate(-2.5deg)}
+.flabel .w{margin:0 .1em}
+#leak{inset:0;pointer-events:none}
 /* persistent top badge */
 #badge{left:50%;top:150px;transform:translateX(-50%);background:var(--green);color:var(--ivory);border-radius:999px;padding:16px 34px;
   font:600 30px/1 'Work Sans';letter-spacing:.08em;text-transform:uppercase;white-space:nowrap;box-shadow:0 10px 28px rgba(0,0,0,.35);display:flex;align-items:center;gap:14px}
@@ -52,6 +59,7 @@ html,body{margin:0;width:1080px;height:1920px;background:transparent;overflow:hi
 <svg width="0" height="0" style="position:absolute"><defs id="fdefs"></defs></svg>
 
 <div id="badge" class="el"><i></i>Birthday at Greppo Café<i></i></div>
+<div id="frm" class="el"><div class="win"></div></div>
 <div id="scrim" class="el" style="left:0;right:0;top:0;height:900px;background:linear-gradient(180deg,rgba(20,14,8,.78),rgba(20,14,8,.45) 55%,rgba(20,14,8,0))"></div>
 <div id="scrim2" class="el" style="left:0;right:0;top:1150px;height:770px;background:linear-gradient(0deg,rgba(20,14,8,.45),rgba(20,14,8,0))"></div>
 <div id="hook"><div class="sc hookh" data-s="0.05,2.55">A birthday <em>they'll never</em> forget</div><div class="sc hooks" data-s="0.55,2.55">here's what the family said...</div></div>
@@ -62,27 +70,31 @@ html,body{margin:0;width:1080px;height:1920px;background:transparent;overflow:hi
 <div class="sc cap" data-s="6.2,7.9">and <b>celebrated</b> his birthday</div>
 <div class="sc cap" data-s="8.0,9.5">The <b>ambience</b> is very good</div>
 <div class="sc cap" data-s="9.5,11.4">and <b>food</b> is also good</div>
-<div class="sc cap" data-s="11.6,12.95">Thank you!</div>
-<div class="sc cap" data-s="13.5,14.1">Thank you</div>
-<div class="sc cap" data-s="14.1,16.0">Thank you <b>so much</b></div>
-<div class="sc cap" data-s="16.0,17.2"><b>Greppo Cafe!</b></div>
-<div class="sc cap" data-s="17.3,18.75">Thank you!</div>
-<div class="sc cap" data-s="19.2,21.7">Thank you! 🎂</div>
-<div class="sc cap" data-s="21.9,24.0"><b>Bahut achha laga!</b><span class="sub">(We loved it!)</span></div>
-<div class="sc cap" data-s="24.0,25.35">Thank you 🙏</div>
-<div id="tag" class="el" data-t="18.9,21.75">Birthday boy 🎂</div>
-<div id="dadi" class="el" data-t="21.9,25.35">Family-approved 💛</div>
+<div class="sc cap" data-s="11.6,12.45">Thank you!</div>
+<div class="sc cap" data-s="16.2,16.8">Thank you</div>
+<div class="sc cap" data-s="16.8,18.7">Thank you <b>so much</b></div>
+<div class="sc cap" data-s="18.7,19.9"><b>Greppo Cafe!</b></div>
+<div class="sc cap" data-s="20.0,21.05">Thank you!</div>
+<div class="sc cap" data-s="21.5,23.55">Thank you! 🎂</div>
+<div class="sc cap" data-s="28.8,30.9"><b>Bahut achha laga!</b><span class="sub">(We loved it!)</span></div>
+<div class="sc cap" data-s="30.9,32.1">Thank you 🙏</div>
+<div class="sc flabel" data-s="12.95,15.8">Spicy noodles 🌶️</div>
+<div class="sc flabel" data-s="24.05,26.3">Crispy spring rolls</div>
+<div class="sc flabel" data-s="26.55,28.75">Tikka &amp; cold coffee ☕</div>
+<div id="leak" class="el"></div>
+<div id="tag" class="el" data-t="21.3,23.55">Birthday boy 🎂</div>
+<div id="dadi" class="el" data-t="28.8,32.0">Family-approved 💛</div>
 
 <div id="cta" class="el">
   <div class="bg"></div><div class="tint"></div>
   <div class="wrap">
     <div class="dots c" data-d="0"><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span></div>
     <div class="k1 c" data-d=".15">Your celebration is next</div>
-    <div class="k2 sc" data-s="25.95,99">Greppo Café</div>
+    <div class="k2 sc" data-s="32.55,99">Greppo Café</div>
     <div class="k3 c" data-d=".45">Good food · Good stories · Good vibes</div>
     <div class="btn c" data-d=".7">Book your birthday table<small>Call or WhatsApp now</small></div>
     <div class="rows">
-      <div class="row c" data-d=".95"><svg viewBox="0 0 24 24"><path d="M12 21s-7-6.2-7-11.5A7 7 0 0 1 19 9.5C19 14.8 12 21 12 21z"/><circle cx="12" cy="9.5" r="2.5"/></svg><div><div class="l">Visit us</div><div class="t">Sector 61, Gurugram</div></div></div>
+      <div class="row c" data-d=".95"><svg viewBox="0 0 24 24"><path d="M12 21s-7-6.2-7-11.5A7 7 0 0 1 19 9.5C19 14.8 12 21 12 21z"/><circle cx="12" cy="9.5" r="2.5"/></svg><div><div class="l">Visit us</div><div class="t">Greppo Cafe,<br>Sector 61, Gurgaon</div></div></div>
       <div class="row c" data-d="1.1"><svg viewBox="0 0 24 24"><path d="M5 4h4l2 5-2.5 1.5a11 11 0 0 0 5 5L15 13l5 2v4a2 2 0 0 1-2 2A16 16 0 0 1 3 6a2 2 0 0 1 2-2"/></svg><div><div class="l">Call / WhatsApp</div><div class="t">98730 76684</div></div></div>
       <div class="row c" data-d="1.25"><svg viewBox="0 0 24 24"><circle cx="12" cy="12" r="9"/><path d="M3 12h18M12 3a14 14 0 0 1 0 18M12 3a14 14 0 0 0 0 18"/></svg><div><div class="l">Website</div><div class="t">www.greppocafe.in</div></div></div>
       <div class="row c" data-d="1.4"><svg viewBox="0 0 24 24"><rect x="3" y="3" width="18" height="18" rx="5"/><circle cx="12" cy="12" r="4"/><circle cx="17.5" cy="6.5" r=".6" fill="#e8a93c"/></svg><div><div class="l">Instagram</div><div class="t">@greppocafe</div></div></div>
@@ -91,7 +103,7 @@ html,body{margin:0;width:1080px;height:1920px;background:transparent;overflow:hi
 </div>
 
 <script>
-const CTA=25.4, clamp=(x,a,b)=>Math.max(a,Math.min(b,x)), ease=x=>1-Math.pow(1-x,3);
+const CTA=32.0, clamp=(x,a,b)=>Math.max(a,Math.min(b,x)), ease=x=>1-Math.pow(1-x,3);
 function pop(el,t,a,b){ // in/out with pop
   if(t<a||t>b){el.style.opacity=0;return}
   const i=ease(clamp((t-a)/0.14,0,1)), o=clamp((b-t)/0.1,0,1);
@@ -155,7 +167,24 @@ function smoke(c,t){
     p.el.style.transform=`scale(${0.55+u*1.15})`;
   });
 }
+
+(function(){const f=document.getElementById('frm');
+ for(let x=60;x<=1020;x+=48){[39,1881].forEach(y=>{const d=document.createElement('div');d.className='fd';d.style.left=(x-6)+'px';d.style.top=(y-6)+'px';f.appendChild(d)})}
+ for(let y=150;y<=1770;y+=60){[20,1060].forEach(x=>{const d=document.createElement('div');d.className='fd';d.style.left=(x-6)+'px';d.style.top=(y-6)+'px';d.style.width=d.style.height='10px';f.appendChild(d)})}})();
+const TALK=[[-1,13.0],[15.7,24.1],[28.7,32.3]], LEAKS=[12.6,15.7,21.1,23.7,26.2,28.7];
+function frameT(t){
+  let o=0;TALK.forEach(([a,b])=>{o=Math.max(o,clamp((t-a)/0.4,0,1)*clamp((b-t)/0.4,0,1))});
+  const f=document.getElementById('frm');f.style.opacity=o;
+  f.querySelectorAll('.fd').forEach((d,i)=>{d.style.opacity=(0.35+0.65*Math.abs(Math.sin(t*2.2+i*0.7))).toFixed(2)});
+  const L=document.getElementById('leak');let best=null;LEAKS.forEach(m=>{if(Math.abs(t-(m+0.2))<0.55)best=m});
+  if(best===null){L.style.opacity=0;return}
+  const u=(t-(best-0.35))/1.1, x=-20+140*u;
+  L.style.opacity=(Math.sin(Math.PI*clamp(u,0,1))*0.6).toFixed(3);
+  L.style.background=`radial-gradient(60% 45% at ${x}% ${30+20*u}%,rgba(255,205,130,.95),rgba(255,150,70,.45) 40%,rgba(255,120,60,0) 75%),linear-gradient(${100+40*u}deg,rgba(255,180,90,0) 20%,rgba(255,190,110,.35) 50%,rgba(255,180,90,0) 80%)`;
+}
+
 window.setT=function(t){
+  frameT(t);
   SC.forEach(c=>smoke(c,t));
   document.querySelectorAll('[data-t]').forEach(el=>{const [a,b]=el.dataset.t.split(',').map(Number);pop(el,t,a,b)});
   // badge: shows 0..CTA after hook settles
