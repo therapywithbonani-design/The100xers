@@ -45,3 +45,14 @@ description: Master index of the agency's saved reel editing styles and add-on k
 2. Every reel ends on a CTA mapped to a KPI (DM/comment keyword → CPL; link → CTR/ROAS; booking → cost per booking).
 3. Keep text out of the bottom 20% and the right UI rail.
 4. New reference reel → analyse → save as a new style skill → add a row here.
+
+## F. Keyword map (team guide book: https://claude.ai/artifact/GC3aWAoCxqer5rZmN6j3no)
+Requests use `STYLE:` + up to two add-ons; not case-sensitive; `+` joins.
+- STYLE: PINTERESTY→pinteresty-style · LOOKBOOK→editorial-lookbook · DARKSPLIT→dark-split-explainer · COUNTDOWN→starfield-countdown · PODCAST→podcast-premium-edit (A) · NOEDIT→podcast-premium-edit (B, before/after ad) · LUXE→luxe-editorial-motion · GRID4→luxe-editorial-motion (2×2 showcase)
+- STYLE (built-in): CHECKLIST→reel-checklist · DOCUMENTARY→reel-documentary · GLASS→reel-glass-widgets · ORBIT→reel-orbit · PIXELREVEAL→reel-pixel-reveal · SPLITCHART→reel-split-chart · SPOTLIGHT→reel-spotlight · TIMELINE→reel-timeline-ui · TRAVLINK→travlink-reference-edit
+- TEXT: (caption-animation-kit) GLASS=Glass Widget · BEHINDHEAD=Behind-Head Depth · SMOKE=Smoke Exit · WALLINK=Wall Ink · ARC=Arc Orbit · BOUNCE=Kinetic Bounce · NEON=Neon Sign · GIANT=Giant Behind · EXPLODE=Explosive Breakup · TYPER=Retro Typer · OUTLINE=Outline Run · STACK=Hierarchy Stack · overlays COUNTER/NOTES/FOLLOW/COMMENTCTA
+- LOOK: (animation-style-kit/looks.sh) CYBERPUNK PAPER HOLOGRAM POPART THERMAL ANIME SUNSET UKIYOE CLAYMATION · SWAP = style-swap hook/transition · `ON: hook|broll|transition|full`
+- SCENE: (animated-scene-engine) DOGWALK SHOPPING CAFE FILMSET or `NEW — <description>` + STYLE: one of 18 engine styles; `CHARACTER:` locks a mascot via `colors`
+- PROMPTS: PACK1 → animation-style-kit/prompts.md · PACK2 → prompts-pack-2.md
+- NICHE: CLOTHING JEWELLERY FOOD SPORTS TALKING INTERVIEW SITEVISIT GAMING INFO TRAVEL AGENCY → use table D defaults
+When a new style is saved, add its keyword here AND in the guide book doc.
