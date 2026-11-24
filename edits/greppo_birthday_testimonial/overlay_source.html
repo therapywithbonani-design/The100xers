@@ -5,19 +5,29 @@
 :root{--green:#2e4a3b;--terra:#a84a2a;--gold:#e8a93c;--ivory:#fbf3e4;--ink:#2b2116;--dark:#211a12;--blossom:#c4487a}
 html,body{margin:0;width:1080px;height:1920px;background:transparent;overflow:hidden}
 .el{position:absolute;opacity:0;will-change:transform,opacity}
-.cap{left:60px;right:60px;top:1290px;text-align:center;font:900 76px/1.08 'Work Sans',sans-serif;color:#fff;
-  text-shadow:0 4px 0 rgba(0,0,0,.55),0 0 18px rgba(0,0,0,.55);-webkit-text-stroke:2px rgba(20,14,8,.65);letter-spacing:-.01em}
-.cap b{color:var(--gold);font-weight:900}
-.sub{display:block;font:700 42px/1.2 'Work Sans';color:var(--ivory);margin-top:14px;-webkit-text-stroke:0;text-shadow:0 2px 10px rgba(0,0,0,.9)}
+
+.sc .w{display:inline-block;margin:0 .13em;position:relative;will-change:filter,transform,opacity}
+.sc .w.subw{display:block;margin:14px 0 0}
+.cap{position:absolute;left:50px;right:50px;top:1290px;text-align:center;font:900 78px/1.18 'Work Sans',sans-serif;color:#fff;
+  text-shadow:0 4px 0 rgba(0,0,0,.5),0 0 22px rgba(0,0,0,.55);-webkit-text-stroke:2px rgba(20,14,8,.6);letter-spacing:-.01em}
+.cap .hl{color:var(--ink);-webkit-text-stroke:0;text-shadow:none;padding:0 .16em;z-index:1}
+.cap .hl .tx{position:relative;z-index:2}
+.cap .hl .mk{position:absolute;left:0;right:0;top:.12em;bottom:.04em;background:linear-gradient(100deg,#f2bd55,#e8a93c 60%,#d98f2a);border-radius:12px;
+  transform-origin:left center;z-index:1;box-shadow:0 0 34px rgba(232,169,60,.75),0 6px 0 rgba(0,0,0,.35)}
+.cap .sub{display:block;font:700 44px/1.2 'Work Sans';color:var(--ivory);-webkit-text-stroke:0;text-shadow:0 2px 12px rgba(0,0,0,.95)}
+.puffs{position:absolute;left:0;right:0;top:-40px;height:220px;pointer-events:none;z-index:0}
+.puff{position:absolute;border-radius:50%;background:radial-gradient(closest-side,rgba(255,248,235,.95),rgba(255,240,220,.35) 55%,rgba(255,240,220,0));filter:blur(16px);opacity:0;mix-blend-mode:screen}
+.words{position:relative;z-index:1}
+#hook{position:absolute;left:80px;right:80px;top:260px;text-align:center}
+.hookh{font:700 92px/1.04 'Fraunces',serif;color:#fff;text-shadow:0 6px 30px rgba(0,0,0,.6),0 2px 0 rgba(0,0,0,.4);position:relative}
+.hookh .em{font-style:italic;font-weight:500;color:var(--gold)}
+.hooks{margin-top:22px;font:700 66px/1 'Caveat',cursive;color:var(--ivory);text-shadow:0 3px 14px rgba(0,0,0,.7);position:relative}
+.k2{position:relative}
 /* persistent top badge */
 #badge{left:50%;top:150px;transform:translateX(-50%);background:var(--green);color:var(--ivory);border-radius:999px;padding:16px 34px;
   font:600 30px/1 'Work Sans';letter-spacing:.08em;text-transform:uppercase;white-space:nowrap;box-shadow:0 10px 28px rgba(0,0,0,.35);display:flex;align-items:center;gap:14px}
 #badge i{width:14px;height:14px;border-radius:99px;background:var(--gold);display:block;box-shadow:0 0 12px var(--gold)}
 /* hook */
-#hook{left:80px;right:80px;top:260px;text-align:center}
-#hook .h{font:700 86px/1.02 'Fraunces',serif;color:#fff;text-shadow:0 6px 30px rgba(0,0,0,.6),0 2px 0 rgba(0,0,0,.4)}
-#hook .h em{font-style:italic;font-weight:500;color:var(--gold)}
-#hook .s{margin-top:20px;font:700 64px/1 'Caveat',cursive;color:var(--ivory);text-shadow:0 3px 14px rgba(0,0,0,.7)}
 #tag{left:360px;top:1150px;background:var(--blossom);color:#fff;border-radius:999px;padding:16px 30px;font:800 40px/1 'Work Sans';transform:rotate(-6deg);box-shadow:0 10px 28px rgba(0,0,0,.35)}
 #dadi{left:330px;top:1160px;background:var(--ivory);color:var(--ink);border-radius:999px;padding:14px 28px;font:700 36px/1 'Work Sans';transform:rotate(-4deg);box-shadow:0 10px 28px rgba(0,0,0,.35)}
 /* CTA */
@@ -39,26 +49,27 @@ html,body{margin:0;width:1080px;height:1920px;background:transparent;overflow:hi
 .row .t{font:700 46px/1.1 'Work Sans';color:var(--ivory)}
 .row .l{font:600 24px/1 'Work Sans';letter-spacing:.14em;text-transform:uppercase;color:#d9c8a6;margin-bottom:10px}
 </style></head><body>
+<svg width="0" height="0" style="position:absolute"><defs id="fdefs"></defs></svg>
 
 <div id="badge" class="el"><i></i>Birthday at Greppo Café<i></i></div>
 <div id="scrim" class="el" style="left:0;right:0;top:0;height:900px;background:linear-gradient(180deg,rgba(20,14,8,.78),rgba(20,14,8,.45) 55%,rgba(20,14,8,0))"></div>
 <div id="scrim2" class="el" style="left:0;right:0;top:1150px;height:770px;background:linear-gradient(0deg,rgba(20,14,8,.45),rgba(20,14,8,0))"></div>
-<div id="hook" class="el"><div class="h">A birthday <em>they'll never</em> forget</div><div class="s">here's what the family said...</div></div>
+<div id="hook"><div class="sc hookh" data-s="0.05,2.55">A birthday <em>they'll never</em> forget</div><div class="sc hooks" data-s="0.55,2.55">here's what the family said...</div></div>
 
-<div class="el cap" data-t="0.15,2.0">We came to <b>Greppo Cafe</b></div>
-<div class="el cap" data-t="2.0,4.4">and today is his <b>birthday</b></div>
-<div class="el cap" data-t="4.5,6.2">so we <b>enjoyed</b> a lot</div>
-<div class="el cap" data-t="6.2,7.9">and <b>celebrated</b> his birthday</div>
-<div class="el cap" data-t="8.0,9.5">The <b>ambience</b> is very good</div>
-<div class="el cap" data-t="9.5,11.4">and <b>food</b> is also good</div>
-<div class="el cap" data-t="11.6,12.95">Thank you!</div>
-<div class="el cap" data-t="13.5,14.1">Thank you</div>
-<div class="el cap" data-t="14.1,16.0">Thank you <b>so much</b></div>
-<div class="el cap" data-t="16.0,17.2"><b>Greppo Cafe!</b></div>
-<div class="el cap" data-t="17.3,18.75">Thank you!</div>
-<div class="el cap" data-t="19.2,21.7">Thank you! 🎂</div>
-<div class="el cap" data-t="21.9,24.0">Bahut achha laga!<span class="sub">(We loved it!)</span></div>
-<div class="el cap" data-t="24.0,25.35">Thank you 🙏</div>
+<div class="sc cap" data-s="0.15,2.0">We came to <b>Greppo Cafe</b></div>
+<div class="sc cap" data-s="2.0,4.4">and today is his <b>birthday</b></div>
+<div class="sc cap" data-s="4.5,6.2">so we <b>enjoyed a lot</b></div>
+<div class="sc cap" data-s="6.2,7.9">and <b>celebrated</b> his birthday</div>
+<div class="sc cap" data-s="8.0,9.5">The <b>ambience</b> is very good</div>
+<div class="sc cap" data-s="9.5,11.4">and <b>food</b> is also good</div>
+<div class="sc cap" data-s="11.6,12.95">Thank you!</div>
+<div class="sc cap" data-s="13.5,14.1">Thank you</div>
+<div class="sc cap" data-s="14.1,16.0">Thank you <b>so much</b></div>
+<div class="sc cap" data-s="16.0,17.2"><b>Greppo Cafe!</b></div>
+<div class="sc cap" data-s="17.3,18.75">Thank you!</div>
+<div class="sc cap" data-s="19.2,21.7">Thank you! 🎂</div>
+<div class="sc cap" data-s="21.9,24.0"><b>Bahut achha laga!</b><span class="sub">(We loved it!)</span></div>
+<div class="sc cap" data-s="24.0,25.35">Thank you 🙏</div>
 <div id="tag" class="el" data-t="18.9,21.75">Birthday boy 🎂</div>
 <div id="dadi" class="el" data-t="21.9,25.35">Family-approved 💛</div>
 
@@ -67,7 +78,7 @@ html,body{margin:0;width:1080px;height:1920px;background:transparent;overflow:hi
   <div class="wrap">
     <div class="dots c" data-d="0"><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span></div>
     <div class="k1 c" data-d=".15">Your celebration is next</div>
-    <div class="k2 c" data-d=".3">Greppo Café</div>
+    <div class="k2 sc" data-s="25.95,99">Greppo Café</div>
     <div class="k3 c" data-d=".45">Good food · Good stories · Good vibes</div>
     <div class="btn c" data-d=".7">Book your birthday table<small>Call or WhatsApp now</small></div>
     <div class="rows">
@@ -88,15 +99,70 @@ function pop(el,t,a,b){ // in/out with pop
   const base=el.dataset.base||'';
   el.style.transform=base+` scale(${0.82+0.18*i})`;
 }
+
+const R=n=>{let x=Math.sin(n*127.1+311.7)*43758.5453;return x-Math.floor(x)};
+const SC=[];
+document.querySelectorAll('.sc').forEach((el,ci)=>{
+  const [a,b]=el.dataset.s.split(',').map(Number);
+  const words=document.createElement('div');words.className='words';
+  const units=[];
+  const addText=(txt,cls)=>txt.split(/\s+/).filter(Boolean).forEach(w=>{const sp=document.createElement('span');sp.className='w '+(cls||'');sp.textContent=w;words.appendChild(sp);units.push({el:sp})});
+  [...el.childNodes].forEach(n=>{
+    if(n.nodeType===3) addText(n.textContent);
+    else if(n.tagName==='EM') addText(n.textContent,'em');
+    else if(n.tagName==='B'){const sp=document.createElement('span');sp.className='w hl';sp.innerHTML='<span class="mk"></span><span class="tx"></span>';sp.querySelector('.tx').textContent=n.textContent;words.appendChild(sp);units.push({el:sp,hl:true})}
+    else if(n.classList&&n.classList.contains('sub')){const sp=document.createElement('span');sp.className='w subw';sp.appendChild(n.cloneNode(true));words.appendChild(sp);units.push({el:sp})}
+  });
+  el.innerHTML='';
+  const puffs=document.createElement('div');puffs.className='puffs';
+  const P=[];for(let k=0;k<16;k++){const d=document.createElement('div');d.className='puff';const sz=130+R(ci*31+k)*170;
+    d.style.width=sz+'px';d.style.height=sz*0.7+'px';puffs.appendChild(d);
+    P.push({el:d,x:R(ci*17+k*3)*100,y:R(ci*7+k*5)*120,sz,dx:(R(k*9+ci)-0.5)*80,dl:R(k*13+ci*3)*0.35})}
+  el.appendChild(puffs);el.appendChild(words);
+  const fid='sm'+ci;
+  document.getElementById('fdefs').insertAdjacentHTML('beforeend',`<filter id="${fid}" x="-20%" y="-60%" width="140%" height="220%"><feTurbulence id="${fid}t" type="fractalNoise" baseFrequency="0.011 0.028" numOctaves="3" seed="${ci+3}" result="n"/><feDisplacementMap id="${fid}d" in="SourceGraphic" in2="n" scale="0" xChannelSelector="R" yChannelSelector="G"/></filter>`);
+  words.style.filter=`url(#${fid})`;
+  SC.push({el,a,b,units,P,words,disp:null,turb:null,fid});
+});
+SC.forEach(c=>{c.disp=document.getElementById(c.fid+'d');c.turb=document.getElementById(c.fid+'t')});
+const STG=0.07, IN=0.55, OUT=0.32;
+function smoke(c,t){
+  const {a,b,units}=c;
+  const vis=t>=a-0.05&&t<=b+0.45; c.el.style.display=vis?'':'none'; if(!vis) return;
+  const n=units.length, outS=b-0.22;
+  let maxAmt=0;
+  units.forEach((u,k)=>{
+    const s0=a+k*STG, p=clamp((t-s0)/IN,0,1), e=ease(p);
+    const q=clamp((t-(outS+k*0.025))/OUT,0,1), qe=q*q;
+    const amt=Math.max(1-e,qe); maxAmt=Math.max(maxAmt,amt);
+    u.el.style.opacity=(e*(1-qe)).toFixed(3);
+    u.el.style.filter=`blur(${((1-e)*16+qe*14).toFixed(2)}px)`;
+    u.el.style.transform=`translate(${((1-e)*-18+qe*22).toFixed(1)}px,${((1-e)*26-qe*46).toFixed(1)}px) scale(${(1+(1-e)*0.28+qe*0.18).toFixed(3)})`;
+    if(u.hl){const m=ease(clamp((t-(s0+0.28))/0.28,0,1));const mk=u.el.querySelector('.mk');mk.style.transform=`scaleX(${m}) rotate(-1.5deg)`;
+      const tx=u.el.querySelector('.tx');tx.style.color=m>0.45?'#2b2116':'#e8a93c';tx.style.textShadow=m>0.45?'none':'0 0 26px rgba(232,169,60,.9),0 3px 0 rgba(0,0,0,.5)';
+      u.el.style.transform+=` scale(${1+0.08*Math.sin(Math.PI*m)})`;}
+  });
+  c.disp.setAttribute('scale',(maxAmt*85).toFixed(1));
+  c.turb.setAttribute('baseFrequency',`${(0.011+0.002*Math.sin(t*2)).toFixed(4)} ${(0.028+0.004*Math.cos(t*1.7)).toFixed(4)}`);
+  const W=c.el.offsetWidth||980;
+  c.P.forEach((p,k)=>{
+    const u1=(t-(a-0.05+p.dl*0.6))/1.1, u2=(t-(outS+p.dl*0.5))/0.75;
+    let o=0,u=0;
+    if(u1>0&&u1<1){o=Math.sin(Math.PI*u1)*0.42;u=u1}
+    if(u2>0&&u2<1&&k%2===0){const o2=Math.sin(Math.PI*u2)*0.3;if(o2>o){o=o2;u=u2}}
+    p.el.style.opacity=o.toFixed(3);
+    p.el.style.left=(W*p.x/100-p.sz/2+p.dx*u)+'px';p.el.style.top=(p.y-60*u)+'px';
+    p.el.style.transform=`scale(${0.55+u*1.15})`;
+  });
+}
 window.setT=function(t){
+  SC.forEach(c=>smoke(c,t));
   document.querySelectorAll('[data-t]').forEach(el=>{const [a,b]=el.dataset.t.split(',').map(Number);pop(el,t,a,b)});
   // badge: shows 0..CTA after hook settles
   const bd=document.getElementById('badge');
   bd.style.opacity=t<CTA?ease(clamp(t/0.3,0,1)):0;
   bd.style.transform=`translateX(-50%) translateY(${(1-ease(clamp(t/0.3,0,1)))*-30}px)`;
-  const hk=document.getElementById('hook');
-  const hi=ease(clamp((t-0.05)/0.35,0,1)), ho=clamp((2.7-t)/0.3,0,1);
-  hk.style.opacity=Math.min(hi,ho); document.getElementById('scrim').style.opacity=Math.min(ease(clamp(t/0.2,0,1)),ho); document.getElementById('scrim2').style.opacity=t<CTA?1:0; hk.style.transform=`translateY(${(1-hi)*40}px) scale(${0.94+0.06*hi})`;
+  const ho=clamp((2.7-t)/0.3,0,1); document.getElementById('scrim').style.opacity=Math.min(ease(clamp(t/0.2,0,1)),ho); document.getElementById('scrim2').style.opacity=t<CTA?1:0;
   const cta=document.getElementById('cta'), ct=t-CTA;
   cta.style.opacity=ct<0?0:ease(clamp(ct/0.35,0,1));
   cta.querySelector('.bg').style.transform=`scale(${1.05+0.03*clamp(ct/5,0,1)})`;
