@@ -1,5 +1,8 @@
 // Scene library — add new scenes here. x = world position (px), props loop horizontally.
 module.exports={
+ filmset:{label:'Filmmaker on set',speed:110,burst:'ACTION!',caption:'TAKE 1...',kanji:'映画',tag:'Scene 1 · Take 3',
+  props:[{type:'spot',x:40},{type:'chair',x:560},{type:'camera',x:820},{type:'tree',x:950},{type:'spot',x:1150},{type:'bush',x:600,layer:'near'}],
+  chars:[{type:'person',x:330,carry:'clapper',beret:true,glasses:true,beard:true,scarf:true,colors:{shirt:'#f4f1ea',pants:'#2a2f45',hair:'#4a3020',skin:'#e8a882'}}]},
  dogwalk:{label:'Dog walk in the park',speed:130,burst:'WOOF!',kanji:'犬散歩',tag:'WALK 2.4 km',
   props:[{type:'tree',x:80},{type:'lamp',x:330},{type:'bench',x:560},{type:'tree',x:800},{type:'sign',x:1000,label:'PARK 88'},{type:'lamp',x:1080},{type:'bush',x:250,layer:'near'},{type:'bush',x:900,layer:'near'}],
   chars:[{type:'person',x:250,leash:true,carry:'leash'},{type:'dog',x:480}]},

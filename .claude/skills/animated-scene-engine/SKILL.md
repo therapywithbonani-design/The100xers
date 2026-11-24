@@ -1,6 +1,6 @@
 ---
 name: animated-scene-engine
-description: Recreate any simple scene as a looping 2D vector animation (side-scroller: characters walk in place while parallax props scroll past) and render it in any of 10 animation styles — Cyberpunk Neon, Paper Cutout, Hologram, Isometric, Pop Art, Thermal Cam, Anime Cel, Sunset Silhouette, Ukiyo-e, Claymation. Code-built (canvas + Playwright + ffmpeg), so scenes are reusable and restyleable in one line. Use when the user wants animated scenes/cutaways/explainers in reels, a "same scene in N styles" showcase, illustrated b-roll for a brand, or to recreate a scene in one of these animation styles.
+description: Recreate any simple scene as a looping 2D vector animation (side-scroller: characters walk in place while parallax props scroll past) and render it in any of 18 animation styles — Cyberpunk Neon, Paper Cutout, Hologram, Isometric, Pop Art, Thermal Cam, Anime Cel, Sunset Silhouette, Ukiyo-e, Claymation, Pixel Art, Flat Vector, Comic Book, 3D Animation, Cartoon, Retro Low-Poly, Storybook, Toy Bricks. Code-built (canvas + Playwright + ffmpeg), so scenes are reusable and restyleable in one line. Use when the user wants animated scenes/cutaways/explainers in reels, a "same scene in N styles" showcase, illustrated b-roll for a brand, or to recreate a scene in one of these animation styles.
 ---
 
 # Animated Scene Engine
@@ -15,7 +15,7 @@ description: Recreate any simple scene as a looping 2D vector animation (side-sc
 - `engine.html` — renderer: props, characters (person with walk cycle; carry `leash|cup|bags`; dog with gait + tail wag), far layers, 10 style skins, overlays.
 - `scenes.js` — scene library (`dogwalk`, `shopping`, `cafe`). Add scenes here.
 - `render.js` — renders a plan to MP4 (or stills).
-- Sample: `samples/animated-scenes-sample.mp4` (dog walk ×10 styles, shopping ×3, café ×3).
+- Samples: `samples/animated-scenes-sample.mp4` (pack 1), `samples/animated-scenes-sample-2.mp4` (film set ×10 pack-2 styles + cross-scene examples).
 
 ## Render
 ```bash
@@ -24,7 +24,10 @@ node render.js out.mp4 '[{"scene":"cafe","style":"anime","dur":3},{"scene":"cafe
 # options per item: scene, style, dur (s), t0 (start time), label (true = style name pill)
 # stills:  node render.js prefix '[{"scene":"dogwalk","style":"ukiyoe","t":0.5}]' stills
 ```
-Styles: `cyberpunk paper hologram isometric popart thermal anime sunset ukiyoe claymation`
+Styles (18):
+- Pack 1: `cyberpunk paper hologram isometric popart thermal anime sunset ukiyoe claymation`
+- Pack 2: `pixel flatvector comic render3d cartoon lowpoly storybook bricks` (+ anime, claymation)
+  - pixel = 16-bit downscale, neon night city, brick street · flatvector = sage/cream arches, no-outline · comic = halftone + speed lines + inked skyline + hatched floor · render3d = giant moon, string lights, soft 3D shading, wet floor · cartoon = magenta/orange sunburst, purple mesas, cacti, thick outlines · lowpoly = faceted snowy peaks + pine trees · storybook = watercolour blur, pastel sunset, paper grain · bricks = studded baseplate, brick shopfronts, block trees
 
 ## Making a new scene (describe it → I add it to scenes.js)
 ```js
@@ -32,8 +35,9 @@ gym:{label:'Gym run', speed:180, burst:'BURN!', caption:'DAY 1...', kanji:'運�
   props:[{type:'store',x:150,label:'FITCLUB'},{type:'lamp',x:420},{type:'tree',x:700},{type:'bush',x:500,layer:'near'}],
   chars:[{type:'person',x:340}]}
 ```
-- Props available: `tree, lamp, bench, bush, store(label), cafe(label), table, sign(label)`; `layer:'near'` = foreground parallax.
-- Characters: `person` (`carry: leash|cup|bags`, `leash:true` links to dog), `dog`.
+- Props available: `tree, lamp, bench, bush, store(label), cafe(label), table, sign(label), spot, chair, camera`; `layer:'near'` = foreground parallax.
+- Characters: `person` (`carry: leash|cup|bags|clapper`, `leash:true` links to dog; accessories `beret, glasses, beard, scarf`; `colors:{shirt,pants,hair,skin}` locks a character's outfit across styles = consistent mascot), `dog`.
+- Scenes: `dogwalk, shopping, cafe, filmset`.
 - Per-scene text hooks used by styles: `burst` (Pop Art word), `caption` (Pop Art box), `kanji` (Ukiyo-e cartouche), `tag` (Isometric pill).
 - New props/characters (car, product bottle, phone, building, mascot…) = add a draw function in `P` (engine.html) once; it then works in all 10 styles automatically.
 

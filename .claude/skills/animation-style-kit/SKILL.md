@@ -8,7 +8,7 @@ description: Library of 10 visual animation/illustration looks (Cyberpunk Neon, 
 Picked from a "10 animation styles" countdown reel (same scene of a man walking a dog in 10 styles).
 Two ways to use every look:
 - **A. Filter on real footage** → `looks.sh` (fast, works on talking heads, b-roll, product shots). An approximation of the style.
-- **B. AI-generated** → `prompts.md` (true illustrated look; generate image/video, or restyle a frame/clip with image-to-image / video-to-video).
+- **B. AI-generated** → `prompts.md` (pack 1) and `prompts-pack-2.md` (pack 2: Claymation, Anime, Pixel Art, Flat Vector, Comic Book, 3D Animation, Cartoon, Retro Low-Poly, Storybook, Toy Bricks — with a consistent-character workflow) (true illustrated look; generate image/video, or restyle a frame/clip with image-to-image / video-to-video).
 
 ```bash
 # apply to a clip or a still (png/jpg output = single frame)
@@ -66,3 +66,7 @@ Pair with text: Cyberpunk/Hologram → Neon Sign or Retro Typer; Pop Art → Exp
 - Style-swap hooks drive rewatches and shares ("tag someone who's the Pop Art one").
 - Offer the looks as a lead magnet: "Comment LOOKS and I'll send you the prompts / presets".
 - KPIs: 3s hold rate, replays/avg watch %, shares per 1k reach, keyword comments → DM leads (CPL).
+
+
+## Pack 2 looks (consistent character)
+Pixel Art · Flat Vector · Comic Book · 3D Animation · Cartoon · Retro Low-Poly · Storybook · Toy Bricks (+ Anime, Claymation). Code versions live in `animated-scene-engine`; full-detail versions via `prompts-pack-2.md`. Niche picks: Pixel/Low-Poly → gaming; Flat Vector → B2B, wellness, real estate; Comic/Cartoon → sales, food, Gen-Z fashion; 3D Animation → premium launches, festive; Storybook → kids, bakery, gifting, jewellery; Toy Bricks → kids, playful D2C, events.
