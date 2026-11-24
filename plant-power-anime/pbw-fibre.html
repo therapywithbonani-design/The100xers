@@ -86,6 +86,22 @@ function card(img,cx,cy,w,h,rot,sc,t,shine,tag,tagCol){
     pill(tag,cx-w*sc/2+110,cy-h*sc/2+4,40,'#fff',tagCol,1,sc)}
 }
 
+/* url bar */
+function urlBar(t,start,Y){
+  const p=prog(t,start,.3);if(p<=0)return;const sc=eOutBack(p);
+  const url='www.pbwfoods.com',n=Math.floor(clamp((t-start-.2)/.8)*url.length),typed=url.slice(0,n);
+  x.save();x.translate(540,Y);x.scale(sc,sc);
+  x.fillStyle=INK;x.beginPath();x.roundRect(-390+10,-62+12,780,124,62);x.fill();
+  x.fillStyle='#fff';x.strokeStyle=INK;x.lineWidth=9;x.beginPath();x.roundRect(-390,-62,780,124,62);x.fill();x.stroke();
+  // lock icon
+  x.save();x.translate(-320,2);x.strokeStyle='#22a83a';x.lineWidth=7;x.beginPath();x.arc(0,-10,13,Math.PI,0);x.stroke();
+  x.fillStyle='#22a83a';x.beginPath();x.roundRect(-20,-10,40,32,6);x.fill();x.restore();
+  x.font='900 58px "M PLUS Rounded 1c"';try{x.letterSpacing='0px'}catch(e){}x.textBaseline='middle';x.textAlign='left';x.fillStyle=INK;
+  x.fillText(typed,-275,4);
+  if(Math.floor(t*4)%2===0||n<url.length){const cw=x.measureText(typed).width;x.fillStyle='#ff3d7f';x.fillRect(-275+cw+6,-28,6,60)}
+  x.restore();
+}
+
 /* ---------- Characters ---------- */
 function cel(path,base,shade,hx,hy,R,hl=true){
   x.lineJoin='round';x.lineWidth=16;x.strokeStyle=INK;x.stroke(path);x.fillStyle=shade;x.fill(path);
@@ -329,12 +345,12 @@ function s6(t){
   card(IMG.bread,320,960+bob,370,355,-.08,cp,t,18.0,null);card(IMG.granola,765,965-bob,320,366,.07,cp,t,18.2,null);
   drawAt(proteinHero,135,1140+Math.abs(Math.sin(t*7))*-35,.42,Math.sin(t*8)*.1,t,'joy',[-2.5,-.6+Math.sin(t*12)*.4]);
   drawAt(fibreNinja,950,1140+Math.abs(Math.sin(t*7+1))*-35,.42,Math.sin(t*8+1)*.1,t,'joy',[-2.5+Math.sin(t*12)*.4,-.7]);
-  pill('Granola subscriptions available',540,1225,44,INK,'#fff',prog(t,17.8,.2),pop(t,17.8));
+  urlBar(t,17.7,1218);
   const bp=prog(t,18.0,.3);if(bp>0){const sc=eOutBack(bp)*(1+Math.sin(t*10)*.045);
     x.save();x.translate(540,1375);x.scale(sc,sc);x.fillStyle=INK;x.beginPath();x.roundRect(-370+12,-82+14,740,164,82);x.fill();
     x.fillStyle='#ff3d7f';x.strokeStyle=INK;x.lineWidth=12;x.beginPath();x.roundRect(-370,-82,740,164,82);x.fill();x.stroke();
     x.fillStyle='rgba(255,255,255,.35)';x.beginPath();x.roundRect(-320,-66,540,28,14);x.fill();x.restore();
-    txt('TAP TO ORDER',505,1379,100,'#fff',{scale:sc,sw:12,shadow:false});
+    txt('ORDER NOW',505,1379,100,'#fff',{scale:sc,sw:12,shadow:false});
     x.save();x.translate(540+290*sc+Math.sin(t*12)*8,1375);x.scale(sc,sc);x.fillStyle='#fff';x.strokeStyle=INK;x.lineWidth=8;x.lineJoin='round';x.beginPath();x.moveTo(-22,-30);x.lineTo(26,0);x.lineTo(-22,30);x.closePath();x.fill();x.stroke();x.restore()}
   const dp=prog(t,18.3,.25);if(dp>0){pill('      Delivering in Delhi/NCR only',540,1530,42,'#fff','#2f8fd0',dp,pop(t,18.3));
     x.save();x.globalAlpha=dp;x.translate(222,1528);x.fillStyle='#ff3d5a';x.strokeStyle='#fff';x.lineWidth=4;x.beginPath();x.arc(0,-8,16,Math.PI,0);x.lineTo(0,20);x.closePath();x.fill();x.stroke();x.fillStyle='#fff';x.beginPath();x.arc(0,-8,6,0,TAU);x.fill();x.restore()}
