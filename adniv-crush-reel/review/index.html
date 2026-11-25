@@ -1,0 +1,229 @@
+<title>Adniv × CRUSH Reel Review</title>
+<meta name="claude:viewport-fit-sides" content="cover">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Inter:opsz,wght@14..32,400;14..32,500;14..32,600;14..32,700;14..32,800&display=swap">
+<style>
+/* Layout: a single review column (max 1180px) per workflow step; each step is a numbered band because the order IS the approval sequence. */
+:root{
+  --bg:#f3f3f7; --surface:#ffffff; --ink:#14163a; --muted:#5b5e7d; --line:#dcdde8;
+  --navy:#1B1F54; --orange:#F7931E; --orange-ink:#b15f00; --ok:#1f7a4d; --warn:#9a5a00; --warn-bg:#fff4e3;
+  --display:"Inter",system-ui,-apple-system,"Segoe UI",sans-serif;
+  --body:"Inter",system-ui,-apple-system,"Segoe UI",sans-serif;
+}
+@media (prefers-color-scheme: dark){:root:not([data-theme="light"]){
+  --bg:#0d0f24; --surface:#161939; --ink:#eceefc; --muted:#a3a6c8; --line:#2a2e5a;
+  --navy:#3a4196; --orange:#F7931E; --orange-ink:#ffb35c; --ok:#5fd39a; --warn:#ffbf66; --warn-bg:#2b2412; color-scheme:dark}}
+:root[data-theme="dark"]{
+  --bg:#0d0f24; --surface:#161939; --ink:#eceefc; --muted:#a3a6c8; --line:#2a2e5a;
+  --navy:#3a4196; --orange:#F7931E; --orange-ink:#ffb35c; --ok:#5fd39a; --warn:#ffbf66; --warn-bg:#2b2412; color-scheme:dark}
+*{box-sizing:border-box}
+body{background:var(--bg);color:var(--ink);font-family:var(--body);font-size:15px;line-height:1.55;
+  padding-left:max(16px,env(safe-area-inset-left,0px));padding-right:max(16px,env(safe-area-inset-right,0px));padding-block:0 64px}
+.wrap{max-width:1180px;margin:0 auto;display:flex;flex-direction:column;gap:56px}
+header{padding-block:40px 0;display:flex;flex-direction:column;gap:14px}
+.eyebrow{font-size:12px;font-weight:700;letter-spacing:.14em;text-transform:uppercase;color:var(--orange-ink)}
+h1{font-family:var(--display);font-size:clamp(30px,5vw,48px);line-height:1.05;font-weight:800;letter-spacing:-.02em;margin:0;text-wrap:balance}
+h2{font-size:24px;font-weight:700;letter-spacing:-.01em;margin:0;text-wrap:balance}
+h3{font-size:17px;font-weight:700;margin:0}
+p{margin:0;max-width:72ch}
+.lede{color:var(--muted);font-size:17px}
+.status{display:flex;flex-wrap:wrap;gap:10px}
+.pill{display:inline-flex;align-items:center;gap:8px;padding:6px 12px;border-radius:999px;font-size:13px;font-weight:600;background:var(--surface);border:1px solid var(--line)}
+.pill i{width:8px;height:8px;border-radius:50%;background:var(--ok)}
+.pill.warn i{background:var(--orange)}
+section{display:flex;flex-direction:column;gap:20px}
+.sec-head{display:flex;gap:14px;align-items:baseline;border-top:2px solid var(--ink);padding-top:14px}
+.step{font-weight:800;color:var(--orange-ink);font-variant-numeric:tabular-nums}
+.note{background:var(--warn-bg);border:1px solid var(--line);border-left:4px solid var(--orange);padding:14px 16px;border-radius:8px;display:flex;flex-direction:column;gap:6px}
+.note b{color:var(--warn)}
+.tbl{overflow-x:auto;border:1px solid var(--line);border-radius:10px;background:var(--surface)}
+table{border-collapse:collapse;width:100%;font-size:13.5px;min-width:860px}
+th,td{text-align:left;padding:10px 12px;border-bottom:1px solid var(--line);vertical-align:top}
+th{font-size:11.5px;letter-spacing:.08em;text-transform:uppercase;color:var(--muted);font-weight:700;background:var(--surface);position:sticky;top:0}
+tr:last-child td{border-bottom:0}
+td.num{font-variant-numeric:tabular-nums;white-space:nowrap}
+.tag{display:inline-block;font-size:11.5px;font-weight:700;padding:2px 8px;border-radius:6px;background:var(--navy);color:#fff;white-space:nowrap}
+.tag.o{background:var(--orange);color:#1a1200}
+.tag.g{background:transparent;color:var(--muted);border:1px solid var(--line)}
+figure{margin:0;display:flex;flex-direction:column;gap:8px;min-width:0}
+figure img{width:100%;height:auto;border-radius:10px;border:1px solid var(--line);display:block;background:#000}
+figcaption{font-size:13px;color:var(--muted)}
+.grid2{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:18px}
+.grid3{display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:18px}
+.style{background:var(--surface);border:1px solid var(--line);border-radius:14px;padding:20px;display:grid;grid-template-columns:minmax(0,300px) minmax(0,1fr);gap:22px}
+.style .meta{display:flex;flex-direction:column;gap:12px;min-width:0}
+.style .letter{font-size:44px;font-weight:800;line-height:1;color:var(--orange-ink)}
+dl{margin:0;display:grid;grid-template-columns:auto 1fr;gap:6px 14px;font-size:14px}
+dt{font-weight:700;color:var(--muted);font-size:12px;letter-spacing:.06em;text-transform:uppercase;padding-top:2px}
+dd{margin:0}
+.cover{background:var(--surface);border:1px solid var(--line);border-radius:14px;padding:16px;display:flex;flex-direction:column;gap:12px}
+.decide{background:var(--navy);color:#fff;border-radius:14px;padding:24px;display:flex;flex-direction:column;gap:10px}
+.decide code{background:rgba(255,255,255,.14);padding:2px 8px;border-radius:6px;font-size:14px}
+ul{margin:0;padding-left:20px;display:flex;flex-direction:column;gap:4px}
+@media (max-width:820px){.grid2,.grid3{grid-template-columns:minmax(0,1fr)}.style{grid-template-columns:minmax(0,1fr)}}
+@media (prefers-reduced-motion:reduce){*{scroll-behavior:auto}}
+</style>
+
+<div class="wrap">
+<header>
+  <span class="eyebrow">Adniv · Project reel · CRUSH Salon, Gurgaon</span>
+  <h1>Pick a style and a cover, then I render the full reel</h1>
+  <p class="lede">Steps 1–4 of the workflow: clip inspection and shot list, grade before/after, three editing directions on the real donut shot, and three cover options. Everything shown is rendered from the actual footage at 1080 × 1920.</p>
+  <div class="status">
+    <span class="pill"><i></i>9 of 10 clips inspected</span>
+    <span class="pill"><i></i>Grade locked for 9 clips</span>
+    <span class="pill warn"><i></i>Waiting: IMG_4893 + logo PNG</span>
+    <span class="pill warn"><i></i>Waiting: your style + cover pick</span>
+  </div>
+</header>
+
+<div class="note">
+  <b>Two inputs still missing</b>
+  <p><strong>IMG_4893 (spa lounge, chandelier)</strong> wasn't in the upload. The shot list keeps a 2.5 s slot for it. Without it the reel runs about 28 s instead of 30.5 s, still inside 25–35 s.</p>
+  <p><strong>Adniv logo PNG.</strong> The top-right mark in these samples is a typeset stand-in ("ADNIV" + "We light. We power. We build.") at the exact size and position the real logo will use. It gets swapped for the PNG before the final render.</p>
+</div>
+
+<section>
+  <div class="sec-head"><span class="step">01</span><h2>Clip inspection</h2></div>
+  <p>All clips are iPhone H.264, SDR Rec.709, 3840 × 2160 with a −90° rotation flag (true vertical). Frame rates are mixed (25 / 29.97 / 30), so everything gets conformed to 30 fps. Jitter is the high-frequency part of the camera path in px at 540 px width. Anything under 0.6 is gimbal-smooth, so only a light stabilisation pass is needed.</p>
+  <div class="tbl"><table>
+    <thead><tr><th>Clip</th><th>Length / fps</th><th>Exposure (mean Y)</th><th>Highlights clipped</th><th>Colour</th><th>Move · jitter</th><th>Usable segment · notes</th></tr></thead>
+    <tbody>
+      <tr><td><b>IMG_4905</b> wide floor</td><td class="num">5.04 s · 25</td><td class="num">122 · bright</td><td class="num">1.15%</td><td>Neutral</td><td>Walk-in pan · 0.19</td><td class="num">0.1–3.0 s. A man reclines on the sofa with his face in view from ~3.3 s, so that part is cut.</td></tr>
+      <tr><td><b>IMG_4902</b> CRUSH sign</td><td class="num">4.24 s · 25</td><td class="num">81</td><td class="num">0.15%</td><td>Teal wall (real colour), sign 3000K-ish</td><td>Pan right · 0.30</td><td class="num">0.6–3.2 s · clean</td></tr>
+      <tr><td><b>IMG_4903</b> Donut pendant</td><td class="num">4.04 s · 25</td><td class="num">43 · dark</td><td class="num">0.52%</td><td>Ring edges peach (R/B 1.31): the camera warmed its WB in the dark</td><td>Slow tilt · 0.56</td><td class="num">0.3–3.7 s · light stabilisation</td></tr>
+      <tr><td><b>IMG_4901</b> Round panel + donut</td><td class="num">3.52 s · 25</td><td class="num">46 · dark</td><td class="num">0.78%</td><td>Slightly warm</td><td>Static · 0.46</td><td class="num">0.1–3.0 s. Exposure pumps in the last 0.4 s. Light stabilisation.</td></tr>
+      <tr><td><b>IMG_4904</b> Reception</td><td class="num">3.28 s · 25</td><td class="num">106</td><td class="num">0.40%</td><td>Slightly warm</td><td>Locked · 0.00</td><td class="num">0.0–3.0 s. The receptionist's head is just visible behind the counter: small, not prominent.</td></tr>
+      <tr><td><b>IMG_4896</b> Dome lights</td><td class="num">4.04 s · 25</td><td class="num">54 · dark</td><td class="num">0.00%</td><td>3000K warm, true</td><td>Tilt · 0.04</td><td class="num">0.2–3.4 s · clean</td></tr>
+      <tr><td><b>IMG_4893</b> Spa chandelier</td><td colspan="6"><span class="tag o">Not supplied</span> Slot kept in the shot list</td></tr>
+      <tr><td><b>IMG_4890</b> Floral + marble</td><td class="num">3.13 s · 30</td><td class="num">91</td><td class="num">0.68%</td><td>Mixed: warm strips + cool 4000K panels</td><td>Locked · 0.04</td><td class="num">0.1–3.0 s. Dutch tilt ~4°, straightened (rotate + 1.17× crop from 4K).</td></tr>
+      <tr><td><b>IMG_4891</b> Pedicure chairs</td><td class="num">4.94 s · 29.97</td><td class="num">112</td><td class="num">0.34%</td><td>Magenta tint on pillar</td><td>Slow push · 0.21</td><td class="num">0.3–2.8 s · no people</td></tr>
+      <tr><td><b>IMG_4895</b> Retail shelf</td><td class="num">3.88 s · 25</td><td class="num">92</td><td class="num">0.20%</td><td>Warm shelf profiles</td><td>Slight drift · 0.11</td><td class="num">0.2–2.7 s · clean</td></tr>
+    </tbody>
+  </table></div>
+  <div class="grid2">
+    <figure><img src="contact/contact_sheet_1.jpg" alt="Contact sheet: six frames each of IMG_4905, 4902, 4903, 4901, 4904"><figcaption>Contact sheet 1: 4905 · 4902 · 4903 · 4901 · 4904 (6 frames across each clip)</figcaption></figure>
+    <figure><img src="contact/contact_sheet_2.jpg" alt="Contact sheet: six frames each of IMG_4896, 4890, 4891, 4895"><figcaption>Contact sheet 2: 4896 · 4890 · 4891 · 4895</figcaption></figure>
+  </div>
+</section>
+
+<section>
+  <div class="sec-head"><span class="step">01b</span><h2>Shot list · 30 fps · ~30.5 s</h2></div>
+  <div class="tbl"><table>
+    <thead><tr><th>#</th><th>Reel time</th><th>Clip · source in–out</th><th>On screen</th><th>Text zone (clear of lights)</th><th>Transition out</th></tr></thead>
+    <tbody>
+      <tr><td>1</td><td class="num">0.0–2.9</td><td class="num">4905 · 0.1–3.0</td><td><b>Hook:</b> "CRUSH Salon, Gurgaon" + "Lighting by Adniv". The donut ring sits in the top third: the hero in frame 1.</td><td>Lower third over the floor</td><td>Soft whip, following the pan direction</td></tr>
+      <tr><td>2</td><td class="num">2.9–5.5</td><td class="num">4902 · 0.6–3.2</td><td>Mood: <b>"First impressions, backlit."</b></td><td>Lower wall, below the sign</td><td>Light-on flash + switch click</td></tr>
+      <tr><td>3</td><td class="num">5.5–8.9</td><td class="num">4903 · 0.3–3.7</td><td><span class="tag">01</span> <b>Donut Pendant</b>: 600 mm Donut, 50 × 70 mm, black finish · chips: 36 W &amp; 40 W · 4000K Neutral White · Canopy + 1.5 m suspension kit</td><td>y 1120–1480 (ring is y 480–1120)</td><td>Match-cut ring → ring</td></tr>
+      <tr><td>4</td><td class="num">8.9–11.9</td><td class="num">4901 · 0.1–3.1</td><td><span class="tag">02</span> <b>Round Concealed Panel</b> · 15 W · 4000K Neutral White (callout points to the panel, not the donut)</td><td>Upper ceiling y 300–600</td><td>Smooth slide up</td></tr>
+      <tr><td>5</td><td class="num">11.9–14.9</td><td class="num">4904 · 0.0–3.0</td><td><b>"Donut, made to your size"</b> · chips: 450 / 500 / 600 / 800 / 900 / 1000 mm "and more" · "Custom-made to your preference"</td><td>Over the reception desk front</td><td>Soft light-leak dissolve</td></tr>
+      <tr><td>6</td><td class="num">14.9–17.9</td><td class="num">4896 · 0.2–3.2</td><td><span class="tag">03</span> <b>Dome Hanging Light</b> (decorative) · black finish · 3000K Warm White · canopy + 1.5 m black wire</td><td>Over the pillars, y 1050–1450</td><td>Tilt-continuation slide</td></tr>
+      <tr><td>7</td><td class="num">17.9–20.4</td><td class="num">4893 · TBC</td><td>Mood: <b>"Calm, switched on."</b> No product label on the chandelier.</td><td>TBC on footage</td><td>Soft dissolve</td></tr>
+      <tr><td>8</td><td class="num">20.4–23.3</td><td class="num">4890 · 0.1–3.0</td><td><span class="tag">04</span> <b>Concealed Panel</b> · 15 W · 4000K Neutral White (no "Round")</td><td>Middle ledge band</td><td>Smooth slide</td></tr>
+      <tr><td>9</td><td class="num">23.3–25.8</td><td class="num">4891 · 0.3–2.8</td><td>Mood: <b>"Softer light. Longer stays."</b></td><td>Over the chair, y 1150–1450</td><td>Soft whip</td></tr>
+      <tr><td>10</td><td class="num">25.8–28.3</td><td class="num">4895 · 0.2–2.7</td><td>Mood: <b>"Light that moves product."</b></td><td>Left of the shelf column</td><td>Light flash to end card</td></tr>
+      <tr><td>11</td><td class="num">28.3–32.8</td><td>End card · 4.5 s</td><td>Adniv logo · "Want your salon lit like this?" · "DM us to book a lighting consultation" · "or call" · <b>99108 13339</b> and <b>93190 74766</b> as buttons · www.adnivtech.com. No top-right logo.</td><td>Solid Adniv navy with an orange light-ring motif, inside y 230–1500</td><td>None</td></tr>
+    </tbody>
+  </table></div>
+  <p style="color:var(--muted)">The ~8-frame transitions overlap the cuts, so the finished runtime lands around 30 s with IMG_4893, or 28 s without it.</p>
+</section>
+
+<section>
+  <div class="sec-head"><span class="step">02</span><h2>Lighting fix · before / after</h2></div>
+  <p>Per clip: white balance read from neutral surfaces (the light sources themselves are never "corrected"), exposure set in linear light, a gentle shadow lift, and a bounded highlight roll-off. That roll-off takes clipped pixels on the rings and panels from 0.4–0.9% to <b>0%</b>, so the ring keeps its edge-to-centre gradient instead of going flat white. The 4000K fixtures land clean neutral white; the 3000K domes stay warm. One shared finish goes on top: a light S-curve, +3% saturation, a faint warm-mid / neutral-highlight balance. There's no tint or wash over the footage. 4K → 1080 × 1920 uses Lanczos with light sharpening.</p>
+  <div class="grid2">
+    <figure><img src="grade/ba_IMG_4903.jpg" alt="IMG_4903 before and after grade"><figcaption>4903 Donut: ring warmed by AWB, pulled back to neutral 4000K. Ceiling lifted (mean Y 34 → 48). Clipping 0.62% → 0%.</figcaption></figure>
+    <figure><img src="grade/ba_IMG_4901.jpg" alt="IMG_4901 before and after grade"><figcaption>4901 Round panel: shadows opened, panel and ring rolled off. Clipping 0.50% → 0%.</figcaption></figure>
+    <figure><img src="grade/ba_IMG_4890.jpg" alt="IMG_4890 before and after grade"><figcaption>4890 Floral/marble: Dutch tilt straightened, yellow cast trimmed while the warm strips stay warm. Clipping 0.68% → 0%.</figcaption></figure>
+    <figure><img src="grade/ba_IMG_4896.jpg" alt="IMG_4896 before and after grade"><figcaption>4896 Domes: +0.45 EV with the 3000K warmth kept true; pillar texture recovered.</figcaption></figure>
+    <figure><img src="grade/ba_IMG_4891.jpg" alt="IMG_4891 before and after grade"><figcaption>4891 Pedicure: magenta on the pillar neutralised.</figcaption></figure>
+    <figure><img src="grade/ba_IMG_4905.jpg" alt="IMG_4905 before and after grade"><figcaption>4905 Wide floor: highlights on the ceiling ring and downlights brought under 100%.</figcaption></figure>
+  </div>
+</section>
+
+<section>
+  <div class="sec-head"><span class="step">03</span><h2>Three editing directions</h2></div>
+  <p>All three run on the real donut shot (IMG_4903), with identical specs, logo slot and safe area. Each strip shows the text animation at 0.15 s, 0.45 s, 0.8 s and 1.8 s into the scene. Every element sits inside x 64–1016 / y 230–1500, keeps out of the icon column, and stays off the ring.</p>
+
+  <article class="style">
+    <figure><img src="styles/styleA_hero.jpg" alt="Style A hero still: Gallery Label"><figcaption>Hero still, 1080 × 1920</figcaption></figure>
+    <div class="meta">
+      <span class="letter">A</span>
+      <h3>Gallery Label</h3>
+      <p>Quiet architectural captioning: an orange product number with a hairline that draws itself, the title rising out of an invisible mask, a spec line, and solid navy chips that fade in one after another.</p>
+      <dl>
+        <dt>Type</dt><dd>Inter Display Medium 92 / Inter 34, soft two-layer shadow</dd>
+        <dt>Transitions</dt><dd>Soft light-bloom dissolves; ring → ring match-cut</dd>
+        <dt>Pace</dt><dd>Calm, 3–3.4 s per shot</dd>
+        <dt>Based on</dt><dd>The "quiet luxury" project-caption look architecture and interior studios use on Reels (Dezeen/ArchDaily-style labels): minimal type that leaves the space to do the selling</dd>
+        <dt>Best for</dt><dd>Premium perception; lowest risk of looking "salesy"</dd>
+      </dl>
+      <figure><img src="styles/styleA_strip.jpg" alt="Style A four-frame animation strip"><figcaption>Animation strip</figcaption></figure>
+    </div>
+  </article>
+
+  <article class="style">
+    <figure><img src="styles/styleB_hero.jpg" alt="Style B hero still: Glass Spec Card"><figcaption>Hero still, 1080 × 1920</figcaption></figure>
+    <div class="meta">
+      <span class="letter">B</span>
+      <h3>Glass Spec Card</h3>
+      <p>A frosted-glass card pops in with a slight overshoot. Only the footage under the card is blurred, and the rest of the frame is untouched. The size counts up 0 → 600 mm, then glass chips stagger in. Reads like a product UI.</p>
+      <dl>
+        <dt>Type</dt><dd>Inter Display Bold 120 for the hero number, tracked caps label</dd>
+        <dt>Transitions</dt><dd>Iris match-cut through the ring; smooth slides</dd>
+        <dt>Pace</dt><dd>Medium, 2.8–3.2 s</dd>
+        <dt>Based on</dt><dd>The 2025–26 "liquid glass" UI language (iOS 26) and the glass widget cards now common on product and spec Reels</dd>
+        <dt>Best for</dt><dd>Spec clarity: buyers read W / K / size in one glance</dd>
+      </dl>
+      <figure><img src="styles/styleB_strip.jpg" alt="Style B four-frame animation strip"><figcaption>Animation strip. The number in frame 3 is the count-up mid-animation.</figcaption></figure>
+    </div>
+  </article>
+
+  <article class="style">
+    <figure><img src="styles/styleC_hero.jpg" alt="Style C hero still: Light-On Kinetic"><figcaption>Hero still, 1080 × 1920</figcaption></figure>
+    <div class="meta">
+      <span class="letter">C</span>
+      <h3>Light-On Kinetic</h3>
+      <p>An oversized product name with a navy 3D extrusion. Its letters drop in one by one and "switch on" with a brief flicker. A leader line with an orange node points from the fixture to the label, and white chips pop in last.</p>
+      <dl>
+        <dt>Type</dt><dd>Inter Display Black 184, 10-step extrusion, tracked spec line</dd>
+        <dt>Transitions</dt><dd>Light-switch exposure flash + click, soft whips</dd>
+        <dt>Pace</dt><dd>Punchy, 2.5–3 s</dd>
+        <dt>Based on</dt><dd>Kinetic typography plus "annotated product" callouts (the leader-line spec labels lighting and design brands use, e.g. the type-led Nobile "Light is Matter" film), with the light-switch cut as the signature move</dd>
+        <dt>Best for</dt><dd>Stopping the scroll and retention; the strongest hook energy</dd>
+      </dl>
+      <figure><img src="styles/styleC_strip.jpg" alt="Style C four-frame animation strip"><figcaption>Animation strip</figcaption></figure>
+    </div>
+  </article>
+
+  <div class="grid3">
+    <figure><img src="styles/styleA_hero_safezone.jpg" alt="Style A safe-zone overlay"><figcaption>A: safe-zone overlay</figcaption></figure>
+    <figure><img src="styles/styleB_hero_safezone.jpg" alt="Style B safe-zone overlay"><figcaption>B: safe-zone overlay</figcaption></figure>
+    <figure><img src="styles/styleC_hero_safezone.jpg" alt="Style C safe-zone overlay"><figcaption>C: safe-zone overlay. Red = Reels UI, orange = icon column, green = safe area.</figcaption></figure>
+  </div>
+</section>
+
+<section>
+  <div class="sec-head"><span class="step">04</span><h2>Cover options</h2></div>
+  <p>Each cover is checked against the 4:5 centre crop you asked for and the 3:4 crop the profile grid has used since 2025. The cover logo sits at y 300 (not 244) so it stays inside both crops.</p>
+  <div class="grid3">
+    <div class="cover"><figure><img src="covers/cover1.jpg" alt="Cover 1: Lit by Adniv over the donut pendant"><figcaption><b>1 · "Lit by Adniv."</b> The donut is the hero; project name as kicker, product list below. Most premium; strongest brand recall on the grid.</figcaption></figure></div>
+    <div class="cover"><figure><img src="covers/cover2.jpg" alt="Cover 2: How CRUSH Salon got its glow over the wide salon floor"><figcaption><b>2 · "How CRUSH Salon got its glow."</b> Wide salon in solid navy label bars; a curiosity hook that reads as a case study.</figcaption></figure></div>
+    <div class="cover"><figure><img src="covers/cover3.jpg" alt="Cover 3: Your salon, lit like this? over the dome lights"><figcaption><b>3 · "Your salon, lit like this?"</b> Speaks straight to the buyer and sets up the end-card CTA; the warm domes stand out on the grid.</figcaption></figure></div>
+  </div>
+  <div class="grid3">
+    <figure><img src="covers/cover1_gridcheck.jpg" alt="Cover 1 grid crop check"><figcaption>Cover 1: 9:16 · 4:5 · 3:4</figcaption></figure>
+    <figure><img src="covers/cover2_gridcheck.jpg" alt="Cover 2 grid crop check"><figcaption>Cover 2: 9:16 · 4:5 · 3:4</figcaption></figure>
+    <figure><img src="covers/cover3_gridcheck.jpg" alt="Cover 3 grid crop check"><figcaption>Cover 3: 9:16 · 4:5 · 3:4</figcaption></figure>
+  </div>
+</section>
+
+<div class="decide">
+  <h2 style="color:#fff">Your call</h2>
+  <p>Reply with a style and a cover, e.g. <code>Style C, Cover 1</code>. Mixes work too, e.g. "C's extruded type with B's glass chips".</p>
+  <ul>
+    <li>Send IMG_4893 and the Adniv logo PNG if you can, and both go into the final render.</li>
+    <li>Then I render the full reel: H.264 MP4, 1080 × 1920, 30 fps, high bitrate, plus an optional SFX stem (whoosh / switch click). After that comes a QA pass on every scene and transition, then the cover PNG + grid crop and the Instagram caption.</li>
+  </ul>
+</div>
+</div>
