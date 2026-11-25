@@ -152,37 +152,22 @@ def chip(text, font=None, bg=NAVY + (240,), fg=WHITE, dot=ORANGE, padx=26, h=64,
 
 
 _logo_cache = {}
+ASSETS = "/tmp/claude-0/-home-user-The100xers/3dc716bb-8387-5a31-912b-63c195d92910/scratchpad/assets/"
 
 
-def logo(width=210, dark=False):
-    """Typeset placeholder for the Adniv logo (swap for client PNG before final render)."""
+def logo(width=280, dark=False):
+    """Client Adniv logo. Reversed (white wordmark/tagline, brand blue + orange kept) for footage;
+    dark=True uses the original black version for light backgrounds."""
     k = (width, dark)
-    if k in _logo_cache:
-        return _logo_cache[k]
-    path = "/tmp/claude-0/-home-user-The100xers/3dc716bb-8387-5a31-912b-63c195d92910/scratchpad/assets/adniv_logo.png"
-    import os
-    if os.path.exists(path):
-        im = Image.open(path).convert("RGBA")
-        im = im.resize((width, int(im.height * width / im.width)), Image.LANCZOS)
-    else:
-        col = NAVY if dark else WHITE
-        word = text_img("ADNIV", F("InterDisplay-Bold", 64), col, tracking=10)
-        tag = text_img("We light. We power. We build.", F("Inter-Medium", 17), col, tracking=0.5)
-        sc = width / word.width
-        word = word.resize((width, int(word.height * sc)), Image.LANCZOS)
-        tag = tag.resize((width, int(tag.height * width / tag.width)), Image.LANCZOS)
-        im = Image.new("RGBA", (width, word.height + tag.height + 6), (0, 0, 0, 0))
-        im.alpha_composite(word, (0, 0))
-        bar = Image.new("RGBA", (int(width * 0.18), 3), ORANGE + (255,))
-        im.alpha_composite(tag, (0, word.height + 6))
-    _logo_cache[k] = im
-    return im
+    if k not in _logo_cache:
+        im = Image.open(ASSETS + ("adniv_logo_original.png" if dark else "adniv_logo_reversed.png")).convert("RGBA")
+        _logo_cache[k] = im.resize((width, round(im.height * width / im.width)), Image.LANCZOS)
+    return _logo_cache[k]
 
 
-def place_logo(canvas, opacity=1.0, width=210):
-    lg = logo(width)
-    place(canvas, lg, SAFE["x1"], 244, opacity=opacity, anchor="rt",
-          depth_kw=dict(soft=(0, 4, 12, 0.5), tight=(0, 1, 2, 0.4)))
+def place_logo(canvas, opacity=1.0, width=280):
+    place(canvas, logo(width), SAFE["x1"], 244, opacity=opacity, anchor="rt",
+          depth_kw=dict(soft=(0, 4, 12, 0.55), tight=(0, 1, 2, 0.45)))
 
 
 def glass(bg_rgb, box, radius=36, blur=28, tint=(255, 255, 255, 26), border=(255, 255, 255, 80)):

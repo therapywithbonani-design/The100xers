@@ -7,7 +7,7 @@ X0 = 72
 
 def cover_logo(c, dark=False):
     # y=300 keeps the logo inside the 4:5 (y285-1635) and 3:4 (y240-1680) grid crops
-    place(c, logo(220, dark), 1008, 300, anchor="rt", depth_kw=dict(soft=(0, 4, 12, .5), tight=(0, 1, 2, .4)))
+    place(c, logo(280, dark), 1008, 300, anchor="rt", depth_kw=dict(soft=(0, 4, 12, .5), tight=(0, 1, 2, .4)))
 
 
 def bar_line(text, font, fg, bg, padx=22, pady=12):
