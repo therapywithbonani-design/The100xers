@@ -1,9 +1,9 @@
 ---
 name: video-effects-kit
-description: Library of 17 talking-head video effects — Orbit, Couch Wall, UI World, Frame Break, Digital Zoom, Phone Mock-up, Checklist, Headline Wall, Zoom-through Cut, Chart Grow, Pull-back Reveal, Green Screen, Paper Cut, Doodle Boil, Vertigo, Cover Story, Glass Type — with build steps, timing and best use, plus the "17 Video Effects" numbered-showcase format (grid-paper bg, highlighted list, effect cards, comment-LIST DM CTA). Use when the user asks for video effects, FX, cut-out/background effects, transitions or set-pieces on a talking-head reel, or an "N effects" showcase reel.
+description: Library of 30 talking-head video effects — Orbit, Couch Wall, UI World, Frame Break, Digital Zoom, Phone Mock-up, Checklist, Headline Wall, Zoom-through Cut, Chart Grow, Pull-back Reveal, Green Screen, Paper Cut, Doodle Boil, Vertigo, Cover Story, Glass Type, Keycap Lineup, Shortcut Rain, Red Collage, Comment Box, Rabbit Hole, Profile Wall, Noise Collage, Phone Fan, The Bill, Split Headline, Pastel Word, Tier List, Auto-Edit Timeline — with build steps, timing and best use, plus the "17 Video Effects" numbered-showcase format (grid-paper bg, highlighted list, effect cards, comment-LIST DM CTA). Use when the user asks for video effects, FX, cut-out/background effects, transitions or set-pieces on a talking-head reel, or an "N effects" showcase reel.
 ---
 
-# Video Effects Kit — 17 effects
+# Video Effects Kit — 30 effects
 
 Source: 25s showcase reel "17 Video Effects [Tool] You Can Create": one talking-head clip (seated, black jacket, white studio), each effect shown ~1.1–1.3s in a card.
 Most effects need a **subject cut-out** (CapCut Remove BG / Resolve Magic Mask / AE Roto Brush) or a **card/device mock-up**.
@@ -31,6 +31,35 @@ Most effects need a **subject cut-out** (CapCut Remove BG / Resolve Magic Mask /
 | 17 | `FX: GLASSTYPE` | Glass Type | Giant word behind a frosted-glass pane, speaker in front, blue→purple gradient; word reads blurred through glass | Text layer → frosted rect (blur 30) → cut-out; gradient bg | Tech, beauty, premium titles |
 
 Timing in the showcase: each effect 1.1–1.3s, effect visible from frame 1 (no build-up wasted).
+
+
+## Effects 18–30 (from the "/effects" command-demo reel)
+Seen on a seated talking head in a warm lamp-lit room (tripod lamp, bookshelf). Each is a full-screen look held 2–4s.
+
+| # | Keyword | Effect | What happens on screen | How to build | Best for |
+|---|---|---|---|---|---|
+| 18 | `FX: LINEUP` | Keycap Lineup | A row of dark keyboard keycaps arcs over the speaker's head like a crown, popping in left→right | Keycap PNGs on an arc path behind/above head, stagger 2f, slight bounce | Tech, tools, shortcuts, productivity |
+| 19 | `FX: SHORTCUTRAIN` | Shortcut Rain | White keycaps ("tab", "shift", "opt", "⌘") tumble down the frame with rotation | Particle emitter of keycap sprites, gravity + spin, some behind the speaker | Tips, hacks, "shortcuts" content |
+| 20 | `FX: REDCOLLAGE` | Red Collage | Speaker turns B&W cut-out; giant red condensed word ("EDIT") behind the head; bold caps stack lower third: "ONE CLIP. / 34 EFFECTS. (red) / ZERO APPS." | Desaturate + cut-out; Anton/Bebas red #E3262F word behind; caps block white/red | Hooks, announcements, bold claims |
+| 21 | `FX: COMMENTBOX` | Comment Box | Instagram comment bar pops up at chest height, a comment types in, heart pops red, progress slider fills | IG-style UI PNGs; type-on 1 char/f; heart scale pop | Comment-keyword CTAs, engagement asks |
+| 22 | `FX: RABBITHOLE` | Rabbit Hole | Nested, rotated thin white frames recede behind the speaker like a tunnel | 5–6 rectangle outlines, each smaller & rotated +4°, scale in sequence; cut-out on top | "Going deeper", storytelling, mysteries |
+| 23 | `FX: PROFILEWALL` | Profile Wall | Instagram profile grid (Reels tab) drops in above the head; follower card below counts up to "197,000" with Follow button | Grid of thumbnails in dark card; number roll; button press | Social proof, creators, growth claims |
+| 24 | `FX: NOISE` | Noise Collage | Screenshots, past reels and comments float around the speaker in layers (some behind) | 6–10 cards with drift + parallax; cut-out between layers | Overwhelm, "too much info", recap of content |
+| 25 | `FX: PHONEFAN` | Phone Fan | A fan of 4 phones showing different reels rises in front of the speaker's hands; headline on a white strip above ("34 effects. zero editing apps.") | Phone mock-ups rotated −15°…+15°, rise from bottom staggered; black/white label strip | Showing multiple outputs, portfolios |
+| 26 | `FX: BILL` | The Bill | A paper receipt slides down from the top with itemised lines (cost of tools/time) and a total | Receipt PNG + mono text (Courier), slide-down + slight swing | Pricing, savings, "what it costs" |
+| 27 | `FX: SPLITHEADLINE` | Split Headline | Top 40%: off-white panel with huge black bold headline, one word in a **green highlight box** ("[Brand] **edits** my reels."); speaker below; small green pill "in seconds" | Panel + Inter Black 64px, green #3DDC84 box wipe; pill pop | Hooks, claims, before-after statements |
+| 28 | `FX: PASTELWORD` | Pastel Word | Background replaced with lavender #B9A8F5; giant white word ("REELS") behind the speaker; profile chip with Following at the bottom | Cut-out + flat pastel bg + text behind | Personal brand, soft/Gen-Z brands |
+| 29 | `FX: TIERLIST` | Tier List | Dark S/A/B/C/D/F tier panel (coloured letters) at the bottom; items drop into tiers; italic yellow serif question at top ("best way to edit a reel?") | Panel UI + item chips drag-drop animation | Rankings, comparisons, hot takes |
+| 30 | `FX: AUTOEDIT` | Auto-Edit Timeline | Deep red bg/grade, "AUTO-EDIT" caps top, red clip blocks build on a timeline at the bottom with playhead | Red overlay (multiply) + timeline UI blocks stagger | Speed, automation, "edited for you" |
+
+### Built-in styles as seen in this reel (variants to copy)
+- **Glass widgets** (`STYLE: GLASS`): big counter tile "36 effects / one clip", Rendering progress card, profile card, "Top reels 197K" bar card, now-playing card, 4K ring, "21 posts" card; "Edited by [Brand]" frosted pill bottom.
+- **Documentary** (`STYLE: DOCUMENTARY`): magenta glow circle behind B&W speaker, top kicker line "A NON-TECHNICAL AI SERIES · DAILY", condensed caps headline with one coloured line ("ONE CLIP. / 36 EFFECTS. / ZERO APPS." in white/pink), magenta name bar + handle, cursor clicks **Follow → Following**.
+- **Orbit** (`STYLE: ORBIT`): reel/screenshot thumbnail cards circling the head, passing in front of hands.
+- **Split chart** (`STYLE: SPLITCHART`): cream top panel, "My top 7 reels **by** *views*" (italic red serif underlined), bar chart yellow first bar + red others, dashed red "avg" line, values on bars.
+- **Spotlight** (`STYLE: SPOTLIGHT`): dark warm vignette, glowing pink-red neon italic serif word above head ("CLAUDIT").
+- **Checklist** (`STYLE: CHECKLIST`): dark card "[Brand] is editing your clip 3 of 5": Found your face / Cut you out of the room / Put the text behind you / Graded the colour / Rendered in 4K, with mono tech notes on the right ("every frame", "AI mask", "depth", "warm", "2160p").
+- **Timeline UI** (`STYLE: TIMELINE`): purple editor panel above speaker, headline "[Brand] *renders it*", tracks with waveform, % render bar.
 
 ## Showcase format: "17 Video Effects" list reel
 - **Background:** white with faint grey grid-paper lines (#F5F6F8 + #E6E8EC 1px lines every 24px).

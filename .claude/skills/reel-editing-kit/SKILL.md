@@ -13,6 +13,7 @@ description: Master index of the agency's saved reel editing styles and add-on k
 | **Dark Split Explainer** | `dark-split-explainer` | Talking head, split screen | Black top panel with UI motion graphics, sans + italic-serif titles, stamps (NOW., SAME DAY), full-screen punchlines | Services, B2B, SaaS, courses, webinars, site visits |
 | **Starfield Countdown** | `starfield-countdown` | Faceless/voice-over listicle | Numbered list revealing names, wiping showcase card, drifting grid CTA "Comment KEYWORD" | "10 looks/flavours/ways", product ranges, lead magnets |
 | **Podcast Premium Edit** | `podcast-premium-edit` | Podcast / seated interview | Stacked mixed-size captions, orange script + highlighter accents, face-track bracket hook, cross-mask collage, scrapbook wide shot; NO EDIT vs FINAL ad | Podcasts, founders, coaches, interviews, agency lead-gen |
+| **Slash Demo Reel** | `slash-demo-reel` | Screen-recorded chat | Type /command → pixel-dot render → full-screen result, repeat; numbered grid + comment CTA | Tool/product demos, agency capability reels, lead magnets |
 | **Luxe Editorial Motion** | `luxe-editorial-motion` | Model / talking, luxury | Glass phone card behind subject, one-giant-word captions, magazine serif beside model, script + polaroids, chrome-orb & stat interludes; 2×2 showcase | Luxury fashion, jewellery, beauty, premium brands, AI/SaaS promos |
 
 ## B. Add-on kits (layer onto any style)
@@ -20,7 +21,7 @@ description: Master index of the agency's saved reel editing styles and add-on k
 |---|---|---|
 | **Caption Animation Kit** | `caption-animation-kit` | 12 text animations (Glass Widget, Behind-Head Depth, Smoke Exit, Wall Ink, Arc Orbit, Kinetic Bounce, Neon Sign, Giant Behind, Explosive Breakup, Retro Typer, Outline Run, Hierarchy Stack) + listicle overlays + sample reel |
 | **Animation Style Kit** | `animation-style-kit` | 10 looks as filters on real footage (`looks.sh`) + AI prompt packs 1 & 2 (consistent character) |
-| **Video Effects Kit** | `video-effects-kit` | 17 talking-head effects (Orbit, Couch Wall, UI World, Frame Break, Digital Zoom, Phone Mock-up, Checklist, Headline Wall, Zoom-through Cut, Chart Grow, Pull-back Reveal, Green Screen, Paper Cut, Doodle Boil, Vertigo, Cover Story, Glass Type) + "N effects" showcase format |
+| **Video Effects Kit** | `video-effects-kit` | 30 talking-head effects (17 + Keycap Lineup, Shortcut Rain, Red Collage, Comment Box, Rabbit Hole, Profile Wall, Noise, Phone Fan, The Bill, Split Headline, Pastel Word, Tier List, Auto-Edit) — (Orbit, Couch Wall, UI World, Frame Break, Digital Zoom, Phone Mock-up, Checklist, Headline Wall, Zoom-through Cut, Chart Grow, Pull-back Reveal, Green Screen, Paper Cut, Doodle Boil, Vertigo, Cover Story, Glass Type) + "N effects" showcase format |
 | **Animated Scene Engine** | `animated-scene-engine` | Code-built animated scenes (dog walk, shopping, café, film set) in 18 styles; add scenes/props/mascots |
 
 ## C. Built-in styles (Anthropic skills)
@@ -49,12 +50,13 @@ description: Master index of the agency's saved reel editing styles and add-on k
 
 ## F. Keyword map (team guide book: https://claude.ai/artifact/GC3aWAoCxqer5rZmN6j3no)
 Requests use `STYLE:` + up to two add-ons; not case-sensitive; `+` joins.
-- STYLE: PINTERESTY→pinteresty-style · LOOKBOOK→editorial-lookbook · DARKSPLIT→dark-split-explainer · COUNTDOWN→starfield-countdown · PODCAST→podcast-premium-edit (A) · NOEDIT→podcast-premium-edit (B, before/after ad) · LUXE→luxe-editorial-motion · GRID4→luxe-editorial-motion (2×2 showcase)
+- Quick command: `/effects <keywords>` (skill `effects`) routes everything below.
+- STYLE: SLASHDEMO→slash-demo-reel · PINTERESTY→pinteresty-style · LOOKBOOK→editorial-lookbook · DARKSPLIT→dark-split-explainer · COUNTDOWN→starfield-countdown · PODCAST→podcast-premium-edit (A) · NOEDIT→podcast-premium-edit (B, before/after ad) · LUXE→luxe-editorial-motion · GRID4→luxe-editorial-motion (2×2 showcase)
 - STYLE (built-in): CHECKLIST→reel-checklist · DOCUMENTARY→reel-documentary · GLASS→reel-glass-widgets · ORBIT→reel-orbit · PIXELREVEAL→reel-pixel-reveal · SPLITCHART→reel-split-chart · SPOTLIGHT→reel-spotlight · TIMELINE→reel-timeline-ui · TRAVLINK→travlink-reference-edit
 - TEXT: (caption-animation-kit) GLASS=Glass Widget · BEHINDHEAD=Behind-Head Depth · SMOKE=Smoke Exit · WALLINK=Wall Ink · ARC=Arc Orbit · BOUNCE=Kinetic Bounce · NEON=Neon Sign · GIANT=Giant Behind · EXPLODE=Explosive Breakup · TYPER=Retro Typer · OUTLINE=Outline Run · STACK=Hierarchy Stack · overlays COUNTER/NOTES/FOLLOW/COMMENTCTA
 - LOOK: (animation-style-kit/looks.sh) CYBERPUNK PAPER HOLOGRAM POPART THERMAL ANIME SUNSET UKIYOE CLAYMATION · SWAP = style-swap hook/transition · `ON: hook|broll|transition|full`
 - SCENE: (animated-scene-engine) DOGWALK SHOPPING CAFE FILMSET or `NEW — <description>` + STYLE: one of 18 engine styles; `CHARACTER:` locks a mascot via `colors`
-- FX: (video-effects-kit) ORBIT COUCHWALL UIWORLD FRAMEBREAK DIGITALZOOM PHONE CHECKLIST HEADLINEWALL ZOOMCUT CHART PULLBACK GREENSCREEN PAPERCUT DOODLE VERTIGO COVER GLASSTYPE · `STYLE: FXLIST` = the 17-effects showcase format
+- FX: (video-effects-kit) ORBIT COUCHWALL UIWORLD FRAMEBREAK DIGITALZOOM PHONE CHECKLIST HEADLINEWALL ZOOMCUT CHART PULLBACK GREENSCREEN PAPERCUT DOODLE VERTIGO COVER GLASSTYPE LINEUP SHORTCUTRAIN REDCOLLAGE COMMENTBOX RABBITHOLE PROFILEWALL NOISE PHONEFAN BILL SPLITHEADLINE PASTELWORD TIERLIST AUTOEDIT · `STYLE: FXLIST` = the 17-effects showcase format
 - PROMPTS: PACK1 → animation-style-kit/prompts.md · PACK2 → prompts-pack-2.md
 - NICHE: CLOTHING JEWELLERY FOOD SPORTS TALKING INTERVIEW SITEVISIT GAMING INFO TRAVEL AGENCY → use table D defaults
 When a new style is saved, add its keyword here AND in the guide book doc.
