@@ -22,3 +22,5 @@ Known compromises
 - Scene 7 (IMG_4890) was straightened ~3.8 degrees with a 1.17x crop from the 4K frame.
 - The reversed logo is derived from the supplied PNG (neutral parts inverted, blue mark and orange dot untouched), not an official Adniv asset.
 - Hook chip "Lighting by Adniv" is an addition to the "CRUSH Salon, Gurgaon" line in your brief.
+
+Update: website corrected to www.adniv.in on the end card, in the caption and in the review page (the brief originally listed www.adnivtech.com). The reel was re-encoded; nothing else changed. The end-card layout is unchanged (content x69-834, y288-1461).

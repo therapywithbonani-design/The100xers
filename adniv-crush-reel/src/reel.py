@@ -451,7 +451,7 @@ def end_assets():
     lay = build_layout(SC_END)
     sub = text_img("DM us to book a lighting consultation", F("Inter-Medium", 38), NAVY)
     orc = text_img("or call", F("Inter-Medium", 34), (86, 90, 128))
-    web = text_img("www.adnivtech.com", F("Inter-SemiBold", 42), NAVY)
+    web = text_img("www.adniv.in", F("Inter-SemiBold", 42), NAVY)
     y_sub = lay["bottom"] + 38
     y_or = y_sub + 40 + 40
     y_b1 = y_or + 46 + 18
