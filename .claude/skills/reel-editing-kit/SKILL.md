@@ -1,6 +1,6 @@
 ---
 name: reel-editing-kit
-description: Master index of the agency's saved reel editing styles and add-on kits — Pinteresty, Editorial Lookbook, Dark Split Explainer, Starfield Countdown, Podcast Premium Edit, Luxe Editorial Motion, Caption Animation Kit, Animation Style Kit, Animated Scene Engine, plus built-in reel-* styles. Use first whenever the user asks to edit/plan a reel, asks "which style", lists the kit, or names a niche (clothing, jewellery, food, sports, talking reel, interview, site visit, gaming, informational, travel) — then load the chosen style's skill.
+description: Master index of the agency's saved reel editing styles and add-on kits (incl. Video Effects Kit, keyword map STYLE/TEXT/FX/LOOK/SCENE/NICHE) — Pinteresty, Editorial Lookbook, Dark Split Explainer, Starfield Countdown, Podcast Premium Edit, Luxe Editorial Motion, Caption Animation Kit, Animation Style Kit, Animated Scene Engine, plus built-in reel-* styles. Use first whenever the user asks to edit/plan a reel, asks "which style", lists the kit, or names a niche (clothing, jewellery, food, sports, talking reel, interview, site visit, gaming, informational, travel) — then load the chosen style's skill.
 ---
 
 # Reel Editing Kit — Master Index
@@ -20,6 +20,7 @@ description: Master index of the agency's saved reel editing styles and add-on k
 |---|---|---|
 | **Caption Animation Kit** | `caption-animation-kit` | 12 text animations (Glass Widget, Behind-Head Depth, Smoke Exit, Wall Ink, Arc Orbit, Kinetic Bounce, Neon Sign, Giant Behind, Explosive Breakup, Retro Typer, Outline Run, Hierarchy Stack) + listicle overlays + sample reel |
 | **Animation Style Kit** | `animation-style-kit` | 10 looks as filters on real footage (`looks.sh`) + AI prompt packs 1 & 2 (consistent character) |
+| **Video Effects Kit** | `video-effects-kit` | 17 talking-head effects (Orbit, Couch Wall, UI World, Frame Break, Digital Zoom, Phone Mock-up, Checklist, Headline Wall, Zoom-through Cut, Chart Grow, Pull-back Reveal, Green Screen, Paper Cut, Doodle Boil, Vertigo, Cover Story, Glass Type) + "N effects" showcase format |
 | **Animated Scene Engine** | `animated-scene-engine` | Code-built animated scenes (dog walk, shopping, café, film set) in 18 styles; add scenes/props/mascots |
 
 ## C. Built-in styles (Anthropic skills)
@@ -53,6 +54,7 @@ Requests use `STYLE:` + up to two add-ons; not case-sensitive; `+` joins.
 - TEXT: (caption-animation-kit) GLASS=Glass Widget · BEHINDHEAD=Behind-Head Depth · SMOKE=Smoke Exit · WALLINK=Wall Ink · ARC=Arc Orbit · BOUNCE=Kinetic Bounce · NEON=Neon Sign · GIANT=Giant Behind · EXPLODE=Explosive Breakup · TYPER=Retro Typer · OUTLINE=Outline Run · STACK=Hierarchy Stack · overlays COUNTER/NOTES/FOLLOW/COMMENTCTA
 - LOOK: (animation-style-kit/looks.sh) CYBERPUNK PAPER HOLOGRAM POPART THERMAL ANIME SUNSET UKIYOE CLAYMATION · SWAP = style-swap hook/transition · `ON: hook|broll|transition|full`
 - SCENE: (animated-scene-engine) DOGWALK SHOPPING CAFE FILMSET or `NEW — <description>` + STYLE: one of 18 engine styles; `CHARACTER:` locks a mascot via `colors`
+- FX: (video-effects-kit) ORBIT COUCHWALL UIWORLD FRAMEBREAK DIGITALZOOM PHONE CHECKLIST HEADLINEWALL ZOOMCUT CHART PULLBACK GREENSCREEN PAPERCUT DOODLE VERTIGO COVER GLASSTYPE · `STYLE: FXLIST` = the 17-effects showcase format
 - PROMPTS: PACK1 → animation-style-kit/prompts.md · PACK2 → prompts-pack-2.md
 - NICHE: CLOTHING JEWELLERY FOOD SPORTS TALKING INTERVIEW SITEVISIT GAMING INFO TRAVEL AGENCY → use table D defaults
 When a new style is saved, add its keyword here AND in the guide book doc.
