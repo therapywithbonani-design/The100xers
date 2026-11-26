@@ -45,9 +45,11 @@ SC = [
          lines=["PANEL"], S=84, maxw=860, caps_top=1286,
          rows=[["#02", "~ROUND CONCEALED PANEL"], ["15 W", "4000K Neutral White"]],
          anchor=dict(kind="bottom", box=(250, 1135, 700, 1340)), elbow_off=-22, tr="slide_u"),
-    dict(id="s05_size", clip="IMG_4904", ss=0.0, dur=2.7, z=(1.00, 1.05), look="dark",
-         lines=["Donut made", "to your size."], S=96, maxw=860, caps_top=1174,
-         rows=[["450", "500", "600", "800", "900", "1000", "mm & more"], ["~CUSTOM-MADE TO YOUR PREFERENCE"]],
+    dict(id="s05_donut_sizes", photo=S_DIR + "/assets/photo_donut_sizes.jpg", photo_crop=(0, 160, 722, 720),
+         card=(64, 380, 952, 738), focus=(0.35, 0.55), dur=3.4, z=(1.00, 1.10), look="navybg",
+         lines=["Concealed Panel", "Round Donut"], S=96, maxw=860, caps_top=1160,
+         rows=[["~~ALSO MADE TO YOUR OWN PREFERENCE"],
+               ["450", "500", "600", "800", "900", "1000", "mm & more"]],
          nodots=True, tr="leak"),
     dict(id="s06_dome", clip="IMG_4896", ss=0.2, dur=3.0, z=(1.00, 1.05), look="dark",
          lines=["DOME"], S=146, maxw=860, caps_top=1156,
@@ -121,6 +123,7 @@ LOOKS = dict(
     dark=dict(face=WHITE, ext=NAVY, lo=0.55, off=(95, 100, 125), chip="white", ink=WHITE),
     plate=dict(face=WHITE, ext=ORANGE, lo=0.62, off=(150, 150, 170), chip="white", ink=WHITE),
     light=dict(face=NAVY, ext=WHITE, lo=0.70, off=(120, 125, 165), chip="navy", ink=NAVY),
+    navybg=dict(face=WHITE, ext=ORANGE, lo=0.62, off=(150, 150, 170), chip="white", ink=WHITE),
     end=dict(face=NAVY, ext=ORANGE, lo=0.72, off=(150, 155, 190), chip="navy", ink=NAVY),
 )
 
@@ -385,6 +388,47 @@ def detect_anchor(fr, spec):
 LOGO_BOX = (736, 244, 1016, 360)
 
 
+
+# ----------------------------------------------------------------------------------------------
+# photo scene: framed card on brand navy, push-in + light-on glow
+# ----------------------------------------------------------------------------------------------
+_PH = {}
+
+
+def photo_frame(sc, k):
+    if sc["id"] not in _PH:
+        cw, ch = sc["card"][2:]
+        _PH[sc["id"]] = dict(cr=Image.open(sc["photo"]).convert("RGB").crop(sc["photo_crop"]),
+                             mask=rounded((cw, ch), 28, (255, 255, 255, 255)).split()[3])
+    A = _PH[sc["id"]]
+    cr = A["cr"]
+    cx, cy, cw, ch = sc["card"]
+    n, t = n_own(sc), k / FPS
+    z = sc["z"][0] + (sc["z"][1] - sc["z"][0]) * in_out(min(k / (n - 1), 1.0))
+    W0, H0 = cr.size
+    bw, bh = W0 / z, H0 / z
+    fx, fy = sc.get("focus", (0.5, 0.5))
+    x0, y0 = fx * (W0 - bw), fy * (H0 - bh)
+    im = cr.resize((cw, ch), Image.LANCZOS, box=(x0, y0, x0 + bw, y0 + bh))
+    im = im.filter(ImageFilter.UnsharpMask(radius=1.4, percent=55, threshold=2))
+    P = np.asarray(im).astype(np.float32)
+    M = np.clip((P.mean(-1) - 215) / 25, 0, 1)[..., None]
+    ts = t - 0.45                                           # light-on starts after the transition has settled
+    f = out_cubic(clamp(ts / 0.5))
+    if 0.12 < ts < 0.2:
+        f *= 0.7                                            # little flicker as it switches on
+    g = 0.3 + 0.7 * f
+    P2 = P * (1 - M * (1 - g))
+    glow = np.asarray(Image.fromarray((P * M).astype(np.uint8)).filter(ImageFilter.GaussianBlur(16))).astype(np.float32)
+    P2 = np.clip(P2 + glow * 0.42 * f * (1 + 0.07 * math.sin(2 * math.pi * t / 1.8)), 0, 255)
+    card = Image.fromarray(P2.astype(np.uint8)).convert("RGBA")
+    card.putalpha(A["mask"])
+    base = Image.new("RGBA", (W, H), NAVY + (255,))
+    p = prog(t, 0.0, 0.5)
+    blit(base, card, cx, cy + (1 - out_cubic(p)) * 50, clamp(p * 2), shadow=dict(soft=(0, 22, 36, 0.55), tight=(0, 4, 6, 0.3)))
+    return np.asarray(base.convert("RGB"))
+
+
 def render_scene(i, keep=None, out=None):
     """Render scene i. keep=None -> write full scene file; keep=set(k) -> return {k: (rgb_with_overlay, overlay, base)}."""
     sc = SC[i]
@@ -408,12 +452,15 @@ def render_scene(i, keep=None, out=None):
     if keep is None:
         mm = np.lib.format.open_memmap(f"{WORK}/{sc['id']}.npy", mode="w+", dtype=np.uint8, shape=(N, H, W, 3))
     anc = None
-    gen = decode(sc, N)
+    gen = (None for _ in range(N)) if "photo" in sc else decode(sc, N)
     for k, arr in enumerate(gen):
         if keep is not None and k not in keep:
             continue
-        z = sc["z"][0] + (sc["z"][1] - sc["z"][0]) * (k / (n_own(sc) - 1))
-        fr = prep(arr, z, sc["clip"])
+        if "photo" in sc:
+            fr = photo_frame(sc, k)
+        else:
+            z = sc["z"][0] + (sc["z"][1] - sc["z"][0]) * (k / (n_own(sc) - 1))
+            fr = prep(arr, z, sc["clip"])
         if "anchor" in sc:
             a = detect_anchor(fr, sc["anchor"])
             if a is not None:

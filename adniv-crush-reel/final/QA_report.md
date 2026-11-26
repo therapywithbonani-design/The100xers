@@ -31,7 +31,13 @@ Update 3 (client spec corrections)
 - Scene 3 donut: now 800 mm Donut, 60 W (was 600 mm, 36 W & 40 W). Other specs unchanged: black finish, 4000K Neutral White, 50 x 70 mm, canopy + 1.5 m suspension kit.
 - Scene 7 (IMG_4890) is a strip light with aluminium profile, not a concealed panel. It runs 4.8 s in two text phases on one navy plate: (1) Strip Light, 10 x 10 mm aluminium profile, 240 LED 24 V, 3000K Warm White, with power supply; (2) range: profile 10x10 / 12x12 / 16x16 / 25x25 mm & more, 3.6 m length; strip 120 LED 12 V and 240 LED 24 V with power supply, 5 m roll; 3000K / 4000K / 6500K / tri-colour 3-in-1.
 - IMG_4890 is a locked-off shot, so it was slowed to 0.59x (frame-blended) to give the extra text time to be read. Slow motion is not noticeable on this shot.
-- Reel is now 31.1 s (was 28.6 s). Safe-zone test re-run on all frames: 0 violations (scene 7 plate x64-898, y1110-1496).
+- Reel is now 31.8 s (was 28.6 s). Safe-zone test re-run on all frames: 0 violations (scene 7 plate x64-898, y1110-1496).
 - Caption updated to match; the concealed panel in the caption is the Round Concealed Panel from scene 4 (15 W, 4000K).
 
 Update 4: scene 7 range screen now says what is available. Labels: "PROFILE SIZES AVAILABLE (mm) / 3.6 m LENGTH" with 10x10, 12x12, 16x16, 25x25 and "mm & more"; "STRIP AVAILABLE / 5 m ROLL" with 120 LED 12 V, 240 LED 24 V, with power supply; "STRIP COLOURS AVAILABLE" with 3000K, 4000K, 6500K, Tri-colour (3-in-1). Scene is 5.2 s (clip slowed to 0.54x, locked-off shot). Reel 31.1 s. Safe-zone re-run on all frames: 0 violations (scene 7 plate x64-928, y1084-1500). Caption updated to say "available".
+
+Update 5: scene 5 replaced with the client photo (assets/photo_donut_sizes.jpg, 722x952 source). The reception clip IMG_4904 is no longer used.
+- Layout: photo in a rounded card (x64-1016, y380-1118) on solid Adniv navy, logo top-right above it. Cropped to y160-720 of the photo so the staff at the bottom (faces) are out of frame.
+- Animation: 0.5 s card slide-in, slow push-in (1.0 to 1.10), and a light-on effect on the fixtures only (rings and downlights are masked by brightness: dim, flicker, switch on with a soft bloom; the rest of the photo is untouched).
+- Text: "Concealed Panel / Round Donut", "ALSO MADE TO YOUR OWN PREFERENCE", chips 450 / 500 / 600 / 800 / 900 / 1000 / mm & more. Text bounds x70-932, y1144-1464, inside the safe area. Safe-zone re-run on all frames: 0 violations.
+- Source photo is low resolution (722 px wide), shown about 1.3x enlarged with light sharpening. A higher-resolution original would look crisper.
