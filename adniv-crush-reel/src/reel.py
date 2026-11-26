@@ -56,7 +56,7 @@ SC = [
     dict(id="s07_cpanel", clip="IMG_4890", ss=0.1, dur=2.7, z=(1.00, 1.04), look="plate",
          lines=["Concealed", "Panel"], S=118, maxw=760, caps_top=1176,
          rows=[["#04", "15 W", "4000K Neutral White"]], tr="whip_r"),
-    dict(id="s08_chairs", clip="IMG_4891", ss=0.3, dur=2.5, z=(1.00, 1.05), look="light",
+    dict(id="s08_chairs", clip="IMG_4891", ss=0.3, dur=2.5, z=(1.00, 1.05), look="plate",
          lines=["Softer light.", "Longer stays."], S=100, maxw=820, caps_top=1226, rows=[], tr="whip_l"),
     dict(id="s09_shelf", clip="IMG_4895", ss=0.2, dur=2.5, z=(1.00, 1.05), look="plate",
          lines=["Light that", "moves product."], S=96, maxw=760, caps_top=1290, rows=[], tr="flash"),

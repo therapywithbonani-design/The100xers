@@ -24,3 +24,5 @@ Known compromises
 - Hook chip "Lighting by Adniv" is an addition to the "CRUSH Salon, Gurgaon" line in your brief.
 
 Update: website corrected to www.adniv.in on the end card, in the caption and in the review page (the brief originally listed www.adnivtech.com). The reel was re-encoded; nothing else changed. The end-card layout is unchanged (content x69-834, y288-1461).
+
+Update 2: scene 8 ("Softer light. Longer stays.") changed from navy type on the beige chair to the navy plate with white type and orange extrusion, for legibility. Overlay bounds x64-788, y1186-1432 (inside the safe area, clear of the icon column).
