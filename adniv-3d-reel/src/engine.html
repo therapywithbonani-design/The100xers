@@ -1,0 +1,17 @@
+<!doctype html><html><head><meta charset="utf-8"><style>
+@font-face{font-family:'IX';src:url(assets/fonts/Inter-Regular.otf);font-weight:400}
+@font-face{font-family:'IX';src:url(assets/fonts/Inter-Medium.otf);font-weight:500}
+@font-face{font-family:'IX';src:url(assets/fonts/Inter-SemiBold.otf);font-weight:600}
+@font-face{font-family:'IX';src:url(assets/fonts/Inter-Bold.otf);font-weight:700}
+@font-face{font-family:'ID';src:url(assets/fonts/InterDisplay-Bold.otf);font-weight:700}
+@font-face{font-family:'ID';src:url(assets/fonts/InterDisplay-ExtraBold.otf);font-weight:800}
+@font-face{font-family:'ID';src:url(assets/fonts/InterDisplay-Black.otf);font-weight:900}
+@font-face{font-family:'JB';src:url(assets/fonts/JBM-Medium.ttf);font-weight:500}
+@font-face{font-family:'JB';src:url(assets/fonts/JBM-Bold.ttf);font-weight:700}
+html,body{margin:0;background:#000;overflow:hidden}
+#stage{position:relative;width:1080px;height:1920px;overflow:hidden;background:#05060f}
+#c{position:absolute;left:0;top:0;width:1080px;height:1920px}
+#hud{position:absolute;left:0;top:0;width:1080px;height:1920px;pointer-events:none;font-family:'IX',sans-serif}
+</style></head><body><div id="stage"><canvas id="c" width="1080" height="1920"></canvas><div id="hud"></div></div>
+<script type="importmap">{"imports":{"three":"./node_modules/three/build/three.module.js","three/addons/":"./node_modules/three/examples/jsm/"}}</script>
+<script type="module" src="engine.js"></script></body></html>

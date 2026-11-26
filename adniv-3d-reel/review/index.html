@@ -1,0 +1,182 @@
+<title>Adniv 3D Reel Style Frames</title>
+<meta name="claude:viewport-fit-sides" content="cover">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&family=JetBrains+Mono:wght@500;700&display=swap">
+<style>
+/* Layout: one review column. Order follows the workflow: reference, voiceover, beat sheet, style frames, your pick. */
+:root{
+  --bg:#f2f3f8; --surface:#fff; --ink:#14163a; --muted:#585b7c; --line:#d9dbe8; --navy:#1B1F54; --orange:#F7931E; --orange-ink:#a85c00;
+  --note:#fff4e3; --code:#eceef7;
+  --sans:"Inter",system-ui,-apple-system,"Segoe UI",sans-serif; --mono:"JetBrains Mono",ui-monospace,Menlo,monospace;
+}
+@media (prefers-color-scheme: dark){:root:not([data-theme="light"]){
+  --bg:#0c0e22; --surface:#15183a; --ink:#eceefc; --muted:#a3a6c8; --line:#2a2e5a; --orange-ink:#ffb35c; --note:#2b2412; --code:#1d2150; color-scheme:dark}}
+:root[data-theme="dark"]{--bg:#0c0e22; --surface:#15183a; --ink:#eceefc; --muted:#a3a6c8; --line:#2a2e5a; --orange-ink:#ffb35c; --note:#2b2412; --code:#1d2150; color-scheme:dark}
+*{box-sizing:border-box}
+body{background:var(--bg);color:var(--ink);font-family:var(--sans);font-size:15px;line-height:1.55;
+  padding-left:max(16px,env(safe-area-inset-left,0px));padding-right:max(16px,env(safe-area-inset-right,0px));padding-block:0 72px}
+.wrap{max-width:1200px;margin:0 auto;display:flex;flex-direction:column;gap:60px}
+header{padding-block:44px 0;display:flex;flex-direction:column;gap:14px}
+.eyebrow{font:700 12px var(--sans);letter-spacing:.14em;text-transform:uppercase;color:var(--orange-ink)}
+h1{font-size:clamp(30px,5vw,50px);line-height:1.04;font-weight:800;letter-spacing:-.02em;margin:0;text-wrap:balance}
+h2{font-size:25px;font-weight:700;letter-spacing:-.01em;margin:0;text-wrap:balance}
+h3{font-size:17px;font-weight:700;margin:0}
+p{margin:0;max-width:74ch}.lede{font-size:17px;color:var(--muted)}
+section{display:flex;flex-direction:column;gap:20px}
+.sec{display:flex;gap:14px;align-items:baseline;border-top:2px solid var(--ink);padding-top:14px}
+.step{font-weight:800;color:var(--orange-ink);font-variant-numeric:tabular-nums}
+.pill{display:inline-flex;align-items:center;gap:8px;padding:6px 12px;border-radius:999px;font-size:13px;font-weight:600;background:var(--surface);border:1px solid var(--line)}
+.pill i{width:8px;height:8px;border-radius:50%;background:var(--orange)}
+.status{display:flex;flex-wrap:wrap;gap:10px}
+.note{background:var(--note);border:1px solid var(--line);border-left:4px solid var(--orange);padding:14px 16px;border-radius:8px;display:flex;flex-direction:column;gap:6px}
+.tbl{overflow-x:auto;border:1px solid var(--line);border-radius:10px;background:var(--surface)}
+table{border-collapse:collapse;width:100%;font-size:13.5px;min-width:900px}
+th,td{text-align:left;padding:10px 12px;border-bottom:1px solid var(--line);vertical-align:top}
+th{font-size:11.5px;letter-spacing:.08em;text-transform:uppercase;color:var(--muted);font-weight:700}
+tr:last-child td{border-bottom:0}
+td.t{font-family:var(--mono);font-size:12.5px;white-space:nowrap}
+.k{font-family:var(--mono);font-size:12px;background:var(--code);padding:1px 6px;border-radius:5px;white-space:nowrap}
+figure{margin:0;display:flex;flex-direction:column;gap:8px;min-width:0}
+figure img,figure video{width:100%;height:auto;border-radius:10px;border:1px solid var(--line);display:block;background:#000}
+figcaption{font-size:13px;color:var(--muted)}
+.look{background:var(--surface);border:1px solid var(--line);border-radius:14px;padding:20px;display:flex;flex-direction:column;gap:16px}
+.look header{padding:0;gap:6px}
+.look .letter{font-size:40px;font-weight:800;line-height:1;color:var(--orange-ink)}
+.grid5{display:grid;grid-template-columns:repeat(5,minmax(0,1fr));gap:14px}
+.grid2{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:18px}
+.reco{background:var(--navy);color:#fff;border-radius:14px;padding:24px;display:flex;flex-direction:column;gap:10px}
+.reco code{background:rgba(255,255,255,.14);padding:2px 8px;border-radius:6px;font-size:14px}
+ul{margin:0;padding-left:20px;display:flex;flex-direction:column;gap:4px}
+@media (max-width:900px){.grid5{grid-template-columns:repeat(2,minmax(0,1fr))}.grid2{grid-template-columns:minmax(0,1fr)}}
+@media (prefers-reduced-motion:reduce){*{scroll-behavior:auto}}
+</style>
+
+<div class="wrap">
+<header>
+  <span class="eyebrow">Adniv · "Peeli Light Kahan Gayi?" · 3D explainer reel</span>
+  <h1>Pick a look, then I render the full 3D reel</h1>
+  <p class="lede">Steps 1–3 of the workflow: reference and voiceover analysis, the beat sheet, and three different 3D looks. Every look is real 3D geometry, lit and rendered frame by frame at 1080 × 1920: the stills for scenes 1, 2, 8 and the end screen, plus a 5-second clip of the yellow → white flip with your voiceover under it.</p>
+  <div class="status">
+    <span class="pill"><i></i>Voiceover aligned word by word (127 words)</span>
+    <span class="pill"><i></i>3 looks × 4 stills + 3 flip clips</span>
+    <span class="pill"><i></i>Safe-zone proof included</span>
+    <span class="pill"><i></i>Waiting: your pick</span>
+  </div>
+</header>
+
+<div class="note"><b>Please confirm two things</b>
+  <p><strong>Website.</strong> The brief says www.adnivtech.com. Earlier in this project you corrected the site to <strong>www.adniv.in</strong>, so the end screen uses that. Tell me if this reel should use the other one.</p>
+  <p><strong>Logo.</strong> adniv_logo.png wasn't in this upload, so I used the Adniv logo you sent earlier, on a white rounded card (top-right on every scene, large on the end screen).</p>
+</div>
+
+<section>
+  <div class="sec"><span class="step">01</span><h2>Reference reel: what it does</h2></div>
+  <p>The reference runs 63.2 s in 576 × 1024 (frames every 3 s below). It is a stylised low-poly night city. I use it only for structure and pacing: one idea per 3 s beat, a big headline at the top, a word-by-word caption at the bottom, a small mono info bar, and stats that count up. The visuals, city model, layout and wording are not reused.</p>
+  <figure><img src="ref/reference_contact.jpg" alt="Reference reel contact sheet, one frame every 3 seconds"><figcaption>reference.mov, one frame every 3 s (the top info bar and bottom caption are visible in every frame).</figcaption></figure>
+  <div class="tbl"><table>
+    <thead><tr><th>Ref. time</th><th>What the reference shows</th><th>Beat</th><th>What I take · what I change</th></tr></thead>
+    <tbody>
+      <tr><td class="t">0–6</td><td>Macro of a glowing amber panel, headline "Peeli Light", then "Ab Safed" on a street</td><td>Hook, then flip</td><td>Take the hook-then-flip order. Ours is a drone glide down a wet street with real lamp heads, not a panel.</td></tr>
+      <tr><td class="t">9–18</td><td>"Sodium Gas ka tha", colour swatches that lose their colour, then "5 Jan 2015"</td><td>Why yellow was bad, then the programme</td><td>Take the colour-loss idea. Ours is a floating ring of 3D coloured objects that desaturate under amber.</td></tr>
+      <tr><td class="t">21–45</td><td>City flyover, "Kitni Lights?", count-ups (1.27 Crore, 8,587 MU, 5,688 Crore)</td><td>Stats</td><td>Take the count-up. Ours uses the PIB figures you gave, big 3D numbers with a source chip.</td></tr>
+      <tr><td class="t">45–54</td><td>Macro of a bright LED panel, "Andar: LED Driver", "Smooth Power"</td><td>Inside the product, then the brand</td><td>Take the beat. Ours is an exploded view of a street-light head (housing, module, lens, driver) with labels.</td></tr>
+      <tr><td class="t">57–63</td><td>"Peeli Ya Safed?" then a plain end card with the number</td><td>Question, then CTA</td><td>Take the order. Ours is a split street, then a navy Adniv end screen with two call buttons.</td></tr>
+    </tbody>
+  </table></div>
+</section>
+
+<section>
+  <div class="sec"><span class="step">02</span><h2>Voiceover: word timing</h2></div>
+  <p>vo.mp3 is 52.19 s; speech ends at 51.8 s. I aligned all 127 spoken words to the script (speech recognition for the timestamps, then each word snapped to the real speech onset after a pause). The timings below drive the karaoke captions and every trigger in the reel.</p>
+  <div class="tbl"><table>
+    <thead><tr><th>Phrase</th><th>Speech</th><th>Line</th><th>Trigger words (time in s)</th></tr></thead>
+    <tbody>
+      <tr><td>1</td><td class="t">0.12–2.85</td><td>Raat ki woh peeli roshni... yaad hai?</td><td>peeli 1.15</td></tr>
+      <tr><td>2</td><td class="t">3.72–6.88</td><td>Ab har gali mein safed. Kab badla, aur kyun?</td><td><span class="k">safed 4.69</span> flip</td></tr>
+      <tr><td>3</td><td class="t">7.63–13.89</td><td>Woh thi sodium lamp. Uski roshni mein laal, hara, neela... sab ek jaisa dikhta tha.</td><td>sodium 8.12 · <span class="k">sab ek jaisa 12.20–13.34</span> colours drain</td></tr>
+      <tr><td>4</td><td class="t">14.43–18.82</td><td>Phir 5 January 2015 ko shuru hua Street Lighting National Programme.</td><td><span class="k">2015 15.40</span> city sweep · Street Lighting 17.02</td></tr>
+      <tr><td>5</td><td class="t">19.38–23.74</td><td>Ab tak ek crore chautees lakh se zyada LED street lights lag chuki hain.</td><td>crore 20.25 · lakh 21.14 · <span class="k">1.34 Crore+</span></td></tr>
+      <tr><td>6</td><td class="t">24.15–27.86</td><td>Har saal nau hazaar million unit se zyada bijli bachti hai...</td><td>nau hazaar million 24.70–26.26 · <span class="k">9,001 MU+</span></td></tr>
+      <tr><td>7</td><td class="t">27.86–30.00</td><td>...aur 62 lakh tonne CO2 kam.</td><td>62 27.96 · CO2 29.10 · <span class="k">6.2 Mn Tonnes</span></td></tr>
+      <tr><td>8</td><td class="t">30.58–34.98</td><td>Par asli kamaal hota hai light ke andar: LED module aur driver.</td><td>andar 32.68 · <span class="k">LED module 33.44</span> · <span class="k">driver 34.56</span></td></tr>
+      <tr><td>9</td><td class="t">35.41–40.98</td><td>Yahi technology Adniv banata hai: LED modules, drivers aur complete lighting solutions.</td><td><span class="k">Adniv 36.38</span> light on · modules 37.69 · drivers 38.82 · solutions 40.67</td></tr>
+      <tr><td>10</td><td class="t">41.49–44.52</td><td>Aapke sheher mein abhi bhi peeli light hai? Comment karke batao!</td><td>peeli light 42.74 · Comment 43.68</td></tr>
+      <tr><td>11</td><td class="t">45.07–51.80</td><td>Adniv... sahi roshni, sahi partner. Lighting consultation ke liye DM karein, ya screen par diye number par call karein.</td><td><span class="k">Adniv 45.07</span> · DM 49.20 · number 50.86 · call 51.43</td></tr>
+    </tbody>
+  </table></div>
+</section>
+
+<section>
+  <div class="sec"><span class="step">03</span><h2>Beat sheet · 53.6 s · 30 fps</h2></div>
+  <p>Scene windows follow your brief. The voiceover plays to 52.19 s, so the end screen holds about 1.4 s longer for the music to fade. The triggers above are the exact frames the visuals hit.</p>
+  <div class="tbl"><table>
+    <thead><tr><th>#</th><th>Time</th><th>3D action</th><th>On screen</th></tr></thead>
+    <tbody>
+      <tr><td>1</td><td class="t">0.00–3.60</td><td>Low drone glide forward over a wet street at night; sodium-amber lamps (~1900K) on both sides, light pools on the asphalt, haze and dust in the beams.</td><td>Chip "SODIUM LAMP · PEELI ROSHNI"; headline "Woh Peeli Roshni..."; karaoke caption.</td></tr>
+      <tr><td>2</td><td class="t">3.60–7.40</td><td>Amber flickers, then on <em>safed</em> (4.69) the lamps switch to LED white (~5000K) one after another down the road, with a pop of bloom and a click per lamp.</td><td>Chip "LED · SAFED ROSHNI"; headline "Ab Har Gali Safed".</td></tr>
+      <tr><td>3</td><td class="t">7.40–14.20</td><td>Macro push-in on an old sodium lamp head. A floating ring of red, green, blue and yellow objects loses its colour under the amber on "sab ek jaisa" (12.20–13.34).</td><td>Chip "SODIUM LAMP · EK JAISA RANG"; headline "Sab Ek Jaisa".</td></tr>
+      <tr><td>4</td><td class="t">14.20–19.20</td><td>Camera rises into an aerial city grid; a wave of white sweeps across the amber city on "2015" (15.40).</td><td>"5 Jan 2015 · Street Lighting National Programme".</td></tr>
+      <tr><td>5</td><td class="t">19.20–24.00</td><td>Flythrough continues in white LED light; a big 3D number counts up from "crore" (20.25).</td><td>"1.34 Crore+" · chip "SOURCE · PIB · 6 JAN 2025".</td></tr>
+      <tr><td>6</td><td class="t">24.00–27.65</td><td>Count-up on "nau hazaar million" (24.70–26.26).</td><td>"9,001 MU+ / saal" · same source chip.</td></tr>
+      <tr><td>7</td><td class="t">27.65–30.35</td><td>Count-up on "62 lakh tonne" (27.96–29.30).</td><td>"6.2 Mn Tonnes CO2 / saal" · same source chip.</td></tr>
+      <tr><td>8</td><td class="t">30.35–35.25</td><td>Push into a street-light head; it opens into an exploded view: housing, LED module (glowing chips), lens, LED driver.</td><td>Orange labels "01 LED MODULE" (33.44) and "02 LED DRIVER" (34.56).</td></tr>
+      <tr><td>9</td><td class="t">35.25–41.35</td><td>Parts reassemble and the light switches on at "Adniv" (36.38).</td><td>"Yahi Tech: Adniv" with three raised chips: LED Modules · LED Drivers · Lighting Solutions.</td></tr>
+      <tr><td>10</td><td class="t">41.35–44.85</td><td>Back on the street: one side still yellow, the other white.</td><td>"Aapke Sheher Mein?" · "Comment karo".</td></tr>
+      <tr><td>11</td><td class="t">44.85–53.60</td><td>Adniv navy (#1B1F54) end screen, soft orange glow, slow bokeh.</td><td>Logo, "Sahi roshni, sahi partner.", "DM us to book a lighting consultation", "or call", 99108 13339 and 93190 74766 as orange buttons, www.adniv.in.</td></tr>
+    </tbody>
+  </table></div>
+  <p>Audio: your voiceover at about −14.5 LUFS, music 18–20 dB under it (rising a little on the end screen, fading out), light-switch clicks on the flip and on "2015", soft whooshes on transitions.</p>
+</section>
+
+<section>
+  <div class="sec"><span class="step">04</span><h2>Three looks</h2></div>
+  <p>Each look has stills of scenes 1, 2 (after the flip), 8 and the end screen, and the 5-second flip clip with the voiceover and click sound effects. The clip starts at 3.0 s of the voiceover, so "safed" lands at 1.7 s.</p>
+
+  <article class="look">
+    <header><span class="letter">A</span><h3>Neon Diorama (stylised)</h3>
+      <p>Rounded, chunky miniature geometry, saturated indigo night, toy-bright windows and fat light cones. Friendly and graphic; the amber-to-white contrast is the most exaggerated.</p></header>
+    <div class="grid5">
+      <figure><img src="stills/A_s1.jpg" alt="Look A scene 1"><figcaption>Scene 1 · sodium hook</figcaption></figure>
+      <figure><img src="stills/A_s2.jpg" alt="Look A scene 2"><figcaption>Scene 2 · after the flip</figcaption></figure>
+      <figure><img src="stills/A_s8.jpg" alt="Look A scene 8"><figcaption>Scene 8 · inside the light</figcaption></figure>
+      <figure><img src="stills/A_cta.jpg" alt="Look A end screen"><figcaption>End screen</figcaption></figure>
+      <figure><video controls playsinline preload="metadata" src="clips/flip_test_A.mp4"></video><figcaption>5 s flip test, with sound</figcaption></figure>
+    </div>
+  </article>
+
+  <article class="look">
+    <header><span class="letter">B</span><h3>Realistic Night</h3>
+      <p>Wet asphalt with lamp reflections, cobra-head street lights, haze, subtle bloom, film grain and a touch of lens fringing. Closest to real footage, and it shows sodium versus LED honestly.</p></header>
+    <div class="grid5">
+      <figure><img src="stills/B_s1.jpg" alt="Look B scene 1"><figcaption>Scene 1 · sodium hook</figcaption></figure>
+      <figure><img src="stills/B_s2.jpg" alt="Look B scene 2"><figcaption>Scene 2 · after the flip</figcaption></figure>
+      <figure><img src="stills/B_s8.jpg" alt="Look B scene 8"><figcaption>Scene 8 · inside the light</figcaption></figure>
+      <figure><img src="stills/B_cta.jpg" alt="Look B end screen"><figcaption>End screen</figcaption></figure>
+      <figure><video controls playsinline preload="metadata" src="clips/flip_test_B.mp4"></video><figcaption>5 s flip test, with sound</figcaption></figure>
+    </div>
+  </article>
+
+  <article class="look">
+    <header><span class="letter">C</span><h3>Studio Product-Viz</h3>
+      <p>A glossy black reflective floor, sleek minimal street lights and navy-and-orange rim lighting, like a premium product film. The lamps reflect in the floor; the street feels like a showroom.</p></header>
+    <div class="grid5">
+      <figure><img src="stills/C_s1.jpg" alt="Look C scene 1"><figcaption>Scene 1 · sodium hook</figcaption></figure>
+      <figure><img src="stills/C_s2.jpg" alt="Look C scene 2"><figcaption>Scene 2 · after the flip</figcaption></figure>
+      <figure><img src="stills/C_s8.jpg" alt="Look C scene 8"><figcaption>Scene 8 · inside the light</figcaption></figure>
+      <figure><img src="stills/C_cta.jpg" alt="Look C end screen"><figcaption>End screen</figcaption></figure>
+      <figure><video controls playsinline preload="metadata" src="clips/flip_test_C.mp4"></video><figcaption>5 s flip test, with sound</figcaption></figure>
+    </div>
+  </article>
+
+  <figure><img src="stills/safezone_check.jpg" alt="Safe-zone overlay on four stills"><figcaption>Safe-zone proof on four stills. Red = Instagram UI, orange = like/comment column, green = safe area (x 64–1016, y 230–1500). The headline, logo, labels, captions and buttons all sit inside it. Captions stop at x 940, clear of the icon column.</figcaption></figure>
+</section>
+
+<div class="reco">
+  <h2 style="color:#fff">Your pick</h2>
+  <p>Reply with <code>A</code>, <code>B</code>, <code>C</code>, or a mix. My recommendation is <code>B for the street scenes (1–7, 10) + C's studio look for scenes 8–9 and the end screen</code>: it keeps the sodium-versus-LED story believable, and the product scenes look premium.</p>
+  <ul>
+    <li>After your pick I build the remaining scenes (sodium macro and colour ring, aerial city, count-up numbers, split street), render all 1,608 frames (about 10 minutes of rendering), and mix the audio.</li>
+    <li>Then QA at every beat and transition: caption sync, spelling of every number, safe zone, audio levels, and the voiceover playing to the very end. Delivery: MP4, cover "Peeli Light Kahan Gayi?" with the 4:5 crop check, and the Instagram caption.</li>
+  </ul>
+</div>
+</div>
