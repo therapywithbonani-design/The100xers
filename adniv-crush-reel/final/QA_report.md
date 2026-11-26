@@ -10,7 +10,7 @@ File: `adniv_crush_reel.mp4`, H.264 High, 1080x1920, 30 fps, 16 Mbps, bt709, 30.
 | Icon column (x>940, y1000-1500) clear | Yes. Widest element ends at x=932 (sizes row, scene 5) |
 | Safe-zone proof images | `qa/safezone_overlay_check.jpg`, `cover_safezone_check.jpg` |
 | Logo top-right on every scene, none on end card | Yes. End card has only the centred main logo. Reversed (white) version on dark footage, original (black) on bright scene 5 |
-| Spec spelling | Every on-screen string audited against the brief. "Round" only in scene 4 (Round Concealed Panel) |
+| Spec spelling | Every on-screen string audited against the brief. No "concealed panel" label remains on any product (scenes 4 and 7 were corrected by the client) |
 | No text over the lights | Text pixels over light-source pixels (luma>225): 0.0-1.0% (leader dot touches the fixture edge by design). Navy plates (scenes 1, 7, 9) sit over wall/floor areas, not fixtures. Scene 7 plate covers part of the wall glow, which is unavoidable in that busy frame |
 | No colour wash over footage | Highlights rolled off in the grade only. No tint/gradient layers. Light-leak (scene 5 to 6) and white flash (2 to 3, 9 to end) are 0.3 s transitions |
 | Faces | No prominent faces. Scene 1 has two staff walking at distance, seen from behind/profile. A receptionist is partly visible over the counter in scenes 1 and 5, small. The reclining guest (face visible from ~3.3 s of IMG_4905) is cut out |
@@ -41,3 +41,5 @@ Update 5: scene 5 replaced with the client photo (assets/photo_donut_sizes.jpg, 
 - Animation: 0.5 s card slide-in, slow push-in (1.0 to 1.10), and a light-on effect on the fixtures only (rings and downlights are masked by brightness: dim, flicker, switch on with a soft bloom; the rest of the photo is untouched).
 - Text: "Concealed Panel / Round Donut", "ALSO MADE TO YOUR OWN PREFERENCE", chips 450 / 500 / 600 / 800 / 900 / 1000 / mm & more. Text bounds x70-932, y1144-1464, inside the safe area. Safe-zone re-run on all frames: 0 violations.
 - Source photo is low resolution (722 px wide), shown about 1.3x enlarged with light sharpening. A higher-resolution original would look crisper.
+
+Update 6: scene 4 (IMG_4901) relabelled from "Round Concealed Panel, 15 W, 4000K" to a donut, per client. On screen: "DONUT", "02 ROUND DONUT / CUSTOM-MADE". The leader line to the small disc was removed. The 15 W and 4000K chips were dropped because they were attached to the panel label; the donut's own size and wattage are still needed from the client. Caption updated (concealed panel bullet and keyword removed). Safe-zone re-run on all frames: 0 violations (text x71-739, y1267-1466).
