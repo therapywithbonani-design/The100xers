@@ -15,7 +15,7 @@ const css=`
 .line{display:block;white-space:nowrap;font-family:'ID',sans-serif;font-weight:900;color:#fff;line-height:1.02;letter-spacing:-.02em}
 .ch{display:inline-block;transform-origin:50% 100%;will-change:transform}
 .em{color:${ORANGE}}
-.cap{position:absolute;left:64px;width:876px;top:1372px;text-align:center;font:700 47px/1.26 'IX',sans-serif;letter-spacing:-.005em}
+.cap{position:absolute;left:64px;width:860px;top:1372px;text-align:center;font:700 47px/1.26 'IX',sans-serif;letter-spacing:-.005em}
 .cap span{display:inline-block;margin:0 .13em;transition:none}
 .stat{position:absolute;left:64px;width:952px;top:700px;text-align:center}
 .src{position:absolute;left:0;width:1080px;text-align:center;font:500 20px 'JB',monospace;letter-spacing:.1em;color:#fff}
@@ -24,6 +24,13 @@ const css=`
  color:#fff;font:700 28px 'IX',sans-serif;letter-spacing:.06em;text-transform:uppercase;box-shadow:0 0 22px rgba(247,147,30,.45);white-space:nowrap}
 .lab i{font-style:normal;color:${ORANGE};font:700 20px 'JB',monospace}
 svg.lines{position:absolute;left:0;top:0;width:1080px;height:1920px}
+.hsub{margin-top:14px;font:600 42px 'IX',sans-serif;color:#fff;text-shadow:0 4px 16px rgba(0,0,0,.75),0 0 2px rgba(0,0,0,.5);letter-spacing:.01em}
+.lbl{position:absolute;left:64px;width:876px;text-align:center;font:700 32px 'IX',sans-serif;letter-spacing:.1em;text-transform:uppercase;color:#fff;text-shadow:0 4px 14px rgba(0,0,0,.8)}
+.lbl b{display:block;width:120px;height:5px;margin:12px auto 0;border-radius:3px;background:${ORANGE};box-shadow:0 0 14px ${ORANGE}}
+.pills{position:absolute;left:64px;width:876px;display:flex;justify-content:center;gap:14px;flex-wrap:nowrap}
+.pill{padding:13px 24px;border-radius:999px;background:linear-gradient(#fff,#d9def4);color:${NAVY};font:800 27px 'ID',sans-serif;letter-spacing:.01em;white-space:nowrap;
+ box-shadow:0 8px 0 #8d97d2,0 16px 26px rgba(0,0,0,.5),0 2px 0 #fff inset}
+.pill.o{background:linear-gradient(#ffb04a,${ORANGE});color:#fff;box-shadow:0 8px 0 #b86a08,0 16px 26px rgba(0,0,0,.5),0 2px 0 rgba(255,255,255,.6) inset}
 .flash{position:absolute;inset:0;background:#fff;opacity:0}
 .fade{position:absolute;inset:0;background:#000;opacity:0}
 .cta{position:absolute;left:0;top:0;width:1080px;height:1920px}
@@ -43,9 +50,9 @@ export function createHUD(root,words){
   const st=document.createElement('style');st.textContent=css;document.head.appendChild(st);
   root.innerHTML=`<div class="chip" id="h-chip"><i></i><span></span></div><div class="logo" id="h-logo"><img src="assets/adniv_logo.png"></div>
   <div class="head" id="h-head"></div><div class="stat" id="h-stat"></div><div class="src" id="h-src"></div><div class="cap" id="h-cap"></div>
-  <svg class="lines" id="h-lines"></svg><div id="h-labs"></div><div class="cta" id="h-cta" style="display:none"></div><div class="flash" id="h-flash"></div><div class="fade" id="h-fade"></div>`;
+  <div class="lbl" id="h-lbl"></div><div class="pills" id="h-pills"></div><svg class="lines" id="h-lines"></svg><div id="h-labs"></div><div class="cta" id="h-cta" style="display:none"></div><div class="flash" id="h-flash"></div><div class="fade" id="h-fade"></div>`;
   const $=id=>root.querySelector('#'+id);
-  const el={chip:$('h-chip'),logo:$('h-logo'),head:$('h-head'),stat:$('h-stat'),src:$('h-src'),cap:$('h-cap'),lines:$('h-lines'),labs:$('h-labs'),cta:$('h-cta'),flash:$('h-flash'),fade:$('h-fade')};
+  const el={chip:$('h-chip'),logo:$('h-logo'),head:$('h-head'),stat:$('h-stat'),src:$('h-src'),cap:$('h-cap'),lbl:$('h-lbl'),pills:$('h-pills'),lines:$('h-lines'),labs:$('h-labs'),cta:$('h-cta'),flash:$('h-flash'),fade:$('h-fade')};
   // caption chunks (<=2 lines)
   const chunks=[];let cur=[];
   words.forEach((w,i)=>{cur.push(i);const n=cur.length,ch=cur.map(k=>words[k].w).join(' ').length;
@@ -55,11 +62,12 @@ export function createHUD(root,words){
     const h=state.head; if(!h){el.head.innerHTML='';return}
     const key=JSON.stringify(h.lines)+h.size; if(el.head._k!==key){el.head._k=key;el.head.style.top=(h.y||392)+'px';el.head.style.fontSize=(h.size||118)+'px';
       el.head.innerHTML=h.lines.map(l=>{let n=0;const parts=l.split('*');
-        return '<span class="line">'+parts.map((p,pi)=>[...p].map(c=>{n++;return `<span class="ch ${pi%2?'em':''}" data-n="${n}">${c===' '?'&nbsp;':c}</span>`}).join('')).join('')+'</span>'}).join('')}
+        return '<span class="line">'+parts.map((p,pi)=>[...p].map(c=>{n++;return `<span class="ch ${pi%2?'em':''}" data-n="${n}">${c===' '?'&nbsp;':c}</span>`}).join('')).join('')+'</span>'}).join('')+(h.sub?`<div class="hsub">${h.sub.text}</div>`:'')}
     const tt=t-(h.t0||0); let idx=0;
     el.head.querySelectorAll('.line').forEach((ln,li)=>{ln.querySelectorAll('.ch').forEach(c=>{const n=+c.dataset.n;const p=clamp((tt-li*0.14-n*0.032)/0.5);
       const e=eb(p,1.3);c.style.opacity=clamp(p*2.5);c.style.transform=`translateY(${(1-e)*-70}px) rotateX(${(1-e)*-75}deg) scale(${.85+.15*e})`;
       c.style.textShadow=ext(9);})});
+    const sb=el.head.querySelector('.hsub'); if(sb&&h.sub){const p=eo(clamp((t-h.sub.t0)/0.5));sb.style.opacity=p;sb.style.transform=`translateY(${(1-p)*18}px)`}
     el.head.style.opacity=h.out===undefined?1:h.out;
   }
   function caption(state){
@@ -78,8 +86,8 @@ export function createHUD(root,words){
   }
   return {el,apply(state){
     const t=state.t||0;
-    el.chip.style.display=state.chip?'flex':'none'; if(state.chip){el.chip.querySelector('span').textContent=state.chip;const p=eo(clamp((t-(state.chipT0||0))/0.5));el.chip.style.opacity=p;el.chip.style.transform=`translateX(${(1-p)*-30}px)`}
-    el.logo.style.display=state.logo===false?'none':'flex'; if(state.logo!==false){const p=eo(clamp(t/0.5));el.logo.style.opacity=state.logoOp===undefined?p:state.logoOp}
+    el.chip.style.display=state.chip?'flex':'none'; if(state.chip){el.chip.querySelector('span').textContent=state.chip;const p=eo(clamp((t-(state.chipT0||0))/0.5));el.chip.style.opacity=p;el.chip.style.transform=`translateY(${(1-p)*-12}px)`}
+    el.logo.style.display=state.logo===false?'none':'flex'; if(state.logo!==false){const p=eo(clamp(t/0.5));el.logo.style.top=(state.logoY||244)+'px';el.logo.style.opacity=state.logoOp===undefined?p:state.logoOp}
     headline(state,t); caption(state);
     // source chip
     if(state.src){el.src.style.top=(state.src.y||1300)+'px';el.src.innerHTML=`<b>${state.src.text}</b>`;el.src.style.opacity=state.src.op===undefined?1:state.src.op}else el.src.innerHTML='';
@@ -89,6 +97,9 @@ export function createHUD(root,words){
       const lx=L.lx,ly=L.ly;
       el.lines.innerHTML+=`<line x1="${L.x}" y1="${L.y}" x2="${L.x+(lx-L.x)*p}" y2="${L.y+(ly-L.y)*p}" stroke="${ORANGE}" stroke-width="3.5" stroke-linecap="round" style="filter:drop-shadow(0 0 6px rgba(247,147,30,.9))"/><circle cx="${L.x}" cy="${L.y}" r="${9*p}" fill="${ORANGE}" stroke="#fff" stroke-width="3"/>`;
       const d=document.createElement('div');d.className='lab';d.style.left=lx+'px';d.style.top=(ly-27)+'px';d.style.opacity=clamp(p*1.6);d.style.transform=`scale(${.85+.15*p})`;d.innerHTML=`<i>${L.n||''}</i>${L.text}`;el.labs.appendChild(d)});
+    if(state.label){el.lbl.style.top=(state.label.y||1130)+'px';el.lbl.innerHTML=state.label.text+'<b></b>';const p=eo(clamp((t-state.label.t0)/0.5));el.lbl.style.opacity=p;el.lbl.style.transform=`translateY(${(1-p)*16}px)`}else el.lbl.innerHTML='';
+    if(state.pills){el.pills.style.top=(state.pills.y||1262)+'px';const key=JSON.stringify(state.pills.items.map(i=>i.text));if(el.pills._k!==key){el.pills._k=key;el.pills.innerHTML=state.pills.items.map(i=>`<div class="pill ${i.o?'o':''}">${i.text}</div>`).join('')}
+      [...el.pills.children].forEach((e,i)=>{const p=clamp((t-state.pills.items[i].t0)/0.5),b=eb(p,1.5);e.style.opacity=clamp(p*2.5);e.style.transform=`translateY(${(1-b)*40}px) scale(${.7+.3*b})`})}else el.pills.innerHTML='',el.pills._k='';
     el.flash.style.opacity=state.flash||0; el.fade.style.opacity=state.fade||0;
     // CTA
     if(state.cta){el.cta.style.display='block';cta(state.cta.t)}else el.cta.style.display='none';

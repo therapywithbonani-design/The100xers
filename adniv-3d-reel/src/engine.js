@@ -7,6 +7,8 @@ import {ShaderPass} from 'three/addons/postprocessing/ShaderPass.js';
 import {RoundedBoxGeometry} from 'three/addons/geometries/RoundedBoxGeometry.js';
 import {Reflector} from 'three/addons/objects/Reflector.js';
 import {RoomEnvironment} from 'three/addons/environments/RoomEnvironment.js';
+import {FontLoader} from 'three/addons/loaders/FontLoader.js';
+import {TextGeometry} from 'three/addons/geometries/TextGeometry.js';
 import {createHUD} from './hud.js';
 import {makeShots} from './shots.js';
 
@@ -90,7 +92,7 @@ const addMat = (map, col = 0xffffff, op = 1, fog = false) => new THREE.MeshBasic
 
 function buildStreet(id) {
   const L = LOOKS[id]; const scene = new THREE.Scene(); scene.background = new THREE.Color(L.bg); scene.fog = new THREE.FogExp2(L.fog[0], L.fog[1]);
-  const cam = new THREE.PerspectiveCamera(L.fov, W / H, 0.1, 600);
+  const cam = new THREE.PerspectiveCamera(L.fov, W / H, 0.1, 600); scene.add(cam);
   const rnd = mulberry(id.charCodeAt(0) * 17);
   const hemi = new THREE.HemisphereLight(L.hemi[0], L.hemi[1], id === 'B' ? 0.5 : 0.7); scene.add(hemi);
   const moon = new THREE.DirectionalLight(0x6a7cff, 0.25); moon.position.set(-30, 60, 20); scene.add(moon);
@@ -207,7 +209,7 @@ function buildStreet(id) {
       near.forEach((l, k) => { const c = tmp.copy(AMBER).lerp(WHITE, l.s); plights[k].color.copy(c); plights[k].intensity = L.pl * l.fl * (1 + l.pop); plights[k].position.set(l.x, l.y - 0.5, l.z); });
       skyGlow.position.z = z - 280; stars.position.z = z; dust.position.z = z;
       const arr = dGeo.attributes.position.array; for (let i = 0; i < DN; i++) { arr[i * 3] = dBase[i * 3] + 0.5 * Math.sin(ct * 0.6 + i); arr[i * 3 + 1] = dBase[i * 3 + 1] + 0.25 * Math.cos(ct * 0.5 + i * 1.7); arr[i * 3 + 2] = dBase[i * 3 + 2]; }
-      dGeo.attributes.position.needsUpdate = true; dust.material.color.copy(sg);
+      dGeo.attributes.position.needsUpdate = true; dust.material.color.copy(sg); NUM.set(p.num?.text, p.num?.a ?? 0, ct, p.num?.fit, true);
     }};
 }
 
@@ -259,6 +261,8 @@ function buildInside(id) {
   const halo = new THREE.Mesh(new THREE.PlaneGeometry(14, 14), addMat(glowTex, id === 'B' ? 0x6a5030 : 0xF7931E, id === 'B' ? 0.28 : 0.2)); halo.position.set(0, 0.5, -3); scene.add(halo);
   const pts = []; const pr = mulberry(33); for (let i = 0; i < 160; i++) pts.push((pr() - .5) * 10, (pr() - .5) * 9, -3 + pr() * 4);
   const sparks = new THREE.Points(new THREE.BufferGeometry().setAttribute('position', new THREE.Float32BufferAttribute(pts, 3)), new THREE.PointsMaterial({map: glowTex, size: 0.18, transparent: true, depthWrite: false, blending: THREE.AdditiveBlending, color: 0xF7931E, opacity: 0.7})); scene.add(sparks);
+  const beamM = beamMat(6.5); beamM.uniforms.uColor.value.copy(WHITE); const beam = new THREE.Mesh(new THREE.ConeGeometry(3.4, 6.5, 40, 1, true), beamM); beam.position.y = -0.6 - 3.25; scene.add(beam);
+  const underGlow = new THREE.Sprite(new THREE.SpriteMaterial({map: glowTex, color: new THREE.Color(1, 0.97, 0.9), transparent: true, depthWrite: false, blending: THREE.AdditiveBlending, opacity: 0})); underGlow.scale.set(7, 3.2, 1); scene.add(underGlow);
   const V = new THREE.Vector3();
   const api = {id, scene, cam, L, exposureK: 0.9, bloomK: 0.6,
     update(t, p) {
@@ -269,7 +273,8 @@ function buildInside(id) {
       const on = p.on ?? 1; chipMat.color.setRGB(2.6 * on + 0.3, 2.3 * on + 0.3, 1.7 * on + 0.3); chipGlow.material.opacity = 0.08 + 0.25 * on;
       const th = (p.orbit ?? 0) * 1 + Math.sin(t * 0.5) * 0.25; const R = p.dist ?? 26;
       cam.position.set(Math.sin(th) * R, 3.4 + (p.elev ?? 4.2), Math.cos(th) * R); cam.lookAt(0, 0.6 + (p.lookY ?? 0.5), 0);
-      rig.rotation.y = p.spin ?? 0; sparks.rotation.y = t * 0.1;
+      rig.rotation.y = p.spin ?? 0; sparks.rotation.y = t * 0.1; rig.position.y = Math.sin(t * 0.9) * 0.06;
+      beamM.uniforms.uI.value = 0.75 * (p.beam ?? 0); underGlow.material.opacity = 0.95 * (p.beam ?? 0); underGlow.position.y = lens.position.y - 0.2;
     },
     project(name) { const o = {module: module_, driver: driver, housing, lens}[name]; V.set(name === 'module' ? 1.6 : 1.1, 0.1, 0.35); o.localToWorld(V); V.project(cam); return [(V.x * 0.5 + 0.5) * W, (-V.y * 0.5 + 0.5) * H]; }};
   return api;
@@ -296,9 +301,128 @@ function buildCTA(id) {
   return {id, scene, cam, L: LOOKS[id], update(t) { items.rotation.y = Math.sin(t * 0.4) * 0.15; items.position.y = Math.sin(t * 0.6) * 0.15; }};
 }
 
+
+// ------------------------------------------------------------------ real 3D numbers (TextGeometry, counted up per frame)
+const FONT = new FontLoader().parse(await (await fetch('node_modules/three/examples/fonts/helvetiker_bold.typeface.json')).json());
+const gcache = {};
+const numScene = new THREE.Scene(); numScene.environment = roomEnv; const numCam = new THREE.PerspectiveCamera(50, W / H, 0.1, 50);
+numScene.add(new THREE.HemisphereLight(0xdfe6ff, 0x33406e, 1.2)); const nd = new THREE.DirectionalLight(0xffffff, 2.4); nd.position.set(-3, 5, 6); numScene.add(nd);
+const nd2 = new THREE.DirectionalLight(0xF7931E, 1.6); nd2.position.set(4, -2, 3); numScene.add(nd2);
+const glyph = ch => gcache[ch] || (gcache[ch] = new TextGeometry(ch, {font: FONT, size: 1, height: 0.34, curveSegments: 8, bevelEnabled: true, bevelThickness: 0.05, bevelSize: 0.035, bevelSegments: 4}));
+const adv = ch => ((FONT.data.glyphs[ch] || FONT.data.glyphs['0']).ha) / FONT.data.resolution;
+const easeBack = x => { x = clamp(x); const c = 1.5; return 1 + (c + 1) * Math.pow(x - 1, 3) + c * Math.pow(x - 1, 2); };
+function makeNumber() {
+  const root = new THREE.Group(); root.position.set(0, 0.58, -8.6); const holder = new THREE.Group(); root.add(holder);
+  const face = new THREE.MeshStandardMaterial({color: 0xa9b4dc, roughness: 0.3, metalness: 0.25, emissive: new THREE.Color(0x6f7ab0), emissiveIntensity: 0.1, envMapIntensity: 0.6, fog: false});
+  const side = new THREE.MeshStandardMaterial({color: 0xF7931E, roughness: 0.4, metalness: 0.3, emissive: new THREE.Color(0xF7931E), emissiveIntensity: 0.25, envMapIntensity: 0.6, fog: false});
+  
+  let key = '';
+  const FACE_LIGHT = new THREE.Color(0xeef2ff), FACE_DARK = new THREE.Color(0xeef2ff);
+  const plateTex = ctex(512, 192, (g, w, h) => { g.fillStyle = 'rgba(27,31,84,0.86)'; g.beginPath(); g.roundRect(6, 6, w - 12, h - 12, 44); g.fill(); g.strokeStyle = 'rgba(247,147,30,0.9)'; g.lineWidth = 5; g.stroke(); });
+  const plate = new THREE.Mesh(new THREE.PlaneGeometry(4.2, 1.42), new THREE.MeshBasicMaterial({map: plateTex, transparent: true, depthWrite: false, fog: false, toneMapped: false})); plate.position.set(0, 0.0, -0.5); plate.renderOrder = -1; root.add(plate);
+  return {root, set(text, appear, t, fit, dark) {
+    if (!text || appear <= 0.001) { root.visible = false; return; }
+    root.visible = true; face.color.copy(dark ? FACE_DARK : FACE_LIGHT); face.emissive.set(0x8a96c8); face.emissiveIntensity = 0.12; side.emissiveIntensity = 0.3; plate.visible = true; const fk = text + '|' + (fit || '');
+    if (key !== fk) { key = fk; holder.clear(); const total = [...(fit || text)].reduce((a, c) => a + adv(c), 0); let x = -total / 2;
+      for (const ch of text) { if (ch !== ' ') { const m = new THREE.Mesh(glyph(ch), [face, side]); m.position.x = x; holder.add(m); } x += adv(ch); } holder.userData.total = total; }
+    const sc = (3.6 / holder.userData.total) * (0.65 + 0.35 * easeBack(appear)); holder.scale.setScalar(sc); holder.position.y = -0.36 * sc;
+    root.rotation.y = Math.sin(t * 0.9) * 0.12; root.rotation.x = (1 - clamp(appear)) * -0.9 + Math.sin(t * 0.7) * 0.03;
+  }};
+}
+
+const NUM = makeNumber(); numScene.add(NUM.root);
+// ------------------------------------------------------------------ aerial city
+function buildCity() {
+  const L = LOOKS.B; const scene = new THREE.Scene(); scene.background = new THREE.Color(0x05070d); scene.fog = new THREE.FogExp2(0x0a0f1a, 0.0014);
+  const cam = new THREE.PerspectiveCamera(50, W / H, 0.5, 2600); scene.add(cam);
+  const rnd = mulberry(77);
+  const hemi = new THREE.HemisphereLight(0x303c5a, 0x0a0c12, 0.6); scene.add(hemi); const moon = new THREE.DirectionalLight(0x6a7cff, 0.35); moon.position.set(-60, 120, 40); scene.add(moon);
+  scene.environment = roomEnv;
+  const gt = ctex(512, 512, (g, w, h) => { g.fillStyle = '#05060a'; g.fillRect(0, 0, w, h); const rw = 14 / 44 * w; g.fillStyle = '#12141a'; g.fillRect(0, 0, rw / 2, h); g.fillRect(w - rw / 2, 0, rw / 2, h); g.fillRect(0, 0, w, rw / 2); g.fillRect(0, h - rw / 2, w, rw / 2);
+    g.fillStyle = 'rgba(220,220,220,.3)'; for (let y = 0; y < h; y += 44) { g.fillRect(0, y + 6, 3, 18); g.fillRect(w - 3, y + 6, 3, 18); } for (let x = 0; x < w; x += 44) { g.fillRect(x + 6, 0, 18, 3); g.fillRect(x + 6, h - 3, 18, 3); } });
+  gt.repeat.set(16, 24); const ground = new THREE.Mesh(new THREE.PlaneGeometry(704, 1056), new THREE.MeshStandardMaterial({map: gt, roughness: 0.4, metalness: 0.3, envMapIntensity: 0.1})); ground.rotation.x = -Math.PI / 2; ground.position.set(0, 0, -396); scene.add(ground);
+  const wt = windowTex(301, L.win, 0.5, false); wt.repeat.set(1, 1.5);
+  const bm = new THREE.MeshStandardMaterial({color: 0x1b1d24, roughness: 0.85, emissive: 0xffffff, emissiveMap: wt, emissiveIntensity: 0.85, envMapIntensity: 0.1});
+  const bl = new THREE.InstancedMesh(new THREE.BoxGeometry(1, 1, 1), bm, 1300); let bi = 0; const o = new THREE.Object3D(); const col = new THREE.Color();
+  for (let i = -8; i < 8; i++) for (let j = 3; j > -13; j--) {
+    const cx = 44 * i + 22, cz = 44 * j - 22; const n = rnd() < 0.35 ? 1 : 2 + Math.floor(rnd() * 2); const centre = 1 - Math.min(1, Math.hypot(cx, cz + 100) / 360);
+    for (let k = 0; k < n; k++) { const w = n === 1 ? 22 + rnd() * 6 : 11 + rnd() * 7, d = n === 1 ? 22 + rnd() * 6 : 11 + rnd() * 7; const h = 6 + rnd() * 13 + centre * rnd() * 34 * (rnd() < 0.25 ? 1.7 : 0.5);
+      const px = cx + (n === 1 ? 0 : (k % 2 ? 8 : -8) + (rnd() - 0.5) * 3), pz = cz + (n === 1 ? 0 : (k > 1 ? 8 : -8) + (rnd() - 0.5) * 3);
+      if (bi >= 1300) break; o.position.set(px, h / 2, pz); o.scale.set(w, h, d); o.updateMatrix(); bl.setMatrixAt(bi, o.matrix); col.setHSL(0.62 + rnd() * 0.06, 0.2, 0.55 + rnd() * 0.5); bl.setColorAt(bi, col); bi++; }
+  }
+  bl.count = bi; scene.add(bl);
+  // lamps along every road
+  const lp = []; const roads = (axis, c, lo, hi) => { for (let p = lo; p <= hi; p += 16) for (const sd of [-8, 8]) lp.push(axis === 'z' ? [c + sd, p] : [p, c + sd]); };
+  for (let i = -8; i <= 8; i++) roads('z', 44 * i, -520, 130);
+  for (let j = 3; j >= -11; j--) roads('x', 44 * j, -350, 350);
+  const LN = lp.length; const pools = new THREE.InstancedMesh(new THREE.PlaneGeometry(13, 13), new THREE.MeshBasicMaterial({map: glowTex, transparent: true, depthWrite: false, blending: THREE.AdditiveBlending, fog: true, opacity: 0.55}), LN);
+  const pos = new Float32Array(LN * 3), cols = new Float32Array(LN * 3); const lampOrigin = [0, -60];
+  const dist = new Float32Array(LN); const jit = new Float32Array(LN);
+  lp.forEach((q, i) => { o.position.set(q[0], 0.05, q[1]); o.rotation.set(-Math.PI / 2, 0, 0); o.scale.set(1, 1, 1); o.updateMatrix(); pools.setMatrixAt(i, o.matrix); pos.set([q[0], 9.2, q[1]], i * 3); dist[i] = Math.hypot(q[0] - lampOrigin[0], q[1] - lampOrigin[1]); jit[i] = hash(i) * 0.4; });
+  pools.instanceColor = new THREE.InstancedBufferAttribute(new Float32Array(LN * 3), 3); pools.frustumCulled = false; scene.add(pools);
+  const pg = new THREE.BufferGeometry(); pg.setAttribute('position', new THREE.BufferAttribute(pos, 3)); pg.setAttribute('color', new THREE.BufferAttribute(cols, 3));
+  const heads = new THREE.Points(pg, new THREE.PointsMaterial({map: glowTex, size: 3.2, vertexColors: true, transparent: true, depthWrite: false, blending: THREE.AdditiveBlending, sizeAttenuation: true})); heads.frustumCulled = false; scene.add(heads);
+  const skyGlow = new THREE.Mesh(new THREE.PlaneGeometry(2600, 520), addMat(glowTex)); scene.add(skyGlow);
+  const tmp = new THREE.Color();
+  return {id: 'city', scene, cam, L, exposureK: 1, bloomK: 0.7,
+    update(t, p) {
+      const u = t, y = 6 + 270 * sstep(0, 3.6, u) + 3 * Math.max(0, u - 3.6), z = 70 - 26 * u, x = Math.sin(u * 0.25) * 18;
+      const pitch = (3 + 58 * sstep(0.3, 3.8, u)) * Math.PI / 180; cam.position.set(x, y, z);
+      cam.lookAt(x * 0.6 + Math.sin(u * 0.2) * 10, y - Math.sin(pitch) * 100, z - Math.cos(pitch) * 100); cam.rotation.z += 0.012 * Math.sin(u * 0.5);
+      const t0 = p.sweepT0 ?? 1.2, spd = 175; let sSum = 0;
+      for (let i = 0; i < LN; i++) {
+        const ts = t0 + dist[i] / spd + jit[i] * 0.3; let s = 0, pop = 0, fl = 1;
+        if (t >= ts) { s = Math.min(1, (t - ts) / 0.25); pop = Math.exp(-(t - ts) * 5); } else if (t > ts - 0.2) fl = hash(Math.floor(t * 30) * 3 + i) > 0.5 ? 1 : 0.2;
+        sSum += s; tmp.copy(AMBER).lerp(WHITE, s); const b = fl * (1 + pop * 1.2);
+        const pi = i * 3; cols[pi] = tmp.r * b * 1.6; cols[pi + 1] = tmp.g * b * 1.6; cols[pi + 2] = tmp.b * b * 1.6;
+        pools.instanceColor.array[pi] = tmp.r * b * (0.55 + 0.2 * s); pools.instanceColor.array[pi + 1] = tmp.g * b * (0.55 + 0.2 * s); pools.instanceColor.array[pi + 2] = tmp.b * b * (0.55 + 0.2 * s);
+      }
+      pg.attributes.color.needsUpdate = true; pools.instanceColor.needsUpdate = true;
+      const sAvg = sSum / LN; hemi.color.setHex(0x303c5a).lerp(new THREE.Color(1, 0.55, 0.25), (1 - sAvg) * 0.5);
+      scene.fog.color.setHex(0x0a0f1a).lerp(new THREE.Color(0x3a1c08), (1 - sAvg) * 0.35).lerp(new THREE.Color(0x1c2638), sAvg);
+      scene.background.copy(scene.fog.color).multiplyScalar(0.45);
+      skyGlow.material.color.copy(tmp.copy(AMBER).lerp(WHITE, sAvg).multiplyScalar(0.22)); skyGlow.position.set(0, 120, z - 1200);
+      NUM.set(p.num?.text, p.num?.a ?? 0, u, p.num?.fit);
+    }};
+}
+
+// ------------------------------------------------------------------ sodium macro + colour ring
+function buildSodium() {
+  const L = LOOKS.B; const scene = new THREE.Scene(); scene.background = new THREE.Color(0x05040a); scene.fog = new THREE.FogExp2(0x0b0705, 0.018);
+  const cam = new THREE.PerspectiveCamera(50, W / H, 0.1, 200); scene.add(cam); scene.environment = roomEnv;
+  scene.add(new THREE.HemisphereLight(0x30241a, 0x050403, 0.3));
+  const lamp = new THREE.Group(); lamp.position.set(0, 7.6, 0); scene.add(lamp);
+  const metal = new THREE.MeshStandardMaterial({color: 0x3a3631, roughness: 0.55, metalness: 0.8, envMapIntensity: 0.5});
+  const head = new THREE.Mesh(new THREE.SphereGeometry(1, 32, 16), metal); head.scale.set(2.9, 0.62, 1.4); lamp.add(head);
+  const rim = new THREE.Mesh(new THREE.TorusGeometry(1, 0.05, 12, 64), metal); rim.rotation.x = Math.PI / 2; rim.scale.set(2.5, 1.2, 1); rim.position.y = -0.32; lamp.add(rim);
+  const arm = new THREE.Mesh(new THREE.CylinderGeometry(0.22, 0.3, 4, 16), metal); arm.position.set(2.0, 1.6, 0); arm.rotation.z = -0.5; lamp.add(arm);
+  const dome = new THREE.Mesh(new THREE.SphereGeometry(1, 32, 12, 0, Math.PI * 2, Math.PI / 2, Math.PI / 2), new THREE.MeshBasicMaterial({color: new THREE.Color(2.6, 1.3, 0.25), transparent: true, opacity: 0.9})); dome.scale.set(2.3, 0.7, 1.05); dome.position.y = -0.3; lamp.add(dome);
+  const tube = new THREE.Mesh(new THREE.CylinderGeometry(0.14, 0.14, 2.6, 16), new THREE.MeshBasicMaterial({color: new THREE.Color(6, 3.4, 0.6)})); tube.rotation.z = Math.PI / 2; tube.position.y = -0.4; lamp.add(tube);
+  const glow = new THREE.Sprite(new THREE.SpriteMaterial({map: glowTex, color: new THREE.Color(1, 0.55, 0.12), transparent: true, depthWrite: false, blending: THREE.AdditiveBlending, opacity: 0.9})); glow.scale.set(8, 5, 1); glow.material.opacity = 0.4; glow.position.y = -0.4; lamp.add(glow);
+  const bm = beamMat(7.4); bm.uniforms.uColor.value.set(1, 0.52, 0.1); bm.uniforms.uI.value = 0.28; const beam = new THREE.Mesh(new THREE.ConeGeometry(4.6, 7.4, 48, 1, true), bm); beam.position.set(0, 3.7 + 0.1, 0); scene.add(beam);
+  const floor = new THREE.Mesh(new THREE.PlaneGeometry(60, 60), new THREE.MeshStandardMaterial({color: 0x08090c, roughness: 0.22, metalness: 0.4, envMapIntensity: 0.3})); floor.rotation.x = -Math.PI / 2; scene.add(floor);
+  const pool = new THREE.Mesh(new THREE.PlaneGeometry(14, 14), addMat(glowTex, new THREE.Color(1, 0.5, 0.1), 0.8, true)); pool.rotation.x = -Math.PI / 2; pool.position.y = 0.03; scene.add(pool);
+  const amber = new THREE.PointLight(0xff8a1f, 26, 34, 1.5); amber.position.set(0, 6.6, 1.5); scene.add(amber);
+  const white = new THREE.PointLight(0xffffff, 22, 30, 1.6); white.position.set(2, 5.5, 7); scene.add(white);
+  const ring = new THREE.Group(); ring.position.set(0, 2.7, 0); scene.add(ring);
+  const defs = [[0xe02020, 'sphere'], [0x20c040, 'box'], [0x2f5bff, 'ico'], [0xffd020, 'torus']]; const objs = [];
+  for (let i = 0; i < 8; i++) { const [c, k] = defs[i % 4]; const g = {sphere: new THREE.SphereGeometry(0.55, 32, 16), box: new THREE.BoxGeometry(0.9, 0.9, 0.9), ico: new THREE.IcosahedronGeometry(0.62, 1), torus: new THREE.TorusGeometry(0.46, 0.18, 16, 40)}[k];
+    const m = new THREE.MeshStandardMaterial({color: c, roughness: 0.4, metalness: 0.05, envMapIntensity: 0.15}); const mesh = new THREE.Mesh(g, m); const a = i / 8 * Math.PI * 2; mesh.scale.setScalar(0.8); mesh.position.set(Math.cos(a) * 2.2, 0, Math.sin(a) * 2.2); mesh.userData = {base: new THREE.Color(c), a}; ring.add(mesh); objs.push(mesh); }
+  const SODIUM_FLAT = new THREE.Color(0.9, 0.42, 0.07); const dp = []; const dr = mulberry(12); for (let i = 0; i < 300; i++) dp.push((dr() - .5) * 14, dr() * 9, (dr() - .5) * 12);
+  const dust = new THREE.Points(new THREE.BufferGeometry().setAttribute('position', new THREE.Float32BufferAttribute(dp, 3)), new THREE.PointsMaterial({map: glowTex, size: 0.14, transparent: true, opacity: 0.4, depthWrite: false, blending: THREE.AdditiveBlending, color: 0xff9a30})); scene.add(dust);
+  return {id: 'sodium', scene, cam, L, exposureK: 0.85, bloomK: 0.6,
+    update(t, p) {
+      const d = clamp(p.drain ?? 0);
+      ring.rotation.y = t * 0.4; ring.position.y = 2.7 + Math.sin(t * 0.8) * 0.12;
+      objs.forEach((m, i) => { m.rotation.x = t * (0.5 + i * 0.07); m.rotation.y = t * 0.6; m.material.color.copy(m.userData.base).lerp(SODIUM_FLAT, d * 0.92); m.material.roughness = 0.32 + 0.3 * d; });
+      white.intensity = 22 * (1 - d); amber.intensity = 28 * (0.5 + 0.5 * d); dust.rotation.y = t * 0.05;
+      const z = 14.5 - 0.3 * t; cam.position.set(Math.sin(t * 0.3) * 1.0, 1.9 + Math.sin(t * 0.5) * 0.1, z); cam.lookAt(0, 4.1, 0);
+    }};
+}
+
 // ------------------------------------------------------------------ engine API + shots
 const cache = {};
-const get = (kind, id) => { const k = kind + id; if (!cache[k]) cache[k] = {street: buildStreet, inside: buildInside, cta: buildCTA}[kind](id); return cache[k]; };
+const get = (kind, id) => { const k = kind + id; if (!cache[k]) cache[k] = {street: buildStreet, inside: buildInside, cta: buildCTA, city: buildCity, sodium: buildSodium}[kind](id); return cache[k]; };
 const WORDS = await (await fetch('assets/words.json')).json();
 const hud = createHUD(document.getElementById('hud'), WORDS.words);
 await document.fonts.ready;
@@ -306,13 +430,14 @@ for (const f of ['400 20px IX', '600 20px IX', '700 20px IX', '900 20px ID', '80
 const E = {THREE, W, H, get, hud, words: WORDS.words, clamp, lerp, sstep, AMBER, WHITE, LOOKS};
 const SHOTS = makeShots(E);
 window.renderShot = (name, look, t) => {
-  const L = LOOKS[look]; const sh = SHOTS[name]; const r = sh(look, t);       // r: {sc, state}
+  NUM.root.visible = false; const sh = SHOTS[name]; const r = sh(look, t); const L = r.sc.L || LOOKS[look];       // r: {sc, state}
   renderer.toneMappingExposure = L.exposure * (r.sc.exposureK ?? 1);
   bloom.strength = L.bloom[0] * (r.sc.bloomK ?? 1); bloom.radius = L.bloom[1]; bloom.threshold = L.bloom[2];
   finalPass.uniforms.uTime.value = t; finalPass.uniforms.uVig.value = L.vig; finalPass.uniforms.uCA.value = L.ca ?? 0.003;
   renderPass.scene = r.sc.scene; renderPass.camera = r.sc.cam; r.sc.cam.updateProjectionMatrix(); r.sc.cam.updateMatrixWorld();
-  composer.render();
-  hud.apply(r.state(r.sc));
+  NUM.root.visible = NUM.root.visible; composer.render();
+  if (NUM.root.visible) { renderer.autoClear = false; renderer.clearDepth(); renderer.toneMappingExposure = 1.0; renderer.render(numScene, numCam); renderer.autoClear = true; }
+  hud.apply(r.state(r.sc)); window.__cam = [r.sc.id, ...r.sc.cam.position.toArray().map(v => +v.toFixed(1))];
   return true;
 };
 window.ready = true;

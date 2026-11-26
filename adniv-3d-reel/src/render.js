@@ -1,15 +1,16 @@
-// node render.js <look> <shot> <t0> <t1> <fps> <outDir> [prefix]   (t0==t1 -> single still)
+// node render.js <look> <shot> <t0> <t1> <fps> <outDir> [prefix] [frameStart frameEnd]  -> PNG sequence named by global frame index
 const {chromium}=require('playwright'); const fs=require('fs');
-const [look,shot,t0,t1,fps,out,prefix='f']=process.argv.slice(2);
+const [look,shot,t0,t1,fps,out,prefix='f',fs0,fs1]=process.argv.slice(2);
 (async()=>{
  fs.mkdirSync(out,{recursive:true});
  const b=await chromium.launch({args:['--use-gl=angle','--use-angle=swiftshader','--enable-unsafe-swiftshader','--ignore-gpu-blocklist','--enable-webgl']});
  const p=await b.newPage({viewport:{width:1080,height:1920}});
  p.on('pageerror',e=>console.log('PAGEERROR',e.message)); p.on('console',m=>{const s=m.text(); if(!/GPU stall|GL Driver/.test(s)) console.log('console:',s)});
- await p.goto('http://localhost:8765/engine.html'); await p.waitForFunction('window.ready===true',{timeout:120000});
- const T0=+t0,T1=+t1,F=+fps; const n=T1>T0?Math.round((T1-T0)*F):1; const t_=Date.now();
- for(let i=0;i<n;i++){const t=T0+i/F; await p.evaluate(`window.renderShot(${JSON.stringify(shot)},${JSON.stringify(look)},${t})`);
-  const buf=await p.screenshot({type:'png'}); fs.writeFileSync(`${out}/${prefix}_${String(i).padStart(4,'0')}.png`,buf);
-  if(n>1&&i%15==0) console.log(`${look} ${shot} frame ${i}/${n} ${((Date.now()-t_)/(i+1)/1000).toFixed(2)}s/f`);}
+ await p.goto('http://localhost:8765/engine.html'); await p.waitForFunction('window.ready===true',{timeout:180000});
+ const T0=+t0,T1=+t1,F=+fps; const n=T1>T0?Math.round((T1-T0)*F):1; const a=fs0!==undefined?+fs0:0, z=fs1!==undefined?+fs1:n; const t_=Date.now();
+ for(let i=a;i<z;i++){const t=T0+i/F; const fn=`${out}/${prefix}_${String(i).padStart(4,'0')}.png`; if(fs.existsSync(fn)) continue;
+  await p.evaluate(`window.renderShot(${JSON.stringify(shot)},${JSON.stringify(look)},${t})`);
+  const buf=await p.screenshot({type:'png'}); fs.writeFileSync(fn,buf);
+  if((i-a)%30==0) console.log(`${shot} ${i}/${z} ${((Date.now()-t_)/(i-a+1)/1000).toFixed(2)}s/f`);}
  await b.close();
 })();

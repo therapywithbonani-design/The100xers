@@ -1,6 +1,6 @@
 # Adniv "Peeli Light Kahan Gayi?" 3D reel
 
-Status: steps 1-3 done (reference + voiceover analysis, beat sheet, 3 looks). Waiting on the look pick.
+Status: full reel rendered and QA passed (B + C hybrid). See `final/`.
 
 - `review/index.html` - review page (reference analysis, word timings, beat sheet, style frames, flip clips, safe-zone proof)
 - `assets/words.json` - 127 voiceover words with start/end times (aligned to vo.mp3)
