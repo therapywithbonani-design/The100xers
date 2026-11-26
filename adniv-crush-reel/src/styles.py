@@ -135,9 +135,9 @@ def _tint(face, rgb):
 
 DONUT = dict(
     num="01", title="Donut Pendant", sub="600 mm Donut  ·  Black finish  ·  50 × 70 mm",
-    chips=["36 W & 40 W", "4000K Neutral White", "Canopy + 1.5 m kit"],
+    chips=["36 W & 40 W", "4000K Natural White", "Canopy + 1.5 m kit"],
     big_val=600, big_unit="mm Donut",
-    chips_b=["36 W & 40 W", "4000K Neutral White", "Black finish"],
+    chips_b=["36 W & 40 W", "4000K Natural White", "Black finish"],
     word="DONUT", spec="01  ·  PENDANT  ·  600 mm  ·  BLACK",
-    chips_c=["36 W & 40 W", "4000K Neutral White"],
+    chips_c=["36 W & 40 W", "4000K Natural White"],
 )

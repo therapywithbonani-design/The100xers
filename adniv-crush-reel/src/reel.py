@@ -38,17 +38,23 @@ SC = [
          lines=["First", "impressions,", "backlit."], S=90, maxw=540, caps_top=1215, rows=[], tr="flash"),
     dict(id="s03_donut", clip="IMG_4903", ss=0.2, dur=3.4, z=(1.00, 1.05), look="dark", stab=True,
          lines=["DONUT"], S=146, maxw=860, caps_top=1156,
-         rows=[["#01", "~PENDANT  ·  800 mm  ·  BLACK FINISH"], ["60 W", "4000K Neutral White"],
+         rows=[["#01", "~PENDANT  ·  800 mm  ·  BLACK FINISH"], ["60 W", "4000K Natural White"],
                ["50 × 70 mm", "Canopy + 1.5 m suspension kit"]],
          anchor=dict(kind="bottom", box=(100, 900, 900, 1200)), elbow_off=-28, tr="iris"),
-    dict(id="s04_donut", clip="IMG_4901", ss=0.1, dur=2.7, z=(1.00, 1.04), look="dark", stab=True,
-         lines=["DONUT"], S=130, maxw=860, caps_top=1290,
-         rows=[["#02", "~ROUND DONUT  ·  CUSTOM-MADE"]], tr="slide_u"),
-    dict(id="s05_donut_sizes", photo=S_DIR + "/assets/photo_donut_sizes.jpg", photo_crop=(0, 160, 722, 720),
-         card=(64, 380, 952, 738), focus=(0.35, 0.55), dur=3.4, z=(1.00, 1.10), look="navybg",
-         lines=["Concealed Panel", "Round Donut"], S=96, maxw=860, caps_top=1160,
-         rows=[["~~ALSO MADE TO YOUR OWN PREFERENCE"],
-               ["450", "500", "600", "800", "900", "1000", "mm & more"]],
+    dict(id="s04_donut_panel", clip="IMG_4901", ss=0.1, dur=3.6, z=(1.00, 1.04), look="dark", stab=True, slow=1.3,
+         phases=[
+             dict(start=0.0, lines=["DONUT"], S=130, maxw=860, caps_top=1290,
+                  rows=[["~ROUND DONUT  ·  CUSTOM-MADE"]]),
+             dict(start=1.75, lines=["Concealed", "Round Panel"], S=76, maxw=860, caps_top=1275,
+                  rows=[["#02", "15 W", "4000K Natural White"]],
+                  anchor=dict(kind="left", box=(250, 1135, 700, 1340)), elbow_off=None),
+         ], tr="slide_u"),
+    dict(id="s05_donut_sizes", photo=S_DIR + "/assets/photo_donut_sizes.jpg", photo_crop=(0, 185, 722, 722),
+         card=(64, 380, 952, 708), focus=(0.35, 0.55), dur=3.6, z=(1.00, 1.10), look="navybg",
+         lines=["50 × 70 mm", "Donut Ring"], S=84, maxw=860, caps_top=1118,
+         rows=[["450", "500", "600", "800", "900", "1000", "mm & more"],
+               ["~~COLOURS", "3000K WW", "4000K NW", "6500K CW"],
+               ["~~YOU CAN ALSO GET THE SIZE CUSTOMISED"]],
          nodots=True, tr="leak"),
     dict(id="s06_dome", clip="IMG_4896", ss=0.2, dur=3.0, z=(1.00, 1.05), look="dark",
          lines=["DOME"], S=146, maxw=860, caps_top=1156,
@@ -281,7 +287,7 @@ def draw_overlay(sc, lay, t, anchor=None, amul=1.0, shtext=SH_TEXT, cmul=1.0, tp
     plate_img, cv = cv, Image.new("RGBA", (W, H), (0, 0, 0, 0))   # content goes on its own layer (cmul fades only this)
     # leader line to the fixture
     if "anchor" in sc and anchor is not None:
-        elbow_y = sc["caps_top"] + sc["elbow_off"]
+        elbow_y = sc["caps_top"] + sc["elbow_off"] if sc.get("elbow_off") is not None else anchor[1]
         draw_leader(cv, anchor, elbow_y, x0 + 2, prog(t, 0.0, 0.5))
     # kinetic letters
     asc_pad = int(S * 0.55)
@@ -380,6 +386,9 @@ def detect_anchor(fr, spec):
     ys, xs = np.nonzero(m)
     if len(xs) < 30:
         return None
+    if spec["kind"] == "left":
+        xmin = xs.min(); sel = xs < xmin + 6
+        return (x0 + float(xmin), y0 + float(ys[sel].mean()))
     ymax = ys.max(); sel = ys > ymax - 6
     return (x0 + float(xs[sel].mean()), y0 + float(ymax))
 
@@ -434,14 +443,15 @@ def render_scene(i, keep=None, out=None):
     phases = sc.get("phases")
     if phases:
         lays = [build_layout(dict(sc, **ph)) for ph in phases]
-        rects = [l["plate"] for l in lays]                    # one shared plate that fits every phase
-        ux0, uy0 = min(r[0] for r in rects), min(r[1] for r in rects)
-        ux1, uy1 = max(r[0] + r[2] for r in rects), max(r[1] + r[3] for r in rects)
-        assert uy1 <= 1500 and (ux1 <= 940 or uy1 < 1000), (ux1, uy1)
-        for l in lays:
-            l["plate"] = (ux0, uy0, ux1 - ux0, uy1 - uy0)
+        if "plate" in lays[0]:
+            rects = [l["plate"] for l in lays]                # one shared plate that fits every phase
+            ux0, uy0 = min(r[0] for r in rects), min(r[1] for r in rects)
+            ux1, uy1 = max(r[0] + r[2] for r in rects), max(r[1] + r[3] for r in rects)
+            assert uy1 <= 1500 and (ux1 <= 940 or uy1 < 1000), (ux1, uy1)
+            for l in lays:
+                l["plate"] = (ux0, uy0, ux1 - ux0, uy1 - uy0)
         lay = lays[0]
-        print(sc["id"], "shared plate", lays[0]["plate"], "bottoms", [round(l["bottom"]) for l in lays], flush=True)
+        print(sc["id"], "phases bottoms", [round(l["bottom"]) for l in lays], flush=True)
     else:
         lay = build_layout(sc)
     N = n_own(sc) + XT
@@ -460,8 +470,13 @@ def render_scene(i, keep=None, out=None):
         else:
             z = sc["z"][0] + (sc["z"][1] - sc["z"][0]) * (k / (n_own(sc) - 1))
             fr = prep(arr, z, sc["clip"])
-        if "anchor" in sc:
-            a = detect_anchor(fr, sc["anchor"])
+        t = k / FPS - delay
+        scx = sc
+        if phases:
+            _pi = max([j for j, ph_ in enumerate(phases) if ph_["start"] <= t] or [0])
+            scx = dict(sc, **phases[_pi])
+        if "anchor" in scx:
+            a = detect_anchor(fr, scx["anchor"])
             if a is not None:
                 anc = a if anc is None else (anc[0] * .6 + a[0] * .4, anc[1] * .6 + a[1] * .4)
         amul = 1.0 if k < n_own(sc) else 1 - (k - n_own(sc) + 1) / (XT + 1)
@@ -519,6 +534,8 @@ def stills(idx):
         sc = SC[i]
         d = sc.get("delay", 0.2)
         ks = {int((d + 0.45) * FPS), int((d + 1.0) * FPS), int((d + 2.2) * FPS), n_own(sc) - 2}
+        for ph in sc.get("phases", []):
+            ks |= {int((d + ph["start"] + 1.4) * FPS)}
         if sc["dur"] > 4:
             ks |= {int((d + 3.5) * FPS)}
         ks = sorted(ks)

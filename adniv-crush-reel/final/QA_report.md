@@ -1,7 +1,7 @@
 # Adniv x CRUSH Salon reel: QA report
 
 Cut: Style C "Light-On Kinetic", Cover 3 "Your salon, lit like this?"
-File: `adniv_crush_reel.mp4`, H.264 High, 1080x1920, 30 fps, 16 Mbps, bt709, 30.7 s (9 scenes + 4.5 s end card). Silent. SFX stem separate.
+File: `adniv_crush_reel.mp4`, H.264 High, 1080x1920, 30 fps, 16 Mbps, bt709, 32.9 s (9 scenes + 4.5 s end card). Silent. SFX stem separate.
 
 | Check | Result |
 |---|---|
@@ -28,7 +28,7 @@ Update: website corrected to www.adniv.in on the end card, in the caption and in
 Update 2: scene 8 ("Softer light. Longer stays.") changed from navy type on the beige chair to the navy plate with white type and orange extrusion, for legibility. Overlay bounds x64-788, y1186-1432 (inside the safe area, clear of the icon column).
 
 Update 3 (client spec corrections)
-- Scene 3 donut: now 800 mm Donut, 60 W (was 600 mm, 36 W & 40 W). Other specs unchanged: black finish, 4000K Neutral White, 50 x 70 mm, canopy + 1.5 m suspension kit.
+- Scene 3 donut: now 800 mm Donut, 60 W (was 600 mm, 36 W & 40 W). Other specs unchanged: black finish, 4000K Natural White, 50 x 70 mm, canopy + 1.5 m suspension kit.
 - Scene 7 (IMG_4890) is a strip light with aluminium profile, not a concealed panel. It runs 4.8 s in two text phases on one navy plate: (1) Strip Light, 10 x 10 mm aluminium profile, 240 LED 24 V, 3000K Warm White, with power supply; (2) range: profile 10x10 / 12x12 / 16x16 / 25x25 mm & more, 3.6 m length; strip 120 LED 12 V and 240 LED 24 V with power supply, 5 m roll; 3000K / 4000K / 6500K / tri-colour 3-in-1.
 - IMG_4890 is a locked-off shot, so it was slowed to 0.59x (frame-blended) to give the extra text time to be read. Slow motion is not noticeable on this shot.
 - Reel is now 31.8 s (was 28.6 s). Safe-zone test re-run on all frames: 0 violations (scene 7 plate x64-898, y1110-1496).
@@ -43,3 +43,9 @@ Update 5: scene 5 replaced with the client photo (assets/photo_donut_sizes.jpg, 
 - Source photo is low resolution (722 px wide), shown about 1.3x enlarged with light sharpening. A higher-resolution original would look crisper.
 
 Update 6: scene 4 (IMG_4901) relabelled from "Round Concealed Panel, 15 W, 4000K" to a donut, per client. On screen: "DONUT", "02 ROUND DONUT / CUSTOM-MADE". The leader line to the small disc was removed. The 15 W and 4000K chips were dropped because they were attached to the panel label; the donut's own size and wattage are still needed from the client. Caption updated (concealed panel bullet and keyword removed). Safe-zone re-run on all frames: 0 violations (text x71-739, y1267-1466).
+
+Update 7 (client messages 2:52-2:58 PM)
+- "Neutral White" corrected to "Natural White" everywhere (4000K Natural White): scene 3 chip, scene 4 chip, caption, notes.
+- Scene 4 (IMG_4901, now 3.6 s, clip slowed to 0.77x): phase 1 labels the big ring "DONUT / ROUND DONUT / CUSTOM-MADE" (no callout); phase 2 points a leader at the small disc: "#02 Concealed Round Panel", 15 W, 4000K Natural White. Per client: the small round disc is the 15 W concealed round panel.
+- Scene 5 (client photo, 3.6 s): title replaced with "50 x 70 mm Donut Ring", then sizes 450 / 500 / 600 / 800 / 900 / 1000 / mm & more, COLOURS 3000K WW / 4000K NW / 6500K CW (client abbreviations), and closing line "YOU CAN ALSO GET THE SIZE CUSTOMISED".
+- Reel now 32.9 s. Safe-zone re-run on all frames: 0 violations (scene 4 text x71-656, y1200-1494; scene 5 text x70-932, y1103-1470).
