@@ -53,18 +53,19 @@ SC = [
          lines=["DOME"], S=146, maxw=860, caps_top=1156,
          rows=[["#03", "~DOME HANGING LIGHT  ·  DECORATIVE"], ["3000K Warm White", "Black finish"],
                ["Canopy + 1.5 m black wire"]], tr="slide_d"),
-    dict(id="s07_strip", clip="IMG_4890", ss=0.1, dur=4.8, z=(1.00, 1.10), look="plate", slow=1.7,
+    dict(id="s07_strip", clip="IMG_4890", ss=0.1, dur=5.2, z=(1.00, 1.10), look="plate", slow=1.85, row_dt=0.13,
          phases=[
              dict(start=0.0, lines=["Strip Light"], S=118, maxw=780, caps_top=1150,
                   rows=[["#04", "~10 × 10 mm ALUMINIUM PROFILE"],
                         ["240 LED · 24 V", "3000K Warm White"],
                         ["With power supply"]]),
-             dict(start=2.3, lines=[], S=100, maxw=780, caps_top=1168,
-                  rows=[["~ALUMINIUM PROFILE (mm)  ·  3.6 m LENGTH"],
-                        ["10 × 10", "12 × 12", "16 × 16", "25 × 25", "& more"],
-                        ["~LED STRIP + POWER SUPPLY  ·  5 m ROLL"],
-                        ["120 LED · 12 V", "240 LED · 24 V"],
-                        ["3000K", "4000K", "6500K", "Tri-colour 3-in-1"]]),
+             dict(start=2.3, lines=[], S=100, maxw=780, caps_top=1124,
+                  rows=[["~~PROFILE SIZES AVAILABLE  ·  3.6 m LENGTH"],
+                        ["10 × 10", "12 × 12", "16 × 16", "25 × 25", "mm & more"],
+                        ["~~STRIP AVAILABLE  ·  5 m ROLL"],
+                        ["120 LED · 12 V", "240 LED · 24 V", "With power supply"],
+                        ["~~STRIP COLOURS AVAILABLE"],
+                        ["3000K", "4000K", "6500K", "Tri-colour (3-in-1)"]]),
          ], nodots=True, tr="whip_r"),
     dict(id="s08_chairs", clip="IMG_4891", ss=0.3, dur=2.5, z=(1.00, 1.05), look="plate",
          lines=["Softer light.", "Longer stays."], S=100, maxw=820, caps_top=1226, rows=[], tr="whip_l"),
@@ -164,6 +165,9 @@ def build_layout(sc):
             if it.startswith("#"):
                 im = chip(it[1:], F("InterDisplay-Bold", 28), bg=ORANGE + (255,), fg=WHITE, dot=None, padx=16, h=46, r=12)
                 typ, gap = "badge", 16
+            elif it.startswith("~~"):
+                im = text_img(it[2:], F("Inter-SemiBold", 28), look["ink"], tracking=1.5)
+                typ, gap = "text", 12
             elif it.startswith("~"):
                 im = text_img(it[1:], F("Inter-SemiBold", 30), look["ink"], tracking=3)
                 typ, gap = "text", 12
@@ -312,7 +316,7 @@ def draw_overlay(sc, lay, t, anchor=None, amul=1.0, shtext=SH_TEXT, cmul=1.0, tp
     base = plate_dt + 0.45 + 0.08 * nl
     for ri, row in enumerate(lay["rows"]):
         for ii, it in enumerate(row["items"]):
-            st = base + ri * 0.2 + ii * 0.09
+            st = base + ri * sc.get("row_dt", 0.2) + ii * 0.09
             p = prog(t, st, 0.4)
             if p <= 0:
                 continue
