@@ -38,7 +38,7 @@ SC = [
          lines=["First", "impressions,", "backlit."], S=90, maxw=540, caps_top=1215, rows=[], tr="flash"),
     dict(id="s03_donut", clip="IMG_4903", ss=0.2, dur=3.4, z=(1.00, 1.05), look="dark", stab=True,
          lines=["DONUT"], S=146, maxw=860, caps_top=1156,
-         rows=[["#01", "~PENDANT  ·  600 mm  ·  BLACK FINISH"], ["36 W & 40 W", "4000K Neutral White"],
+         rows=[["#01", "~PENDANT  ·  800 mm  ·  BLACK FINISH"], ["60 W", "4000K Neutral White"],
                ["50 × 70 mm", "Canopy + 1.5 m suspension kit"]],
          anchor=dict(kind="bottom", box=(100, 900, 900, 1200)), elbow_off=-28, tr="iris"),
     dict(id="s04_panel", clip="IMG_4901", ss=0.1, dur=2.7, z=(1.00, 1.04), look="dark", stab=True,
@@ -53,9 +53,19 @@ SC = [
          lines=["DOME"], S=146, maxw=860, caps_top=1156,
          rows=[["#03", "~DOME HANGING LIGHT  ·  DECORATIVE"], ["3000K Warm White", "Black finish"],
                ["Canopy + 1.5 m black wire"]], tr="slide_d"),
-    dict(id="s07_cpanel", clip="IMG_4890", ss=0.1, dur=2.7, z=(1.00, 1.04), look="plate",
-         lines=["Concealed", "Panel"], S=118, maxw=760, caps_top=1176,
-         rows=[["#04", "15 W", "4000K Neutral White"]], tr="whip_r"),
+    dict(id="s07_strip", clip="IMG_4890", ss=0.1, dur=4.8, z=(1.00, 1.10), look="plate", slow=1.7,
+         phases=[
+             dict(start=0.0, lines=["Strip Light"], S=118, maxw=780, caps_top=1150,
+                  rows=[["#04", "~10 × 10 mm ALUMINIUM PROFILE"],
+                        ["240 LED · 24 V", "3000K Warm White"],
+                        ["With power supply"]]),
+             dict(start=2.3, lines=[], S=100, maxw=780, caps_top=1168,
+                  rows=[["~ALUMINIUM PROFILE (mm)  ·  3.6 m LENGTH"],
+                        ["10 × 10", "12 × 12", "16 × 16", "25 × 25", "& more"],
+                        ["~LED STRIP + POWER SUPPLY  ·  5 m ROLL"],
+                        ["120 LED · 12 V", "240 LED · 24 V"],
+                        ["3000K", "4000K", "6500K", "Tri-colour 3-in-1"]]),
+         ], nodots=True, tr="whip_r"),
     dict(id="s08_chairs", clip="IMG_4891", ss=0.3, dur=2.5, z=(1.00, 1.05), look="plate",
          lines=["Softer light.", "Longer stays."], S=100, maxw=820, caps_top=1226, rows=[], tr="whip_l"),
     dict(id="s09_shelf", clip="IMG_4895", ss=0.2, dur=2.5, z=(1.00, 1.05), look="plate",
@@ -131,7 +141,7 @@ def build_layout(sc):
     lines = sc["lines"]
     maxw = sc["maxw"]
     adv_k = 0.0
-    widths = [line_w(fnt, l, S) for l in lines]
+    widths = [line_w(fnt, l, S) for l in lines] or [0]
     if max(widths) > maxw:                       # autofit
         S = int(S * maxw / max(widths))
         fnt = F("InterDisplay-Black", S)
@@ -141,9 +151,12 @@ def build_layout(sc):
     cap_top_in, cap_h = hb[1] + 2, hb[3] - hb[1]
     pitch = 0.95 * S
     caps_top = sc["caps_top"]
-    word_bottom = caps_top + (len(lines) - 1) * pitch + cap_h
-    has_desc = any(c in "gjpqy,;" for c in lines[-1])
-    y = word_bottom + GAP_WORD + (0.14 * S if has_desc else 0)
+    if lines:
+        word_bottom = caps_top + (len(lines) - 1) * pitch + cap_h
+        has_desc = any(c in "gjpqy,;" for c in lines[-1])
+        y = word_bottom + GAP_WORD + (0.14 * S if has_desc else 0)
+    else:
+        word_bottom, y = caps_top, caps_top
     rows, block_w = [], max(widths) + D
     for r in sc["rows"]:
         items, x, rh = [], x0, 0
@@ -239,21 +252,27 @@ def draw_leader(cv, node, elbow_y, xl, p):
     blit(cv, lay, bx0, by0, 1.0, shadow=dict(soft=(0, 3, 5, 0.5), tight=(0, 1, 1, 0.3)))
 
 
-def draw_overlay(sc, lay, t, anchor=None, amul=1.0, shtext=SH_TEXT):
+def draw_overlay(sc, lay, t, anchor=None, amul=1.0, shtext=SH_TEXT, cmul=1.0, tplate=None):
     """Transparent W x H overlay for scene-local text time t (seconds)."""
     cv = Image.new("RGBA", (W, H), (0, 0, 0, 0))
-    if t <= 0:
+    tp = t if tplate is None else tplate
+    if t <= 0 and tp <= 0:
         return cv
     look, S, D, x0 = lay["look"], lay["S"], lay["D"], lay["x0"]
     plate_dt = 0.0
     if "plate" in lay:
         px0, py0, pw, ph = lay["plate"]
-        pp = prog(t, 0.0, 0.5)
+        pp = prog(tp, 0.0, 0.5)
         if pp > 0:
             pl = rounded((pw, ph), 26, NAVY + (250,))
             wcut = max(2, int(pw * out_cubic(pp)))
             blit(cv, pl.crop((0, 0, wcut, ph)), px0, py0, 1.0, shadow=dict(soft=(0, 14, 26, .5), tight=(0, 3, 4, .3)))
-        plate_dt = 0.28
+        plate_dt = 0.28 if tplate is None else 0.0
+    if t <= 0:
+        if amul < 1:
+            cv.putalpha(cv.split()[3].point(lambda v: int(v * max(amul, 0))))
+        return cv
+    plate_img, cv = cv, Image.new("RGBA", (W, H), (0, 0, 0, 0))   # content goes on its own layer (cmul fades only this)
     # leader line to the fixture
     if "anchor" in sc and anchor is not None:
         elbow_y = sc["caps_top"] + sc["elbow_off"]
@@ -263,6 +282,8 @@ def draw_overlay(sc, lay, t, anchor=None, amul=1.0, shtext=SH_TEXT):
     nl = len(lay["lines"])
     lh = int(lay["pitch"] * (nl - 1) + lay["cap_h"] + lay["cap_top_in"] + S * 0.5 + 12)
     wl = Image.new("RGBA", (int(lay["block_w"] + D + 40), lh + asc_pad), (0, 0, 0, 0))
+    if not lay["lines"]:
+        wl = None
     fnt = F("InterDisplay-Black", S)
     for j, line in enumerate(lay["lines"]):
         box_top = asc_pad + j * lay["pitch"] - lay["cap_top_in"]
@@ -285,7 +306,8 @@ def draw_overlay(sc, lay, t, anchor=None, amul=1.0, shtext=SH_TEXT):
                 let = let.copy(); let.putalpha(let.split()[3].point(lambda v: int(v * op)))
             wl.alpha_composite(let, (int(round(xx)), int(round(yy)))) if yy >= 0 else wl.alpha_composite(
                 let.crop((0, int(-yy), let.width, let.height)), (int(round(xx)), 0))
-    blit(cv, wl, x0, lay["caps_top"] - asc_pad, 1.0, shadow=shtext)
+    if wl is not None:
+        blit(cv, wl, x0, lay["caps_top"] - asc_pad, 1.0, shadow=shtext)
     # rows (badge / spec text / chips)
     base = plate_dt + 0.45 + 0.08 * nl
     for ri, row in enumerate(lay["rows"]):
@@ -302,9 +324,12 @@ def draw_overlay(sc, lay, t, anchor=None, amul=1.0, shtext=SH_TEXT):
                 im2 = im.resize((max(1, int(im.width * sc_)), max(1, int(im.height * sc_))), Image.LANCZOS) if sc_ != 1 else im
                 blit(cv, im2, it["x"] + it["w"] / 2, it["y"] + im.height / 2 + (1 - out_cubic(p)) * 16,
                      clamp(p * 2.2), shadow=SH_ITEM, anchor="cm")
+    if cmul < 1:
+        cv.putalpha(cv.split()[3].point(lambda v: int(v * max(cmul, 0))))
+    plate_img.alpha_composite(cv)
     if amul < 1:
-        cv.putalpha(cv.split()[3].point(lambda v: int(v * max(amul, 0))))
-    return cv
+        plate_img.putalpha(plate_img.split()[3].point(lambda v: int(v * max(amul, 0))))
+    return plate_img
 
 
 # ----------------------------------------------------------------------------------------------
@@ -317,7 +342,8 @@ def decode(sc, n):
     vf.append(f"scale={SW}:{SH}:flags=lanczos")
     if sc.get("stab"):
         vf.append(f"vidstabtransform=input={ST}/{name}.trf:smoothing=15:zoom=2:interpol=bicubic")
-    vf.append(f"trim=start={sc['ss']}:end={sc['ss'] + n / FPS + 0.3},setpts=PTS-STARTPTS")
+    slow = sc.get("slow", 1.0)
+    vf.append(f"trim=start={sc['ss']}:end={sc['ss'] + (n / FPS + 0.3) / slow},setpts=(PTS-STARTPTS)*{slow}")
     vf.append(f"framerate=fps={FPS}")
     cmd = ["ffmpeg", "-v", "error", "-i", f"{CL}/{name}.mov", "-vf", ",".join(vf), "-frames:v", str(n),
            "-pix_fmt", "rgb24", "-f", "rawvideo", "-"]
@@ -358,7 +384,19 @@ LOGO_BOX = (736, 244, 1016, 360)
 def render_scene(i, keep=None, out=None):
     """Render scene i. keep=None -> write full scene file; keep=set(k) -> return {k: (rgb_with_overlay, overlay, base)}."""
     sc = SC[i]
-    lay = build_layout(sc)
+    phases = sc.get("phases")
+    if phases:
+        lays = [build_layout(dict(sc, **ph)) for ph in phases]
+        rects = [l["plate"] for l in lays]                    # one shared plate that fits every phase
+        ux0, uy0 = min(r[0] for r in rects), min(r[1] for r in rects)
+        ux1, uy1 = max(r[0] + r[2] for r in rects), max(r[1] + r[3] for r in rects)
+        assert uy1 <= 1500 and (ux1 <= 940 or uy1 < 1000), (ux1, uy1)
+        for l in lays:
+            l["plate"] = (ux0, uy0, ux1 - ux0, uy1 - uy0)
+        lay = lays[0]
+        print(sc["id"], "shared plate", lays[0]["plate"], "bottoms", [round(l["bottom"]) for l in lays], flush=True)
+    else:
+        lay = build_layout(sc)
     N = n_own(sc) + XT
     delay = sc.get("delay", 0.2)
     res, bbox, lums = {}, {}, []
@@ -378,7 +416,17 @@ def render_scene(i, keep=None, out=None):
                 anc = a if anc is None else (anc[0] * .6 + a[0] * .4, anc[1] * .6 + a[1] * .4)
         amul = 1.0 if k < n_own(sc) else 1 - (k - n_own(sc) + 1) / (XT + 1)
         t = k / FPS - delay
-        ov = draw_overlay(sc, lay, t, anc, amul)
+        if phases:
+            pi = max([j for j, ph in enumerate(phases) if ph["start"] <= t] or [0])
+            ph = phases[pi]
+            nxt = phases[pi + 1]["start"] if pi + 1 < len(phases) else None
+            cm = 1 - prog(t, nxt - 0.2, 0.2) if nxt else 1.0
+            if pi == 0:
+                ov = draw_overlay(dict(sc, **ph), lays[0], t, anc, amul, cmul=cm)
+            else:
+                ov = draw_overlay(dict(sc, **ph), lays[pi], t - ph["start"], anc, amul, cmul=cm, tplate=t)
+        else:
+            ov = draw_overlay(sc, lay, t, anc, amul)
         base = Image.fromarray(fr).convert("RGBA")
         base.alpha_composite(ov)
         rgb = np.asarray(base.convert("RGB"))
@@ -420,7 +468,10 @@ def stills(idx):
     for i in idx:
         sc = SC[i]
         d = sc.get("delay", 0.2)
-        ks = sorted({int((d + 0.45) * FPS), int((d + 1.0) * FPS), int((d + 2.2) * FPS), n_own(sc) - 2})
+        ks = {int((d + 0.45) * FPS), int((d + 1.0) * FPS), int((d + 2.2) * FPS), n_own(sc) - 2}
+        if sc["dur"] > 4:
+            ks |= {int((d + 3.5) * FPS)}
+        ks = sorted(ks)
         ks = [min(k, n_own(sc) - 1) for k in ks]
         res = render_scene(i, keep=set(ks))
         tiles = []
@@ -635,7 +686,9 @@ def assemble(out_path, crf=15):
             events.append((T, {"whip_l": "whoosh", "whip_r": "whoosh", "slide_u": "whoosh_lo", "slide_d": "whoosh_lo",
                                "flash": "flash", "iris": "swell", "leak": "air"}[SC[i - 1]["tr"]]))
         d = sc.get("delay", 0.2)
-        if sc["rows"] or sc["id"] in ("s01_hook",):
+        for ph in sc.get("phases", [])[1:]:
+            events.append((T + d + ph["start"] + 0.35, "click"))
+        if sc.get("rows") or sc.get("phases") or sc["id"] in ("s01_hook",):
             events.append((T + d + (0.4 if sc["look"] == "plate" else 0.12) + 0.3, "click"))
         for k in range(own):
             if i > 0 and k < XT:
